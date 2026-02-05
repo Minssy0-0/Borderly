@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="Main-main.css">
+
+  <title>Borderly</title>
+</head>
+
+<body>
+<header>
+  <nav>
+    <div class="navbar">
+        <div class="cover-up"></div>
+    <div class="nav-left">
+  <button id="cloudToggle" class="cloud-nav" aria-label="Open navigation">☁️</button>
+  <navmenu class="navmenu" id="cloudMenu">
+    <a href="#">Documents</a>
+    <a href="#">Luggage & Sizes</a>
+    <a href="#">Vaccines</a>
+    <a href="#">Country Rules</a>
+    <a href="#">Trip Check</a>
+  </navmenu>
+</div>
+      <div class="logo">
+        <a href="index.html"><img src="images/logo.png" alt="Borderly Logo"></a>
+      </div>
+      <div class="nav-right">
+        <a href="#contact" class="contact-link">Contact Us</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+<main>
+
+  <section id="banner">
+    <section class="banner-content">
+  <video autoplay muted loop class="hero-video">
+    <source src="Stock/istockphoto-1474198714-640_adpp_is.mp4" type="video/mp4">
+    Your browser does not support the video.
+  </video>
+      <h1 class="banner-title">Travel Smarter, Not Harder</h1>
+      <p class="banner-subtitle">Your all-in-one travel document and regulation guide</p>
+    </div>
+  </section>
+
+
+
+
+
+  <section id="contact" >
+    <div class="contact-section">
+      <h1>Get in Touch</h1>
+      <p>Have questions or need assistance? We're here to help!</p>
+    <form class="contact-form" action="#" method="post">
+      <div class="input-group1">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required>
+      </div>
+
+      <div class="input-group2">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="input-group3">
+      <label for="topic">Topic</label>
+        <select id="topic" name="topic" required>
+          <option>General Question</option>
+          <option>Documents</option>
+          <option>Luggage Rules</option>
+          <option>Vaccines</option>
+          <option>Country Laws</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="input-group4">
+      <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" placeholder="Enter your message here..." required></textarea>
+      </div>
+      <button type="submit" class="send-btn">Send</button>
+    </form>
+    </div>
+  </section>
+
+
+</main>
+
+
+
+<footer class="site-footer">
+  <div class="footer-inner">
+
+    <div class="footer-brand">
+      <img src="images/logo.png" alt="Borderly logo">
+      <p>Making global travel safer, clearer, and legally right — all in one place.</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Explore</h4>
+      <a href="#">Documents</a>
+      <a href="#">Vaccines</a>
+      <a href="#">Country Rules</a>
+      <a href="#">Trip Check</a>
+    </div>
+
+    <div class="footer-links">
+      <h4>Company</h4>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+    </div>
+
+    <div class="footer-social">
+      <h4>Follow</h4>
+      <div class="social-icons">
+        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 Borderly. All rights reserved.
+  </div>
+</footer>
+
+
+<script>
+const navLeft = document.querySelector('.nav-left');
+const cloudToggle = document.getElementById('cloudToggle');
+
+cloudToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  navLeft.classList.toggle('open');
+});
+
+document.addEventListener('click', (e) => {
+  if (!navLeft.contains(e.target)) {
+    navLeft.classList.remove('open');
+  }
+});
+
+</script>
+
+</body>
+</html>
+
