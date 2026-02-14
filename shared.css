@@ -1,5 +1,9 @@
+html {
+  scroll-behavior: smooth; /* THIS enables the smooth scroll */
+}
+
 nav{
- position: fixed;
+ position: relative;
  left: 0;
  top: 0;
  width: 100%;
@@ -28,18 +32,81 @@ nav .navbar{
   z-index: 1;
 }
 
-html {
-  scroll-behavior: smooth; /* THIS enables the smooth scroll */
+
+/* Container relative so cloud & menu share the same origin */
+.nav-left {
+  position: relative;
 }
+
+
+/* Menu initially hidden, positioned under cloud */
+.navmenu {
+  position: absolute;
+  top: 24%; /* directly under cloud */
+  left: 0;
+  background: white;
+  padding: 0.3rem 1rem 1rem;
+  border-radius: 18px;
+  width: 7rem;
+  z-index: 2;
+  box-shadow: 0 24px 50px rgba(0,0,0,0.18);
+  transform-origin: top;
+  transition: transform 0.55s ease;
+  
+
+  /* Start slightly under cloud */
+  transform: translateY(0) scaleY(0);
+    transform-origin: top;
+  transition: transform 0.55s ease;
+
+}
+
+/* OPEN STATE — cloud falls and menu slides with it */
+.nav-left.open .cloud-nav {
+  transform: translateY(14rem);
+}
+
+.nav-left.open .navmenu {
+  transform: translateY(20px) scaleY(1); /* moves together with cloud */
+}
+
+.cloud-nav {
+  font-size: 5.5rem;;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 3;
+  transition: transform 1.5s cubic-bezier(.22, 1.4, .36, 1); /* smooth spring-like fall */
+}
+
+
+.navbar.open .cloud-nav {
+  transform: translateY(20px);
+}
+
+.navbar.open .navmenu {
+  transform: scaleY(1);
+}
+
+.navmenu a {
+  display: block;
+  padding: 12px 0;
+  text-decoration: none;
+  color: #222;
+}
+
 
 /* ===== NAVBAR LAYOUT ===== */
 
 header {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
-  background: white;
+  z-index: 4;  /* VERY HIGH */
 }
+
 
 .navbar {
   display: grid;
@@ -70,67 +137,7 @@ header {
 
 /* ===== CLOUD NAV ===== */
 
-/* Container relative so cloud & menu share the same origin */
-.nav-left {
-  position: relative;
-}
 
-
-/* Menu initially hidden, positioned under cloud */
-.navmenu {
-  position: absolute;
-  top: 24%; /* directly under cloud */
-  left: 0;
-  background: white;
-  padding: 0.3rem 1rem 1rem;
-  border-radius: 18px;
-  width: 7rem;
-  box-shadow: 0 24px 50px rgba(0,0,0,0.18);
-  transform-origin: top;
-  transition: transform 0.55s ease;
-  
-
-  /* Start slightly under cloud */
-  transform: translateY(0) scaleY(0);
-    transform-origin: top;
-  transition: transform 0.55s ease;
-
-}
-
-/* OPEN STATE — cloud falls and menu slides with it */
-.nav-left.open .cloud-nav {
-  transform: translateY(14rem);
-}
-
-.nav-left.open .navmenu {
-  transform: translateY(20px) scaleY(1); /* moves together with cloud */
-}
-
-.cloud-nav {
-  font-size: 5.5rem;;
-  background: none;
-  border: none;
-  cursor: pointer;
-  position: relative;
-  z-index: 2;
-  transition: transform 1.5s cubic-bezier(.22, 1.4, .36, 1); /* smooth spring-like fall */
-}
-
-
-.navbar.open .cloud-nav {
-  transform: translateY(20px);
-}
-
-.navbar.open .navmenu {
-  transform: scaleY(1);
-}
-
-.navmenu a {
-  display: block;
-  padding: 12px 0;
-  text-decoration: none;
-  color: #222;
-}
 
 /* ===== CONTACT LINK ===== */
 
