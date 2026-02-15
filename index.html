@@ -40,15 +40,114 @@
 <main>
 
 <section id="banner">
-  <video autoplay muted loop class="hero-video">
-    <source src="Stock/istockphoto-1474198714-640_adpp_is.mp4" type="video/mp4">
-  </video>
+  <div class="animated-sky">
+    <div class="sky"></div>
+    <div class="sun"></div>
+    
+    <div class="cloud cloud-1 type-a"></div>
+    <div class="cloud cloud-2 type-b"></div>
+    <div class="cloud cloud-3 type-a"></div>
+    <div class="cloud cloud-4 type-b"></div>
+    <div class="cloud cloud-5 type-a"></div>
+    <div class="cloud cloud-6 type-b"></div>
+    <div class="cloud cloud-7 type-a"></div>
+    <div class="cloud cloud-8 type-b"></div>
+
+    <div class="plane plane-1"><i class="fa-solid fa-plane"></i></div>
+    <div class="plane plane-2"><i class="fa-solid fa-plane"></i></div>
+    <div class="plane plane-3"><i class="fa-solid fa-plane"></i></div>
+
+    <div class="horizon"></div>
+  </div>
 
   <div class="banner-content">
-    <h1 class="banner-title">Travel Smarter, Not Harder</h1>
-    <p class="banner-subtitle">
-      Your all-in-one travel document and regulation guide
-    </p>
+    <h1 class="hero-title">Cross Every<br><span class="orange-text">Border</span>ly</h1>
+    <p class="hero-subtitle">Discover visa requirements, vaccine needs, and travel documents. Your journey starts here.</p>
+    
+    <div class="search-container">
+      <div class="input-wrapper">
+        <i class="fa-solid fa-location-dot"></i>
+        <input type="text" id="originInput" placeholder="Starting from...">
+      </div>
+      <div class="input-wrapper">
+        <i class="fa-solid fa-plane-arrival"></i>
+        <input type="text" id="destinationInput" placeholder="Traveling to...">
+      </div>
+      <button class="search-btn">Check Rules</button>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="feature-item">
+    <i class="fa-solid fa-file-invoice"></i>
+    <div class="feature-text">
+      <h3>Documents</h3>
+      <p>All the documentation needed for safe travel.</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <i class="fa-solid fa-suitcase-rolling"></i>
+    <div class="feature-text">
+      <h3>Luggage</h3>
+      <p>Measurements and weight rules for every airline.</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <i class="fa-solid fa-passport"></i>
+    <div class="feature-text">
+      <h3>Visas</h3>
+      <p>Entry requirements based on your citizenship.</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <i class="fa-solid fa-syringe"></i>
+    <div class="feature-text">
+      <h3>Vaccines</h3>
+      <p>Stay healthy with mandatory medical insights.</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <i class="fa-solid fa-users-rays"></i>
+    <div class="feature-text">
+      <h3>Community</h3>
+      <p>Connect with other travelers and share tips.</p>
+    </div>
+  </div>
+</section>
+
+<section id="recommendations">
+  <div class="section-header">
+    <h2 id="recommendationTitle">Recommended Countries</h2>
+    <p id="recommendationSub">Explore these popular destinations</p>
+  </div>
+  
+  <div class="card-grid" id="cardGrid">
+    <div class="city-card">
+      <div class="card-img" style="background: #ccc;"></div>
+      <div class="card-info">
+        <h3>France</h3>
+        <p>Explore Europe's heart</p>
+      </div>
+    </div>
+    <div class="city-card">
+      <div class="card-img" style="background: #ccc;"></div>
+      <div class="card-info">
+        <h3>Japan</h3>
+        <p>Tradition meets future</p>
+      </div>
+    </div>
+    <div class="city-card">
+      <div class="card-img" style="background: #ccc;"></div>
+      <div class="card-info">
+        <h3>Italy</h3>
+        <p>History and cuisine</p>
+      </div>
+    </div>
   </div>
 </section>
 
