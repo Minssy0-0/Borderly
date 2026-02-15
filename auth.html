@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Borderly - Sign In or Sign Up</title>
+    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* This page needs specific centering styles */
+        body {
+            background-color: #f1f5f9; /* Light gray background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .auth-card {
+            background: white;
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .auth-logo img {
+            width: 160px;
+            margin-bottom: 25px;
+        }
+
+        /* Tabs for switching between Login and Signup */
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            color: #94a3b8;
+            transition: 0.3s;
+        }
+
+        .tab.active {
+            color: #f3a333; /* Borderly Orange */
+            border-bottom: 2px solid #f3a333;
+        }
+
+        /* Form Styling */
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #334155;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group i {
+            position: absolute;
+            left: 15px;
+            top: 40px;
+            color: #466bc3; /* Borderly Blue */
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            outline: none;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #466bc3;
+        }
+
+        .auth-btn {
+            width: 100%;
+            background: #f3a333;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            margin-top: 10px;
+        }
+
+        .auth-btn:hover {
+            background: #d68a1e;
+            transform: translateY(-2px);
+        }
+
+        .toggle-text {
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .toggle-text span {
+            color: #466bc3;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .toggle-text span:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="auth-card">
+    <div class="auth-logo">
+        <a href="index.html"><img src="images/logo.png" alt="Borderly Logo"></a>
+    </div>
+
+    <div class="auth-tabs">
+        <div class="tab active" id="loginTab" onclick="switchTab('login')">Login</div>
+        <div class="tab" id="signupTab" onclick="switchTab('signup')">Create Account</div>
+    </div>
+
+    <form id="loginForm">
+        <div class="form-group">
+            <label>Email or Username</label>
+            <i class="fa-solid fa-user-tag"></i>
+            <input type="text" placeholder="Enter your username or email" required>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="auth-btn">Sign In</button>
+    </form>
+
+    <form id="signupForm" style="display: none;">
+        <div class="form-group">
+            <label>Full Name</label>
+            <i class="fa-solid fa-user"></i>
+            <input type="text" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+            <label>Username</label>
+            <i class="fa-solid fa-at"></i>
+            <input type="text" placeholder="Choose a travel handle" required>
+        </div>
+        <div class="form-group">
+            <label>Email Address</label>
+            <i class="fa-solid fa-envelope"></i>
+            <input type="email" placeholder="name@example.com" required>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" placeholder="Create a strong password" required>
+        </div>
+        <button type="submit" class="auth-btn">Join Community</button>
+    </form>
+
+    <p class="toggle-text" id="toggleLink">
+        New to Borderly? <span onclick="switchTab('signup')">Create an account</span>
+    </p>
+</div>
+
+<script>
+    // This function handles the visual switch between Login and Signup
+    function switchTab(mode) {
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const loginTab = document.getElementById('loginTab');
+        const signupTab = document.getElementById('signupTab');
+        const toggleLink = document.getElementById('toggleLink');
+
+        if (mode === 'signup') {
+            loginForm.style.display = 'none';
+            signupForm.style.display = 'block';
+            loginTab.classList.remove('active');
+            signupTab.classList.add('active');
+            toggleLink.innerHTML = 'Already have an account? <span onclick="switchTab(\'login\')">Sign in instead</span>';
+        } else {
+            loginForm.style.display = 'block';
+            signupForm.style.display = 'none';
+            loginTab.classList.add('active');
+            signupTab.classList.remove('active');
+            toggleLink.innerHTML = 'New to Borderly? <span onclick="switchTab(\'signup\')">Create an account</span>';
+        }
+    }
+</script>
+
+</body>
+</html>
