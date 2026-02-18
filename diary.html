@@ -123,58 +123,19 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const profileLink = document.getElementById('profileLink');
+    // Use the real login status from your virtual database
+    const isLoggedIn = db.currentUser !== null; 
     
-    // This 'isLoggedIn' variable is what we will eventually get from Firebase
-    // For now, we can manually change it to 'true' or 'false' to test!
-    let isLoggedIn = false; 
-
-    if (isLoggedIn) {
-        profileLink.href = "profile.html";
-        // You could also swap the image here to the user's actual photo
-    } else {
-        profileLink.href = "auth.html";
-    }
-});
-</script>
-
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    // === THE TEST SWITCH ===
-    // Change this to 'true' to see the Logged-In version
-    // Change this to 'false' to see the Logged-Out version
-    const isLoggedIn = false; 
-
-    const diaryLink = document.getElementById('diaryMainLink');
-    const diaryBox = document.getElementById('diaryDropdownContent');
     const profileLink = document.getElementById('profileLink');
-
-    if (isLoggedIn) {
-        // --- PATHWAY: LOGGED IN ---
-        profileLink.href = "profile.html";
-        diaryLink.href = "diary.html";
-        
-        diaryBox.innerHTML = `
-            <div style="text-align: center; padding: 10px;">
-                <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 10px;">Your diary is currently empty.</p>
-                <a href="index.html" style="font-size: 0.75rem; color: #466bc3; font-weight: bold; text-decoration: none;">Explore & Save Tips</a>
-            </div>
-        `;
-    } else {
-        // --- PATHWAY: LOGGED OUT ---
-        profileLink.href = "auth.html";
-        diaryLink.href = "auth.html"; // Gatekeeper: redirects to login
-        
-        diaryBox.innerHTML = `
-            <div class="guest-prompt" style="text-align: center;">
-                <i class="fa-solid fa-lock" style="font-size: 1.8rem; color: #cbd5e1; margin-bottom: 10px; display: block;"></i>
-                <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 12px;">Sign in to save gems to your diary!</p>
-                <a href="auth.html" style="display: block; background: #466bc3; color: white; padding: 8px; border-radius: 6px; text-decoration: none; font-size: 0.75rem; font-weight: bold;">Login / Sign Up</a>
-            </div>
-        `;
-    }
+    // ... rest of your gatekeeper logic ...
 });
 </script>
+<script src="database.js"></script>
+    
+    <script src="cloude.js"></script>
+    <script>
+        // Now you can use "db.users" or "db.currentUser" here!
+        console.log("Current user is:", db.currentUser);
+    </script>
 </body>
 </html>

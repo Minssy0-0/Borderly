@@ -208,7 +208,22 @@
             toggleLink.innerHTML = 'New to Borderly? <span onclick="switchTab(\'signup\')">Create an account</span>';
         }
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+    // Use the real login status from your virtual database
+    const isLoggedIn = db.currentUser !== null; 
+    
+    const profileLink = document.getElementById('profileLink');
+    // ... rest of your gatekeeper logic ...
+});
 </script>
 
+<script src="database.js"></script>
+    
+    <script src="cloude.js"></script>
+    <script>
+        // Now you can use "db.users" or "db.currentUser" here!
+        console.log("Current user is:", db.currentUser);
+    </script>
 </body>
 </html>
