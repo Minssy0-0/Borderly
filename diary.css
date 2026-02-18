@@ -1,0 +1,173 @@
+.navbar-spacer {
+    height: 75px; /* Adjust this to match your exact navbar height */
+    width: 100%;
+}
+
+.diary-container {
+    padding-top: 40px; /* Gives extra breathing room below the bar */
+}
+
+.diary-container {
+    max-width: 1100px;
+    margin: 110px auto 60px;
+    padding: 0 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+.diary-header {
+    text-align: center;
+}
+
+.diary-header h1 {
+    font-size: 2.5rem;
+    color: #0f172a;
+}
+
+.diary-header p {
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+/* --- EMPTY STATE --- */
+.diary-empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 30px;
+    border: 2px dashed #e2e8f0;
+    margin-top: 3rem;
+}
+
+.empty-illustration {
+    font-size: 4rem;
+    color: #cbd5e1;
+    margin-bottom: 20px;
+}
+
+.diary-empty-state h2 {
+    color: #334155;
+    margin-bottom: 15px;
+}
+
+.diary-empty-state p {
+    max-width: 400px;
+    margin: 0 auto 25px;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+.explore-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #466bc3;
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.explore-btn:hover {
+    background: #0e255a;
+    transform: translateY(-2px);
+}
+
+/* --- DIARY GRID --- */
+.diary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.diary-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+.diary-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+.card-img-wrapper {
+    position: relative;
+    height: 180px;
+}
+
+.card-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.remove-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    color: #ef4444;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.tag {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #466bc3;
+    background: #eff6ff;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.tag.food {
+    color: #d97706;
+    background: #fffbeb;
+}
+
+.card-content h3 {
+    margin: 12px 0 8px;
+    font-size: 1.2rem;
+    color: #0f172a;
+}
+
+.card-content p {
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+/* Navbar specific to Diary */
+.back-btn {
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 8px 15px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+}
+
+.diary-badge {
+    color: #f3a333;
+    font-weight: 800;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

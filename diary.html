@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Trip Diary - Borderly</title>
+    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="diary.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<header>
+  <nav>
+    <div class="navbar">
+ <div class="cover-up"></div>
+<div class="nav-left">
+  <button id="cloudToggle" class="cloud-nav" aria-label="Open navigation">☁️</button>
+ <a href="auth.html" class="profile-link-wrapper" id="profileLink">
+   <div class="profile-circle">
+      <img src="images/default-user.png" alt="Profile" class="nav-avatar">
+   </div>
+</a>
+
+  <a href="profile.html" class="profile-link-wrapper" id="profileLink">
+    <div class="profile-circle">
+      <img src="images/default-user.png" alt="Profile" class="nav-avatar">
+    </div>
+  </a>
+
+  <navmenu class="navmenu" id="cloudMenu">
+    <a href="#">Documents</a>
+    <a href="#">Luggage</a>
+    <a href="#">Vaccines</a>
+    <a href="#">Visas</a>
+    <a href="#">Travel Insurance</a>
+  </navmenu>
+</div>
+      <div class="logo">
+        <a href="index.html"><img src="images/logo.png" alt="Borderly Logo"></a>
+      </div>
+<div class="nav-right" style="display: flex; gap: 20px;">
+    
+    <div class="diary-wrapper pathway-guest">
+        <a href="auth.html" style="text-decoration: none;">
+            <div class="diary-circle" style="border: 2px dashed #cbd5e1;">
+                <i class="fa-solid fa-lock" style="color: #94a3b8;"></i>
+                <span style="color: #94a3b8;">Guest</span>
+            </div>
+        </a>
+        <div class="diary-dropdown">
+            <div class="guest-prompt" style="text-align: center;">
+                <i class="fa-solid fa-lock" style="font-size: 1.5rem; color: #cbd5e1; margin-bottom: 10px; display: block;"></i>
+                <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 10px;">Sign in to save gems!</p>
+                <a href="auth.html" style="display: block; background: #466bc3; color: white; padding: 6px; border-radius: 4px; text-decoration: none; font-size: 0.7rem; font-weight: bold;">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="diary-wrapper pathway-member">
+        <a href="diary.html" style="text-decoration: none;">
+            <div class="diary-circle" style="border: 2px solid #f3a333;">
+                <i class="fa-solid fa-book-bookmark" style="color: #466bc3;"></i>
+                <span style="color: #334155;">Member</span>
+            </div>
+        </a>
+        <div class="diary-dropdown">
+            <div style="font-weight: 800; font-size: 0.7rem; color: #94a3b8; margin-bottom: 10px;">YOUR SAVES</div>
+            <p style="font-size: 0.8rem; color: #64748b;">Your diary is empty.</p>
+            <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 10px 0;">
+            <a href="diary.html" style="display: block; text-align: center; color: #466bc3; font-weight: 700; text-decoration: none; font-size: 0.75rem;">Open Diary</a>
+        </div>
+    </div>
+    </div>
+    </div>
+  </nav>
+    </header>
+
+    <main>
+        <section id="diary-container">
+        <header class="diary-header">
+            <h1>My Travel Diary</h1>
+            <p>Your curated collection of travel gems and tips.</p>
+        </header>
+
+        <section id="emptyDiary" class="diary-empty-state">
+            <div class="empty-illustration">
+                <i class="fa-solid fa-map-location-dot"></i>
+            </div>
+            <h2>Your diary is waiting...</h2>
+            <p>You haven't saved any travel gems yet. Explore the feed to find places you'd love to visit!</p>
+            <a href="index.html" class="explore-btn">Explore Feed</a>
+        </section>
+
+        <section id="diaryGrid" class="diary-grid">
+            <div class="diary-card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=400" alt="Paris">
+                    <button class="remove-btn" title="Remove from diary">&times;</button>
+                </div>
+                <div class="card-content">
+                    <span class="tag">Sightseeing</span>
+                    <h3>Eiffel Tower Glow</h3>
+                    <p>Go at 10 PM for the best sparkle show without the massive crowds.</p>
+                </div>
+            </div>
+
+            <div class="diary-card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=400" alt="Food">
+                    <button class="remove-btn" title="Remove from diary">&times;</button>
+                </div>
+                <div class="card-content">
+                    <span class="tag food">Food</span>
+                    <h3>Le Petit Bistro</h3>
+                    <p>The truffle pasta here is life-changing. Book 2 days in advance.</p>
+                </div>
+            </div>
+        </section>
+        </section>
+    </main>
+
+    <script src="cloude.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const profileLink = document.getElementById('profileLink');
+    
+    // This 'isLoggedIn' variable is what we will eventually get from Firebase
+    // For now, we can manually change it to 'true' or 'false' to test!
+    let isLoggedIn = false; 
+
+    if (isLoggedIn) {
+        profileLink.href = "profile.html";
+        // You could also swap the image here to the user's actual photo
+    } else {
+        profileLink.href = "auth.html";
+    }
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // === THE TEST SWITCH ===
+    // Change this to 'true' to see the Logged-In version
+    // Change this to 'false' to see the Logged-Out version
+    const isLoggedIn = false; 
+
+    const diaryLink = document.getElementById('diaryMainLink');
+    const diaryBox = document.getElementById('diaryDropdownContent');
+    const profileLink = document.getElementById('profileLink');
+
+    if (isLoggedIn) {
+        // --- PATHWAY: LOGGED IN ---
+        profileLink.href = "profile.html";
+        diaryLink.href = "diary.html";
+        
+        diaryBox.innerHTML = `
+            <div style="text-align: center; padding: 10px;">
+                <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 10px;">Your diary is currently empty.</p>
+                <a href="index.html" style="font-size: 0.75rem; color: #466bc3; font-weight: bold; text-decoration: none;">Explore & Save Tips</a>
+            </div>
+        `;
+    } else {
+        // --- PATHWAY: LOGGED OUT ---
+        profileLink.href = "auth.html";
+        diaryLink.href = "auth.html"; // Gatekeeper: redirects to login
+        
+        diaryBox.innerHTML = `
+            <div class="guest-prompt" style="text-align: center;">
+                <i class="fa-solid fa-lock" style="font-size: 1.8rem; color: #cbd5e1; margin-bottom: 10px; display: block;"></i>
+                <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 12px;">Sign in to save gems to your diary!</p>
+                <a href="auth.html" style="display: block; background: #466bc3; color: white; padding: 8px; border-radius: 6px; text-decoration: none; font-size: 0.75rem; font-weight: bold;">Login / Sign Up</a>
+            </div>
+        `;
+    }
+});
+</script>
+</body>
+</html>

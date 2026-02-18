@@ -498,3 +498,33 @@ header {
   border-color: #f3a333; /* Borderly Orange */
 }
 
+
+.diary-wrapper {
+    position: relative;
+}
+
+/* This is the box that pops up */
+.diary-dropdown {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    width: 220px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    padding: 15px;
+    
+    /* Hidden by default */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+/* Show on hover */
+.diary-wrapper:hover .diary-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
