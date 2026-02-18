@@ -79,6 +79,7 @@
             color: #466bc3; /* Borderly Blue */
         }
 
+
         .form-group input {
             width: 100%;
             padding: 12px 15px 12px 45px;
@@ -93,6 +94,7 @@
         .form-group input:focus {
             border-color: #466bc3;
         }
+        
 
         .auth-btn {
             width: 100%;
@@ -128,6 +130,71 @@
         .toggle-text span:hover {
             text-decoration: underline;
         }
+
+            .form-group1 {
+            position: relative;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group1 label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #334155;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group1 i {
+            position: absolute;
+            left: 15px;
+            top: 23px;
+            color: #466bc3; /* Borderly Blue */
+        }
+
+
+        .form-group1 input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            outline: none;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group1 input:focus {
+            border-color: #466bc3;
+        }
+
+
+        .password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 45px; /* Space for the icon so text doesn't overlap it */
+    box-sizing: border-box;
+}
+
+.toggle-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #94a3b8;
+    z-index: 10;
+}
+
+.toggle-icon:hover {
+    color: #466bc3;
+}
     </style>
 </head>
 <body>
@@ -148,11 +215,13 @@
             <i class="fa-solid fa-user-tag"></i>
             <input type="text" placeholder="Enter your username or email" required>
         </div>
-        <div class="form-group">
-            <label>Password</label>
-            <i class="fa-solid fa-lock"></i>
-            <input type="password" placeholder="••••••••" required>
-        </div>
+        <div class="form-group1">
+    <label>Password</label>
+    <div class="password-wrapper">
+        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+        <i class="fa-solid fa-eye-slash toggle-icon" onclick="toggleVisibility('loginPassword', this)"></i>
+    </div>
+</div>
         <button type="submit" class="auth-btn">Sign In</button>
     </form>
 
@@ -164,7 +233,7 @@
         </div>
         <div class="form-group">
             <label>Username</label>
-            <i class="fa-solid fa-at"></i>
+            <i class="fa-solid fa-user-tag"></i>
             <input type="text" placeholder="Choose a travel handle" required>
         </div>
         <div class="form-group">
@@ -179,11 +248,6 @@
         </div>
         <button type="submit" class="auth-btn">Join Community</button>
     </form>
-
-    <p class="toggle-text" id="toggleLink">
-        New to Borderly? <span onclick="switchTab('signup')">Create an account</span>
-    </p>
-</div>
 
 <script>
     // This function handles the visual switch between Login and Signup
@@ -209,13 +273,23 @@
         }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-    // Use the real login status from your virtual database
-    const isLoggedIn = db.currentUser !== null; 
+    function toggleVisibility(inputId, icon) {
+    const input = document.getElementById(inputId);
     
-    const profileLink = document.getElementById('profileLink');
-    // ... rest of your gatekeeper logic ...
-});
+    if (input.type === "password") {
+        // Switch to visible text
+        input.type = "text";
+        // Change the icon to the open eye
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    } else {
+        // Switch back to hidden dots
+        input.type = "password";
+        // Change the icon back to the slashed eye
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+    }
+}
 </script>
 
 <script src="database.js"></script>
