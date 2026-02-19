@@ -1,0 +1,198 @@
+body {
+    background-color: #f1f5f9; /* Light gray background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.auth-card {
+    background: white;
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.auth-logo img {
+    width: 160px;
+    margin-bottom: 25px;
+}
+
+/* Tabs for switching between Login and Signup */
+.auth-tabs {
+    display: flex;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.tab {
+    flex: 1;
+    padding: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    color: #94a3b8;
+    transition: 0.3s;
+}
+
+.tab.active {
+    color: #f3a333; /* Borderly Orange */
+    border-bottom: 2px solid #f3a333;
+}
+
+/* Form Styling */
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #334155;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group i {
+    position: absolute;
+    left: 15px;
+    top: 40px;
+    color: #466bc3; /* Borderly Blue */
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #466bc3;
+}
+
+.auth-btn {
+    width: 100%;
+    background: #f3a333;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 10px;
+}
+
+.auth-btn:hover {
+    background: #d68a1e;
+    transform: translateY(-2px);
+}
+
+.toggle-text {
+    margin-top: 25px;
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.toggle-text span {
+    color: #466bc3;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.toggle-text span:hover {
+    text-decoration: underline;
+}
+
+.form-group1 {
+    position: relative;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group1 label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #334155;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group1 i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #466bc3;
+    z-index: 5;
+}
+
+.form-group1 input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group1 input:focus {
+    border-color: #466bc3;
+}
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* Fix the input padding so text doesn't go under the icon */
+.password-wrapper input {
+    width: 100%;
+    padding: 12px 45px 12px 45px !important; /* Left padding for user icon, right for eye */
+    box-sizing: border-box;
+}
+
+.toggle-icon {
+    position: absolute;
+    left: 15px; 
+    right: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #94a3b8;
+    z-index: 10;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toggle-icon i {
+    color: #94a3b8;
+    pointer-events: none;
+}
+
+.toggle-icon:hover i {
+    color: #466bc3;
+}
