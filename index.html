@@ -314,39 +314,109 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // === THE TEST SWITCH ===
-    // Change this to 'true' to see the Logged-In version
-    // Change this to 'false' to see the Logged-Out version
-    const isLoggedIn = false; 
-
-    const diaryLink = document.getElementById('diaryMainLink');
-    const diaryBox = document.getElementById('diaryDropdownContent');
-    const profileLink = document.getElementById('profileLink');
-
-    if (isLoggedIn) {
-        // --- PATHWAY: LOGGED IN ---
-        profileLink.href = "profile.html";
-        diaryLink.href = "diary.html";
-        
-        diaryBox.innerHTML = `
-            <div style="text-align: center; padding: 10px;">
-                <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 10px;">Your diary is currently empty.</p>
-                <a href="index.html" style="font-size: 0.75rem; color: #466bc3; font-weight: bold; text-decoration: none;">Explore & Save Tips</a>
-            </div>
-        `;
-    } else {
-        // --- PATHWAY: LOGGED OUT ---
-        profileLink.href = "auth.html";
-        diaryLink.href = "auth.html"; // Gatekeeper: redirects to login
-        
-        diaryBox.innerHTML = `
-            <div class="guest-prompt" style="text-align: center;">
-                <i class="fa-solid fa-lock" style="font-size: 1.8rem; color: #cbd5e1; margin-bottom: 10px; display: block;"></i>
-                <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 12px;">Sign in to save gems to your diary!</p>
-                <a href="auth.html" style="display: block; background: #466bc3; color: white; padding: 8px; border-radius: 6px; text-decoration: none; font-size: 0.75rem; font-weight: bold;">Login / Sign Up</a>
-            </div>
-        `;
+    // Load saved diary items from localStorage
+    function loadSavedDiary() {
+        return JSON.parse(localStorage.getItem('diary_items')) || [];
     }
+
+    // Save diary items to localStorage
+    function saveDiary(items) {
+        localStorage.setItem('diary_items', JSON.stringify(items));
+    }
+
+    // Update the Member dropdown with saved destinations
+    function updateMemberDropdown() {
+        const savedItems = loadSavedDiary();
+        const diaryDropdown = document.querySelector('.pathway-member .diary-dropdown');
+        
+        if (diaryDropdown) {
+            if (savedItems.length === 0) {
+                diaryDropdown.innerHTML = `
+                    <div style="font-weight: 800; font-size: 0.7rem; color: #94a3b8; margin-bottom: 10px;">YOUR SAVES</div>
+                    <p style="font-size: 0.8rem; color: #64748b;">Your diary is empty.</p>
+                    <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 10px 0;">
+                    <a href="diary.html" style="display: block; text-align: center; color: #466bc3; font-weight: 700; text-decoration: none; font-size: 0.75rem;">Open Diary</a>
+                `;
+            } else {
+                let itemsHTML = `<div style="font-weight: 800; font-size: 0.7rem; color: #94a3b8; margin-bottom: 10px;">YOUR SAVES (${savedItems.length})</div>`;
+                
+                savedItems.forEach(item => {
+                    itemsHTML += `
+                        <div style="display: flex; align-items: center; gap: 8px; padding: 8px; background: #f8fafc; border-radius: 8px; margin-bottom: 8px;">
+                            <img src="${item.image}" alt="${item.title}" style="width: 40px; height: 40px; border-radius: 6px; object-fit: cover;">
+                            <div style="flex: 1;">
+                                <p style="font-size: 0.7rem; font-weight: 700; color: #334155; margin: 0;">${item.title}</p>
+                                <p style="font-size: 0.65rem; color: #94a3b8; margin: 2px 0 0 0;">${item.country}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                itemsHTML += `<hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 10px 0;">`;
+                itemsHTML += `<a href="diary.html" style="display: block; text-align: center; color: #466bc3; font-weight: 700; text-decoration: none; font-size: 0.75rem;">Open Diary</a>`;
+                
+                diaryDropdown.innerHTML = itemsHTML;
+            }
+        }
+    }
+
+    // Handle Add to Diary button clicks
+    const addDiaryBtns = document.querySelectorAll('.add-diary-btn');
+    addDiaryBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Get the card info (country name and description)
+            const card = btn.closest('.city-card');
+            const cardInfo = card.querySelector('.card-info');
+            const title = cardInfo.querySelector('h3').textContent;
+            const description = cardInfo.querySelector('p').textContent;
+            const image = card.querySelector('.card-img').style.background || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=400';
+            
+            // Create item object
+            const item = {
+                title: title,
+                country: description,
+                image: image,
+                timestamp: new Date().getTime()
+            };
+            
+            // Load existing items
+            let savedItems = loadSavedDiary();
+            
+            // Check if item already exists
+            const exists = savedItems.some(saved => saved.title === item.title);
+            
+            if (!exists) {
+                savedItems.push(item);
+                saveDiary(savedItems);
+                
+                // Visual feedback
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Added!';
+                btn.style.background = '#059669';
+                
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fa-solid fa-plus"></i> Add to Diary';
+                    btn.style.background = '';
+                }, 2000);
+                
+                // Update Member dropdown
+                updateMemberDropdown();
+            } else {
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Already Added';
+                btn.style.background = '#94a3b8';
+                
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fa-solid fa-plus"></i> Add to Diary';
+                    btn.style.background = '';
+                }, 2000);
+            }
+        });
+    });
+
+    // Initialize Member dropdown on page load
+    updateMemberDropdown();
 });
 </script>
 <script src="database.js"></script>

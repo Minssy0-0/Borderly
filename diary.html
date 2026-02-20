@@ -119,23 +119,259 @@
         </section>
     </main>
 
+    <!-- MODAL POP-UP -->
+    <div id="destinationModal" class="modal">
+        <div class="modal-content">
+            <button id="closeModal" class="close-modal">&times;</button>
+            
+            <div class="modal-body">
+                <!-- Left side - Image Carousel -->
+                <div class="modal-images">
+                    <div class="image-carousel">
+                        <img id="carouselImage" src="" alt="Destination">
+                    </div>
+                    <div class="carousel-controls">
+                        <button id="prevBtn" class="carousel-btn"><i class="fa-solid fa-chevron-left"></i></button>
+                        <span id="imageCounter" class="image-counter">1/3</span>
+                        <button id="nextBtn" class="carousel-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Right side - Description and Reviews -->
+                <div class="modal-info">
+                    <h2 id="modalTitle">Destination Title</h2>
+                    <p id="modalDescription" class="modal-description">Description here</p>
+                    
+                    <div class="reviews-section">
+                        <h3>Reviews from Travelers</h3>
+                        <div id="reviewsContainer" class="reviews-container">
+                            <!-- Reviews will be added here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="cloude.js"></script>
 
+<script src="database.js"></script>
+<script src="cloude.js"></script>
+
 <script>
+// Destination details with images and reviews
+const destinationDetails = {
+    'France': {
+        images: [
+            'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600',
+            'https://images.unsplash.com/photo-1499856871726-6d212b834fcd?auto=format&fit=crop&w=600',
+            'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600'
+        ],
+        description: 'France is a country of unparalleled charm, blending historical grandeur with modern elegance. From the iconic Eiffel Tower to the lavender fields of Provence, every corner tells a story of art, culture, and romance.',
+        reviews: [
+            { name: 'Sarah M.', rating: 5, text: 'The food is absolutely incredible! I spent two weeks exploring Paris and every meal was a masterpiece.' },
+            { name: 'John D.', rating: 5, text: 'Breathtaking landscapes and history at every corner. Highly recommend visiting in spring!' },
+            { name: 'Emma L.', rating: 4, text: 'Beautiful country with amazing art museums. A bit crowded in tourist areas though.' }
+        ]
+    },
+    'Japan': {
+        images: [
+            'https://images.unsplash.com/photo-1480044965905-02098d419e3e?auto=format&fit=crop&w=600',
+            'https://images.unsplash.com/photo-1522383507527-d8f693bfb05d?auto=format&fit=crop&w=600',
+            'https://images.unsplash.com/photo-1480044965905-02098d419e3e?auto=format&fit=crop&w=600'
+        ],
+        description: 'Japan offers a perfect blend of ancient traditions and cutting-edge technology. Experience serene temples, bustling cities, and world-class cuisine all in one extraordinary destination.',
+        reviews: [
+            { name: 'Michael K.', rating: 5, text: 'Tokyo is mind-blowing! The energy, the food, the technology - all incredible. Will definitely return!' },
+            { name: 'Lisa T.', rating: 5, text: 'The temples in Kyoto were so peaceful and beautiful. Japanese hospitality is unmatched.' },
+            { name: 'David R.', rating: 5, text: 'Best trip of my life! Everything is so organized and clean. Highly recommended for everyone.' }
+        ]
+    },
+    'Italy': {
+        images: [
+            'https://images.unsplash.com/photo-1517322034827-86f3929c8318?auto=format&fit=crop&w=600',
+            'https://images.unsplash.com/photo-1535369959375-4e2e3d46b4ba?auto=format&fit=crop&w=600',
+            'https://images.unsplash.com/photo-1517322034827-86f3929c8318?auto=format&fit=crop&w=600'
+        ],
+        description: 'Italy is a treasure trove of history, art, and gastronomy. Walk through cobblestone streets in Rome, explore Venice\'s canals, and indulge in authentic Italian cuisine that has shaped culinary traditions worldwide.',
+        reviews: [
+            { name: 'Isabella N.', rating: 5, text: 'Rome is eternal! The Colosseum, Vatican, and food... I could live there forever.' },
+            { name: 'Marco V.', rating: 5, text: 'Venice is magical, especially at sunset. Romantic and unforgettable experience.' },
+            { name: 'Sofia C.', rating: 4, text: 'Great food and amazing architecture. Venice can be very crowded during peak season.' }
+        ]
+    }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Use the real login status from your virtual database
-    const isLoggedIn = db.currentUser !== null; 
-    
-    const profileLink = document.getElementById('profileLink');
-    // ... rest of your gatekeeper logic ...
+    // Load saved diary items from localStorage
+    function loadSavedDiary() {
+        return JSON.parse(localStorage.getItem('diary_items')) || [];
+    }
+
+    const savedItems = loadSavedDiary();
+    const diaryGrid = document.getElementById('diaryGrid');
+    const emptyDiary = document.getElementById('emptyDiary');
+    const modal = document.getElementById('destinationModal');
+    const closeModal = document.getElementById('closeModal');
+    let currentImageIndex = 0;
+    let currentDestination = null;
+
+    // Clear existing placeholder cards
+    diaryGrid.innerHTML = '';
+
+    if (savedItems.length === 0) {
+        // Show empty state
+        emptyDiary.style.display = 'block';
+    } else {
+        // Hide empty state
+        emptyDiary.style.display = 'none';
+
+        // Create cards for each saved item
+        savedItems.forEach((item, itemIndex) => {
+            const card = document.createElement('div');
+            card.className = 'diary-card clickable-card';
+            
+            card.innerHTML = `
+                <div class="card-img-wrapper">
+                    <img src="${item.image}" alt="${item.title}">
+                    <button class="remove-btn" title="Remove from diary">&times;</button>
+                </div>
+                <div class="card-content">
+                    <span class="tag">${item.country}</span>
+                    <h3>${item.title}</h3>
+                    <p>Saved on ${new Date(item.timestamp).toLocaleDateString()}</p>
+                </div>
+            `;
+
+            // Add click handler to open modal
+            card.addEventListener('click', (e) => {
+                if (e.target.classList.contains('remove-btn')) return;
+                openModal(item.title);
+            });
+
+            diaryGrid.appendChild(card);
+        });
+
+        // Add remove functionality
+        const removeButtons = document.querySelectorAll('.remove-btn');
+        removeButtons.forEach((btn, index) => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                savedItems.splice(index, 1);
+                localStorage.setItem('diary_items', JSON.stringify(savedItems));
+                location.reload();
+            });
+        });
+    }
+
+    // Modal Functions
+    function openModal(destinationTitle) {
+        currentDestination = destinationTitle;
+        currentImageIndex = 0;
+
+        const details = destinationDetails[destinationTitle] || {
+            images: ['https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600'],
+            description: 'Explore this amazing destination.',
+            reviews: [{ name: 'Traveler', rating: 5, text: 'Amazing place!' }]
+        };
+
+        document.getElementById('modalTitle').textContent = destinationTitle;
+        document.getElementById('modalDescription').textContent = details.description;
+        document.getElementById('carouselImage').src = details.images[0];
+        document.getElementById('imageCounter').textContent = `1/${details.images.length}`;
+
+        // Display reviews
+        const reviewsContainer = document.getElementById('reviewsContainer');
+        reviewsContainer.innerHTML = '';
+        details.reviews.forEach(review => {
+            const reviewEl = document.createElement('div');
+            reviewEl.className = 'review-item';
+            reviewEl.innerHTML = `
+                <div class="review-header">
+                    <p class="review-name">${review.name}</p>
+                    <div class="review-rating">
+                        <span class="stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span>
+                    </div>
+                </div>
+                <p class="review-text">${review.text}</p>
+            `;
+            reviewsContainer.appendChild(reviewEl);
+        });
+
+        modal.style.display = 'block';
+    }
+
+    function closeModalFunc() {
+        modal.style.display = 'none';
+        currentImageIndex = 0;
+    }
+
+    function updateCarousel() {
+        const details = destinationDetails[currentDestination];
+        if (!details) return;
+
+        document.getElementById('carouselImage').src = details.images[currentImageIndex];
+        document.getElementById('imageCounter').textContent = `${currentImageIndex + 1}/${details.images.length}`;
+    }
+
+    // Modal event listeners
+    closeModal.addEventListener('click', closeModalFunc);
+
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModalFunc();
+        }
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+        const details = destinationDetails[currentDestination];
+        currentImageIndex = (currentImageIndex - 1 + details.images.length) % details.images.length;
+        updateCarousel();
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+        const details = destinationDetails[currentDestination];
+        currentImageIndex = (currentImageIndex + 1) % details.images.length;
+        updateCarousel();
+    });
+
+    // Update Member dropdown
+    function updateMemberDropdown() {
+        const diaryDropdown = document.querySelector('.pathway-member .diary-dropdown');
+        
+        if (diaryDropdown) {
+            if (savedItems.length === 0) {
+                diaryDropdown.innerHTML = `
+                    <div style="font-weight: 800; font-size: 0.7rem; color: #94a3b8; margin-bottom: 10px;">YOUR SAVES</div>
+                    <p style="font-size: 0.8rem; color: #64748b;">Your diary is empty.</p>
+                    <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 10px 0;">
+                    <a href="diary.html" style="display: block; text-align: center; color: #466bc3; font-weight: 700; text-decoration: none; font-size: 0.75rem;">Open Diary</a>
+                `;
+            } else {
+                let itemsHTML = `<div style="font-weight: 800; font-size: 0.7rem; color: #94a3b8; margin-bottom: 10px;">YOUR SAVES (${savedItems.length})</div>`;
+                
+                savedItems.forEach(item => {
+                    itemsHTML += `
+                        <div style="display: flex; align-items: center; gap: 8px; padding: 8px; background: #f8fafc; border-radius: 8px; margin-bottom: 8px;">
+                            <img src="${item.image}" alt="${item.title}" style="width: 40px; height: 40px; border-radius: 6px; object-fit: cover;">
+                            <div style="flex: 1;">
+                                <p style="font-size: 0.7rem; font-weight: 700; color: #334155; margin: 0;">${item.title}</p>
+                                <p style="font-size: 0.65rem; color: #94a3b8; margin: 2px 0 0 0;">${item.country}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                itemsHTML += `<hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 10px 0;">`;
+                itemsHTML += `<a href="diary.html" style="display: block; text-align: center; color: #466bc3; font-weight: 700; text-decoration: none; font-size: 0.75rem;">Open Diary</a>`;
+                
+                diaryDropdown.innerHTML = itemsHTML;
+            }
+        }
+    }
+
+    updateMemberDropdown();
 });
 </script>
-<script src="database.js"></script>
-    
-    <script src="cloude.js"></script>
-    <script>
-        // Now you can use "db.users" or "db.currentUser" here!
-        console.log("Current user is:", db.currentUser);
-    </script>
 </body>
 </html>
