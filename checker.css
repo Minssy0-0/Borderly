@@ -1,0 +1,172 @@
+/* General Layout */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    background-color: #f8fafc;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+#Searchbar {
+.banner-content {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 2;
+  padding: 0 20px;
+}
+}
+
+header {
+    top: 0;
+    background: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+select {
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 1rem;
+    min-width: 200px;
+}
+
+/* THE ANCHOR ICONS */
+.icon-nav {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.icon-nav a {
+    text-decoration: none;
+    color: #64748b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.8rem;
+    transition: 0.3s;
+}
+
+.icon-nav a i {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.icon-nav a:hover {
+    color: #ff4b2b;
+}
+
+/* CONTENT SECTIONS */
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+section {
+    padding: 100px 0 50px 0; /* Extra top padding so titles aren't hidden by header */
+    border-bottom: 1px solid #e2e8f0;
+}
+
+h2 {
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+p {
+    line-height: 1.8;
+    color: #475569;
+    font-size: 1.1rem;
+}
+
+/*Information cards*/
+
+#results-container {
+    max-width: 1000px; 
+    margin: 40px auto;
+    padding: 0 20px;
+    transition: opacity 0.5s ease;
+}
+
+.wide-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); 
+    border: 1px solid #f1f5f9;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 2px solid #fff1f0; 
+    padding-bottom: 15px;
+}
+
+.card-header i {
+    font-size: 1.5rem;
+    color: #ff4b2b;
+}
+
+.card-header h2 {
+    font-size: 1.4rem;
+    margin: 0;
+    color: #1e293b;
+    font-weight: 700;
+}
+
+.card-content {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #475569;
+}
+
+section {
+    scroll-margin-top: 140px;
+}
+
+
+/*Badgr*/
+#status-badge {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    border-radius: 50px;
+    display: inline-block;
+    width: auto;
+}
+
+.badge-verified {
+    background: #ecfdf5;
+    color: #059669; /* Green for verified */
+    border: 1px solid #10b981;
+}
+
+.badge-update {
+    background: #fffbeb;
+    color: #d97706; /* Orange for updating */
+    border: 1px solid #f59e0b;
+}

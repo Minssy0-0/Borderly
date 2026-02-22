@@ -10,7 +10,8 @@
 </head>
 <body>
 
-<div class="auth-card">
+
+    <div class="auth-card">
     <div class="auth-logo">
         <a href="index.html"><img src="images/logo.png" alt="Borderly Logo"></a>
     </div>
@@ -29,8 +30,8 @@
         <div class="form-group1">
     <label>Password</label>
     <div class="password-wrapper">
-        <input type="password" id="loginPassword" placeholder="Enter your password" required>
-        <i class="fa-solid fa-eye-slash toggle-icon" onclick="toggleVisibility('loginPassword', this)"></i>
+        <i class="fa-solid fa-eye-slash toggle-icon" onclick="toggleVisibility('loginPass', this)"></i>
+        <input type="password" id="loginPass" placeholder="Enter password" required>
     </div>
 </div>
         <button type="submit" class="auth-btn">Sign In</button>
@@ -55,25 +56,25 @@
             <input type="email" placeholder="name@example.com" required>
         </div>
          <div class="form-group1">
-            <label>Password</label>
-            <div class="password-wrapper">
-            <input type="password" id="loginPassword" placeholder="Enter your password" required>
-            <i class="fa-solid fa-eye-slash toggle-icon" onclick="toggleVisibility('loginPassword', this)"></i>
-        </div>
+    <label>Create Password</label>
+    <div class="password-wrapper">
+        <i class="fa-solid fa-eye-slash toggle-icon" onclick="toggleVisibility('regPass', this)"></i>
+        <input type="password" id="regPass" placeholder="Create password" required>
     </div>
+</div>
         <button type="submit" class="auth-btn">Join Community</button>
     </form>
 
 </div>
 
+
 <script>
-    // This function handles the visual switch between Login and Signup
     function switchTab(mode) {
         const loginForm = document.getElementById('loginForm');
         const signupForm = document.getElementById('signupForm');
         const loginTab = document.getElementById('loginTab');
         const signupTab = document.getElementById('signupTab');
-        const toggleLink = document.getElementById('toggleLink');
+
 
         if (mode === 'signup') {
             loginForm.style.display = 'none';
@@ -89,31 +90,102 @@
         }
     }
 
-    function toggleVisibility(inputId, icon) {
+function toggleVisibility(inputId, icon) {
     const input = document.getElementById(inputId);
     
+    if (!input) {
+        console.error("Could not find input with ID:", inputId);
+        return;
+    }
+
     if (input.type === "password") {
-        // Switch to visible text
         input.type = "text";
-        // Change the icon to the open eye
-        icon.classList.remove("fa-eye-slash");
-        icon.classList.add("fa-eye");
+        icon.classList.replace("fa-eye-slash", "fa-eye");
     } else {
-        // Switch back to hidden dots
         input.type = "password";
-        // Change the icon back to the slashed eye
-        icon.classList.remove("fa-eye");
-        icon.classList.add("fa-eye-slash");
+        icon.classList.replace("fa-eye", "fa-eye-slash");
     }
 }
 </script>
 
+
+
+
+
+<!---
+<div id="container">
+    <div class="login">
+        <div class="content">
+            <h1>Log In</h1>
+            <form>
+                <input type="email" placeholder="email">
+                <input type="password" placeholder="password">
+                <span class="remember">Remember me</span>
+                <span class="forget">Forgot password?</span>
+                <span class="clearfix"></span>
+                <button onclick="return false;">Log In</button>
+            </form>
+        </div>
+    </div>
+    <div class="page front">
+        <div class="content">
+            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="8.5" cy="7" r="4"/>
+                <line x1="20" y1="8" x2="20" y2="14"/>
+                <line x1="23" y1="11" x2="17" y2="11"/>
+            </svg>
+            <h1>Hello, friend!</h1>
+            <p>Enter your personal details and start journey with us</p>
+            <button id="register"> Register </button>
+        </div>
+    </div>
+    <div class="page back">
+        <div class="content">
+            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-in">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                <polyline points="10 17 15 12 10 7"/>
+                <line x1="15" y1="12" x2="3" y2="12"/>
+            </svg>
+            <h1>Welcome Back!</h1>
+            <p>To keep connected with us please login with your personal info</p>
+            <button id="login">Log In</button>
+        </div>
+    </div>
+
+    <div class="register">
+        <div class="content">
+            <h1>Sign Up</h1>
+            <form>
+                <input type="text" placeholder="name">
+                <input type="email" placeholder="email">
+                <input type="password" placeholder="password">
+                <button onclick="return false;">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const registerButton = document.getElementById('register');
+    const loginButton = document.getElementById('login');
+    const container = document.getElementById('container');
+
+    registerButton.onclick = function() {
+        container.className = 'active';
+    }
+    loginButton.onclick = function() {
+        container.className = 'close';
+    }
+</script>
+-->
+
 <script src="database.js"></script>
-    
-    <script src="cloude.js"></script>
-    <script>
-        // Now you can use "db.users" or "db.currentUser" here!
-        console.log("Current user is:", db.currentUser);
-    </script>
+<script src="search.js"></script>
+<script src="cloude.js"></script>
+<script>
+    // Use db.users or db.currentUser here
+    console.log("Current user is:", db.currentUser);
+</script>
 </body>
 </html>

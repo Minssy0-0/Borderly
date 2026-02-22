@@ -528,3 +528,122 @@ header {
     visibility: visible;
     transform: translateY(0);
 }
+
+
+
+
+
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 80%;    
+    max-width: 800px;       
+    margin: 0 auto;         
+    box-sizing: border-box; 
+}
+
+
+.input-wrapper {
+    flex: 1; 
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-right: 1px solid #eee;
+}
+
+.input-wrapper:last-of-type {
+    border-right: none;
+}
+
+.input-wrapper i {
+    color: #0e255a;
+}
+
+.input-wrapper input {
+    width: 100%; 
+    border: none;
+    outline: none;
+    font-size: 1rem;
+}
+
+.search-btn {
+    background: #0e255a;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.search-btn:hover {
+    background: #0e255a;
+}
+
+.input-wrapper {
+    position: relative; /* Crucial for positioning the dropdown */
+}
+
+/* 1. Define the Animation */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.custom-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 100;
+    display: none; 
+    
+    animation: slideDown 0.3s ease-out forwards;
+}
+
+.custom-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+.custom-dropdown::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.custom-dropdown li {
+    padding: 12px 15px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+    color: #334155;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.custom-dropdown li:last-child {
+    border-bottom: none;
+}
+
+.custom-dropdown li:hover {
+    background: #fff1f0; 
+    color: #ff4b2b;
+}
+

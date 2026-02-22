@@ -81,7 +81,6 @@
 
 
 <main>
-
 <section id="banner">
   <div class="animated-sky">
     <div class="sky"></div>
@@ -107,17 +106,19 @@
     <h1 class="hero-title">Cross Every<br><span class="orange-text">Border</span>ly</h1>
     <p class="hero-subtitle">Discover visa requirements, vaccine needs, and travel documents. Your journey starts here.</p>
     
-    <div class="search-container">
-      <div class="input-wrapper">
-        <i class="fa-solid fa-location-dot"></i>
-        <input type="text" id="originInput" placeholder="Starting from...">
-      </div>
-      <div class="input-wrapper">
-        <i class="fa-solid fa-plane-arrival"></i>
-        <input type="text" id="destinationInput" placeholder="Traveling to...">
-      </div>
-      <button class="search-btn">Check Rules</button>
-    </div>
+<div class="search-container">
+  <div class="input-wrapper">
+    <i class="fa-solid fa-location-dot"></i>
+    <input type="text" id="originInput" placeholder="Starting from..." oninput="filterCountries(this, 'originResults')">
+    <ul id="originResults" class="custom-dropdown"></ul>
+</div>
+
+<div class="input-wrapper">
+    <i class="fa-solid fa-plane-arrival"></i>
+    <input type="text" id="destinationInput" placeholder="Traveling to..." oninput="filterCountries(this, 'destinationResults')">
+    <ul id="destinationResults" class="custom-dropdown"></ul>
+</div>
+<button class="search-btn" onclick="handleMainSearch()">Check</button>
   </div>
 </section>
 
@@ -419,13 +420,21 @@ document.addEventListener('DOMContentLoaded', () => {
     updateMemberDropdown();
 });
 </script>
+
+
+
+
+
+
 <script src="database.js"></script>
-    
-    <script src="cloude.js"></script>
+<script src="search.js"></script>
+<script src="cloude.js"></script>
     <script>
         // Now you can use "db.users" or "db.currentUser" here!
         console.log("Current user is:", db.currentUser);
     </script>
+
+
 </body>
 </html>
 

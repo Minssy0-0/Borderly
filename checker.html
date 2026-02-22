@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="Main-main.css">
+  <link rel="stylesheet" href="checker.css">
+
+  <title>Borderly</title>
+</head>
+
+<body>
+<header>
+  <nav>
+    <div class="navbar">
+        <div class="cover-up"></div>
+  
+<div class="nav-left">
+  <button id="cloudToggle" class="cloud-nav" aria-label="Open navigation">☁️</button>
+ <a href="auth.html" class="profile-link-wrapper" id="profileLink">
+   <div class="profile-circle">
+      <img src="images/default-user.png" alt="Profile" class="nav-avatar">
+   </div>
+</a>
+
+  <a href="profile.html" class="profile-link-wrapper" id="profileLink">
+    <div class="profile-circle">
+      <img src="images/default-user.png" alt="Profile" class="nav-avatar">
+    </div>
+  </a>
+
+  <navmenu class="navmenu" id="cloudMenu">
+    <a href="#">Documents</a>
+    <a href="#">Luggage</a>
+    <a href="#">Vaccines</a>
+    <a href="#">Visas</a>
+    <a href="#">Travel Insurance</a>
+  </navmenu>
+</div>
+      <div class="logo">
+        <a href="index.html"><img src="images/logo.png" alt="Borderly Logo"></a>
+      </div>
+<div class="nav-right" style="display: flex; gap: 20px;">
+    
+    <div class="diary-wrapper pathway-guest">
+        <a href="auth.html" style="text-decoration: none;">
+            <div class="diary-circle" style="border: 2px dashed #cbd5e1;">
+                <i class="fa-solid fa-lock" style="color: #94a3b8;"></i>
+                <span style="color: #94a3b8;">Guest</span>
+            </div>
+        </a>
+        <div class="diary-dropdown">
+            <div class="guest-prompt" style="text-align: center;">
+                <i class="fa-solid fa-lock" style="font-size: 1.5rem; color: #cbd5e1; margin-bottom: 10px; display: block;"></i>
+                <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 10px;">Sign in to save gems!</p>
+                <a href="auth.html" style="display: block; background: #466bc3; color: white; padding: 6px; border-radius: 4px; text-decoration: none; font-size: 0.7rem; font-weight: bold;">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="diary-wrapper pathway-member">
+        <a href="diary.html" style="text-decoration: none;">
+            <div class="diary-circle" style="border: 2px solid #f3a333;">
+                <i class="fa-solid fa-book-bookmark" style="color: #466bc3;"></i>
+                <span style="color: #334155;">Member</span>
+            </div>
+        </a>
+        <div class="diary-dropdown">
+            <div style="font-weight: 800; font-size: 0.7rem; color: #94a3b8; margin-bottom: 10px;">YOUR SAVES</div>
+            <p style="font-size: 0.8rem; color: #64748b;">Your diary is empty.</p>
+            <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 10px 0;">
+            <a href="diary.html" style="display: block; text-align: center; color: #466bc3; font-weight: 700; text-decoration: none; font-size: 0.75rem;">Open Diary</a>
+        </div>
+    </div>
+    </div>
+    </div>
+  </nav>
+</header>
+<main>
+    <section id="Searchbar">
+            <h1 class="page-title">Travel Checker</h1>
+    <p class="page-description">Easily check travel requirements for any route for an ease of mind</p>
+<div class="search-container">
+<div class="input-wrapper">
+    <i class="fa-solid fa-location-dot"></i>
+    <input type="text" id="originInput"  placeholder="Starting from..." oninput="filterCountries(this, 'originResults')">
+    <ul id="originResults" class="custom-dropdown"></ul>
+</div>
+
+<div class="input-wrapper">
+    <i class="fa-solid fa-plane-arrival"></i>
+    <input type="text" id="destinationInput" placeholder="Traveling to..." oninput="filterCountries(this, 'destinationResults')">
+    <ul id="destinationResults" class="custom-dropdown"></ul>
+</div>
+
+<button class="search-btn" onclick="handleMainSearch()">Check</button>
+</div>
+
+
+<main id="results-container">
+<div id="status-badge" class="badge-hidden">
+    <i class="fa-solid fa-circle-check"></i> Verified for 2026
+</div>
+    <section id="docs-section" class="wide-card">
+        <div class="card-header">
+            <i class="fa-solid fa-file-invoice"></i>
+            <h2>Passport & Documents</h2>
+        </div>
+        <div class="card-content">
+            <p id="docsText">Select a route to view required documents...</p>
+        </div>
+    </section>
+
+    <section id="visa-section" class="wide-card">
+        <div class="card-header">
+            <i class="fa-solid fa-passport"></i>
+            <h2>Visa Requirements</h2>
+        </div>
+        <div class="card-content">
+            <p id="visaText">Information about entry permits will appear here.</p>
+        </div>
+    </section>
+
+    <section id="vax-section" class="wide-card">
+        <div class="card-header">
+            <i class="fa-solid fa-syringe"></i>
+            <h2>Health & Vaccines</h2>
+        </div>
+        <div class="card-content">
+            <p id="vaxText">Mandatory and recommended health safety measures.</p>
+        </div>
+    </section>
+
+    <section id="ins-section" class="wide-card">
+        <div class="card-header">
+            <i class="fa-solid fa-shield-heart"></i>
+            <h2>Travel Insurance</h2>
+        </div>
+        <div class="card-content">
+            <p id="insText">Stay protected with the right coverage for your destination.</p>
+        </div>
+    </section>
+
+</main>
+
+
+
+
+<script src="database.js"></script>
+<script src="search.js"></script>
+<script src="cloude.js"></script>
+</body>
