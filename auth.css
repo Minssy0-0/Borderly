@@ -175,7 +175,6 @@ body {
 .toggle-icon {
     position: absolute;
     left: 15px; 
-    right: auto;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
