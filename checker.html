@@ -18,27 +18,35 @@
     <div class="navbar">
         <div class="cover-up"></div>
   
+    <div class="navbar">
+        <div class="cover-up"></div>
+  
 <div class="nav-left">
-  <button id="cloudToggle" class="cloud-nav" aria-label="Open navigation">☁️</button>
- <a href="auth.html" class="profile-link-wrapper" id="profileLink">
-   <div class="profile-circle">
-      <img src="images/default-user.png" alt="Profile" class="nav-avatar">
-   </div>
-</a>
+    <button id="cloudToggle" class="cloud-nav" aria-label="Open navigation">☁️</button>
 
-  <a href="profile.html" class="profile-link-wrapper" id="profileLink">
-    <div class="profile-circle">
-      <img src="images/default-user.png" alt="Profile" class="nav-avatar">
+    <div class="pathway-guest">
+        <a href="auth.html" class="profile-link-wrapper">
+            <div class="profile-circle">
+                <img src="images/default-user.png" alt="Guest" class="nav-avatar">
+            </div>
+        </a>
     </div>
-  </a>
 
-  <navmenu class="navmenu" id="cloudMenu">
-    <a href="#">Documents</a>
-    <a href="#">Luggage</a>
-    <a href="#">Vaccines</a>
-    <a href="#">Visas</a>
-    <a href="#">Travel Insurance</a>
-  </navmenu>
+    <div class="pathway-member">
+        <a href="profile.html" class="profile-link-wrapper">
+            <div class="profile-circle">
+                <img src="images/default-user.png" alt="Profile" class="nav-avatar">
+            </div>
+        </a>
+    </div>
+
+    <navmenu class="navmenu" id="cloudMenu">
+        <a href="checker.html">Documents</a>
+        <a href="checker.html">Luggage</a>
+        <a href="checker.html">Vaccines</a>
+        <a href="checker.html">Visas</a>
+        <a href="checker.html">Travel Insurance</a>
+    </navmenu>
 </div>
       <div class="logo">
         <a href="index.html"><img src="images/logo.png" alt="Borderly Logo"></a>
@@ -149,7 +157,9 @@
 
 
 
-<script src="database.js"></script>
-<script src="search.js"></script>
-<script src="cloude.js"></script>
+    <script src="database.js"></script>
+    <script src="search.js"></script>
+    <script src="cloude.js"></script>
+    <script src="pathways.js"></script>
+    <script src="posts.js"></script>
 </body>

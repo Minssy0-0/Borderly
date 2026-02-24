@@ -1,4 +1,20 @@
-// 1. Initialize our "Session" Database
+// ADD THIS TO THE VERY TOP OF database.js
+window.redirectToAuth = function() {
+    console.log("Redirect blocked by Stylization Mode");
+};
+
+// Then, search your whole project (Ctrl+Shift+F) for "window.location.href = 'auth.html'"
+// and change it to redirectToAuth();
+
+
+
+
+
+
+
+
+
+
 const db = {
     users: JSON.parse(localStorage.getItem('borderly_users')) || [],
     posts: JSON.parse(localStorage.getItem('borderly_posts')) || [],
@@ -17,7 +33,88 @@ function logout() {
     window.location.href = 'index.html';
 }
 
-// 2. Travel Rules Dictionary
+ /*to Log In*/
+function loginUser(email, password) {
+    const user = db.users.find(u => u.email === email && u.password === password);
+    if (user) {
+        db.currentUser = user;
+        saveDB();
+        return true;
+    }
+    return false;
+}
+
+/*Create a Post (Linked to Current User)*/
+function createPost(content, location, priceRating, image = "") {
+    if (!db.currentUser) return { success: false };
+
+    const newPost = {
+        id: "post_" + Date.now(),
+        userId: db.currentUser.id,
+        author: db.currentUser.username,
+        authorAvatar: db.currentUser.avatar,
+        content: content,
+        location: location, 
+        price: priceRating, // Number 1-5
+        image: image,
+        likes: [], 
+        date: new Date().toLocaleDateString()
+    };
+
+    db.posts.unshift(newPost);
+    saveDB();
+    return { success: true };
+}
+
+function registerUser(username, email, password) {
+    const exists = db.users.find(u => u.email === email);
+    if (exists) return { success: false, message: "Email already registered." };
+
+    const newUser = {
+        id: "user_" + Date.now(), 
+        username: username,
+        email: email,
+        password: password,
+        avatar: "images/default-user.png",
+        followers: [],
+        following: [], 
+        posts: [],     
+        bio: "Hey there! I'm using Borderly."
+    };
+
+    db.users.push(newUser);
+    saveDB();
+    // Auto-login after registration
+    db.currentUser = newUser;
+    saveDB();
+    return { success: true };
+}
+
+// Inside auth.html script
+function handleLogin() {
+    const email = document.querySelector('#loginForm input[type="text"]').value;
+    const pass = document.querySelector('#loginForm input[type="password"]').value;
+
+    // Use the function from database.js
+    if (loginUser(email, pass)) {
+        window.location.href = 'index.html'; // Redirect to home
+    } else {
+        alert("Invalid credentials! Try: (your registered email/pass)");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 const travelRules = {
     "Spain-Turkey": {
         docs: "Passport valid for 6 months beyond entry date.",
@@ -59,6 +156,7 @@ function updateResults() {
 }
 
 // 4. Handle data coming from the Main Page URL
+/*
 window.addEventListener('load', () => {
     const params = new URLSearchParams(window.location.search);
     const fromParam = params.get('from');
@@ -74,4 +172,29 @@ window.addEventListener('load', () => {
             updateResults();
         }
     }
+});*/
+// 4. Handle data coming from the Main Page URL
+window.addEventListener('load', () => {
+    const params = new URLSearchParams(window.location.search);
+    const fromParam = params.get('from');
+    const toParam = params.get('to');
+
+    if (fromParam && toParam) {
+        const originBox = document.getElementById('originInput');
+        const destBox = document.getElementById('destinationInput');
+        
+        if (originBox && destBox) {
+            originBox.value = fromParam;
+            destBox.value = toParam;
+            if (typeof updateResults === 'function') updateResults();
+        }
+    }
+
+    /* TEMPORARILY DISABLED FOR STYLIZATION:
+       This was forcing you back to the login page.
+    
+    if (window.location.pathname.includes('profile.html') && !db.currentUser) {
+        window.location.href = 'auth.html';
+    }
+    */
 });

@@ -647,3 +647,8 @@ header {
     color: #ff4b2b;
 }
 
+/* Ensure the diary wrappers maintain their layout when shown */
+.diary-wrapper {
+    align-items: center;
+    gap: 20px;
+}

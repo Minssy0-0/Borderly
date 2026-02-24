@@ -37,33 +37,26 @@
         <button type="submit" class="auth-btn">Sign In</button>
     </form>
 
-
-
-    <form id="signupForm" style="display: none;">
-        <div class="form-group">
-            <label>Full Name</label>
-            <i class="fa-solid fa-user"></i>
-            <input type="text" placeholder="Your name" required>
-        </div>
-        <div class="form-group">
-            <label>Username</label>
-            <i class="fa-solid fa-user-tag"></i>
-            <input type="text" placeholder="Choose a travel handle" required>
-        </div>
-        <div class="form-group">
-            <label>Email Address</label>
-            <i class="fa-solid fa-envelope"></i>
-            <input type="email" placeholder="name@example.com" required>
-        </div>
-         <div class="form-group1">
-    <label>Create Password</label>
-    <div class="password-wrapper">
-        <i class="fa-solid fa-eye-slash toggle-icon" onclick="toggleVisibility('regPass', this)"></i>
-        <input type="password" id="regPass" placeholder="Create password" required>
+<form id="signupForm">
+    <div class="form-group">
+        <label>Username</label>
+        <i class="fa-solid fa-user-tag"></i>
+        <input type="text" id="regUsername" placeholder="Create a username" required>
     </div>
-</div>
-        <button type="submit" class="auth-btn">Join Community</button>
-    </form>
+    <div class="form-group">
+        <label>Email</label>
+        <i class="fa-solid fa-envelope"></i>
+        <input type="email" id="regEmail" placeholder="Enter your email" required>
+    </div>
+    <div class="form-group1">
+        <label>Password</label>
+        <div class="password-wrapper">
+            <i class="fa-solid fa-eye-slash toggle-icon" onclick="toggleVisibility('regPassword', this)"></i>
+            <input type="password" id="regPassword" placeholder="Create a password" required>
+        </div>
+    </div>
+    <button type="submit" class="auth-btn">Create Account</button>
+</form>
 
 </div>
 
@@ -106,6 +99,28 @@ function toggleVisibility(inputId, icon) {
         icon.classList.replace("fa-eye", "fa-eye-slash");
     }
 }
+
+
+document.getElementById('signupForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Stop page from refreshing
+
+    const user = document.getElementById('regUsername').value;
+    const email = document.getElementById('regEmail').value;
+    const pass = document.getElementById('regPassword').value;
+
+    const result = registerUser(user, email, pass);
+
+    if (result.success) {
+        alert("Account created successfully!");
+        window.location.href = 'profile.html'; // Redirect to profile
+    } else {
+        alert(result.message);
+    }
+});
+    // Ensure only the Login form is visible on initial load
+    window.addEventListener('DOMContentLoaded', function() {
+        switchTab('login');
+    });
 </script>
 
 

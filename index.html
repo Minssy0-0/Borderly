@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="shared.css">
   <link rel="stylesheet" href="Main-main.css">
+  <link rel="stylesheet" href="posts.css">
 
   <title>Borderly</title>
 </head>
@@ -18,33 +19,37 @@
         <div class="cover-up"></div>
   
 <div class="nav-left">
-  <button id="cloudToggle" class="cloud-nav" aria-label="Open navigation">☁️</button>
- <a href="auth.html" class="profile-link-wrapper" id="profileLink">
-   <div class="profile-circle">
-      <img src="images/default-user.png" alt="Profile" class="nav-avatar">
-   </div>
-</a>
+    <button id="cloudToggle" class="cloud-nav" aria-label="Open navigation">☁️</button>
 
-  <a href="profile.html" class="profile-link-wrapper" id="profileLink">
-    <div class="profile-circle">
-      <img src="images/default-user.png" alt="Profile" class="nav-avatar">
+    <div class="pathway-guest">
+        <a href="auth.html" class="profile-link-wrapper">
+            <div class="profile-circle">
+                <img src="images/default-user.png" alt="Guest" class="nav-avatar">
+            </div>
+        </a>
     </div>
-  </a>
 
-  <navmenu class="navmenu" id="cloudMenu">
-    <a href="#">Documents</a>
-    <a href="#">Luggage</a>
-    <a href="#">Vaccines</a>
-    <a href="#">Visas</a>
-    <a href="#">Travel Insurance</a>
-  </navmenu>
+    <div class="pathway-member">
+        <a href="profile.html" class="profile-link-wrapper">
+            <div class="profile-circle">
+                <img src="images/default-user.png" alt="Profile" class="nav-avatar">
+            </div>
+        </a>
+    </div>
+    <navmenu class="navmenu" id="cloudMenu">
+        <a href="checker.html">Documents</a>
+        <a href="checker.html">Luggage</a>
+        <a href="checker.html">Vaccines</a>
+        <a href="checker.html">Visas</a>
+        <a href="checker.html">Travel Insurance</a>
+    </navmenu>
 </div>
       <div class="logo">
         <a href="index.html"><img src="images/logo.png" alt="Borderly Logo"></a>
       </div>
-<div class="nav-right" style="display: flex; gap: 20px;">
+<div class="nav-right" style="display: flex; gap: 20px; align-items: center; padding-right: 20px;">
     
-    <div class="diary-wrapper pathway-guest">
+    <div class="diary-wrapper pathway-guest" style="display: flex;">
         <a href="auth.html" style="text-decoration: none;">
             <div class="diary-circle" style="border: 2px dashed #cbd5e1;">
                 <i class="fa-solid fa-lock" style="color: #94a3b8;"></i>
@@ -60,7 +65,7 @@
         </div>
     </div>
 
-    <div class="diary-wrapper pathway-member">
+    <div class="diary-wrapper pathway-member" style="display: flex;">
         <a href="diary.html" style="text-decoration: none;">
             <div class="diary-circle" style="border: 2px solid #f3a333;">
                 <i class="fa-solid fa-book-bookmark" style="color: #466bc3;"></i>
@@ -74,7 +79,8 @@
             <a href="diary.html" style="display: block; text-align: center; color: #466bc3; font-weight: 700; text-decoration: none; font-size: 0.75rem;">Open Diary</a>
         </div>
     </div>
-    </div>
+
+</div>
     </div>
   </nav>
 </header>
@@ -208,7 +214,18 @@
 </section>
 
 
+<section id="community-section">
+    <div class="section-header">
+        <div class="header-text">
+            <h2>Latest Community Posts</h2>
+            <p>See what other travelers are sharing right now</p>
+        </div>
+        <a href="community.html" class="view-all-link">View All Posts</a>
+    </div>
 
+    <div id="homeRecentFeed" class="feed-grid">
+        </div>
+</section>
 
 
   <section id="contact" >
@@ -291,76 +308,7 @@
     © 2026 Borderly. All rights reserved.
   </div>
 </footer>
-
-
-<script src="cloude.js"></script>
-
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const profileLink = document.getElementById('profileLink');
-    
-    // This 'isLoggedIn' variable is what we will eventually get from Firebase
-    // For now, we can manually change it to 'true' or 'false' to test!
-    let isLoggedIn = false; 
-
-    if (isLoggedIn) {
-        profileLink.href = "profile.html";
-        // You could also swap the image here to the user's actual photo
-    } else {
-        profileLink.href = "auth.html";
-    }
-});
-</script>
-
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    // Load saved diary items from localStorage
-    function loadSavedDiary() {
-        return JSON.parse(localStorage.getItem('diary_items')) || [];
-    }
-
-    // Save diary items to localStorage
-    function saveDiary(items) {
-        localStorage.setItem('diary_items', JSON.stringify(items));
-    }
-
-    // Update the Member dropdown with saved destinations
-    function updateMemberDropdown() {
-        const savedItems = loadSavedDiary();
-        const diaryDropdown = document.querySelector('.pathway-member .diary-dropdown');
-        
-        if (diaryDropdown) {
-            if (savedItems.length === 0) {
-                diaryDropdown.innerHTML = `
-                    <div style="font-weight: 800; font-size: 0.7rem; color: #94a3b8; margin-bottom: 10px;">YOUR SAVES</div>
-                    <p style="font-size: 0.8rem; color: #64748b;">Your diary is empty.</p>
-                    <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 10px 0;">
-                    <a href="diary.html" style="display: block; text-align: center; color: #466bc3; font-weight: 700; text-decoration: none; font-size: 0.75rem;">Open Diary</a>
-                `;
-            } else {
-                let itemsHTML = `<div style="font-weight: 800; font-size: 0.7rem; color: #94a3b8; margin-bottom: 10px;">YOUR SAVES (${savedItems.length})</div>`;
-                
-                savedItems.forEach(item => {
-                    itemsHTML += `
-                        <div style="display: flex; align-items: center; gap: 8px; padding: 8px; background: #f8fafc; border-radius: 8px; margin-bottom: 8px;">
-                            <img src="${item.image}" alt="${item.title}" style="width: 40px; height: 40px; border-radius: 6px; object-fit: cover;">
-                            <div style="flex: 1;">
-                                <p style="font-size: 0.7rem; font-weight: 700; color: #334155; margin: 0;">${item.title}</p>
-                                <p style="font-size: 0.65rem; color: #94a3b8; margin: 2px 0 0 0;">${item.country}</p>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                itemsHTML += `<hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 10px 0;">`;
-                itemsHTML += `<a href="diary.html" style="display: block; text-align: center; color: #466bc3; font-weight: 700; text-decoration: none; font-size: 0.75rem;">Open Diary</a>`;
-                
-                diaryDropdown.innerHTML = itemsHTML;
-            }
-        }
-    }
-
     // Handle Add to Diary button clicks
     const addDiaryBtns = document.querySelectorAll('.add-diary-btn');
     addDiaryBtns.forEach(btn => {
@@ -418,23 +366,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize Member dropdown on page load
     updateMemberDropdown();
-});
 </script>
-
-
-
-
-
-
-<script src="database.js"></script>
-<script src="search.js"></script>
-<script src="cloude.js"></script>
+    
     <script>
-        // Now you can use "db.users" or "db.currentUser" here!
-        console.log("Current user is:", db.currentUser);
+        // Use this only for small page-specific checks
+        console.log("Borderly initialized. User:", db.currentUser ? db.currentUser.username : "Guest");
     </script>
 
-
+    <script src="database.js"></script>
+    <script src="search.js"></script>
+    <script src="cloude.js"></script>
+    <script src="pathways.js"></script>
+    <script src="posts.js"></script>
 </body>
 </html>
 

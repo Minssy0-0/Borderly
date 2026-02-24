@@ -11,3 +11,4 @@ document.addEventListener('click', (e) => {
     navLeft.classList.remove('open');
   }
 });
+
