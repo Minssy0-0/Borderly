@@ -160,7 +160,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(8, 28, 81, 0.753); /* Dark Borderly Blue overlay */
+    background: rgba(6, 22, 64, 0.911); /* Dark Borderly Blue overlay */
     display: none; /* Show with JS */
     justify-content: center;
     align-items: center;
@@ -200,71 +200,90 @@
 .confirm-btn { background: #f3a333; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; flex: 1; font-weight: 700; }
 .cancel-btn { background: #94a3b8; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; }
 
+/* Dollar Sign Logic */
+.d-sign {
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.d-sign.active-blue {
+    color: #466bc3 !important;
+    text-shadow: 0 0 8px rgba(70, 107, 195, 0.3);
+}
+
+
+
+/* Interactive Selector in Preview */
+#priceSelector .d-sign {
+    color: #cbd5e1; /* Default Gray */
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.1s;
+}
+
+#priceSelector .d-sign:hover {
+    transform: scale(1.3);
+    color: #466bc3;
+}
+
+/* Reverted logic: blue when active */
+#priceSelector .d-sign.active-blue {
+    color: #466bc3; /* Borderly Blue */
+    text-shadow: 0 0 5px rgba(70, 107, 195, 0.2);
+}
 
 /*WIND ANIMATION FOR MODAL*/
-/* Ensure the overlay is the base */
-.modal-overlay {
+/* Container stays the same */
+.wind-container {
     position: fixed;
-    inset: 0; /* Shortcut for top/left/right/bottom: 0 */
-    background: rgba(0, 0, 0, 0.85);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
     overflow: hidden;
 }
 
-/* FORCE the container to fill the entire viewport */
-.wind-container {
-    position: fixed; /* Changed from absolute to fixed */
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 1; /* Sits behind your card */
-}
-
-/* The actual strikes */
-.wind-strike {
+.wind-mover {
     position: absolute;
     right: -300px;
-    height: 3px;
-    border-radius: 10px;
-    filter: blur(1px);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* Adds a subtle glow */
 }
 
-/* Colors - brighter for visibility */
-.wind-strike.white { background: #ffffff; width: 140px; }
-.wind-strike.light-blue { background: #60a5fa; width: 200px; }
-.wind-strike.dark-blue { background: #2563eb; width: 100px; }
+/* Movement Speeds */
+.m1 { top: 15%; animation: flow 4s linear infinite; }
+.m2 { top: 35%; animation: flow 6s linear infinite 1s; }
+.m3 { top: 55%; animation: flow 3.5s linear infinite 0.5s; }
+.m4 { top: 75%; animation: flow 5s linear infinite 2s; }
+.m5 { top: 25%; animation: flow 4.5s linear infinite 1.5s; }
+.m6 { top: 85%; animation: flow 7s linear infinite 0.2s; }
 
-/* Apply the one-way flow + wave animation */
-.wind-strike:nth-child(1) { top: 15%; animation: windMovement 4s linear infinite; }
-.wind-strike:nth-child(2) { top: 35%; animation: windMovement 6s linear infinite 1s; }
-.wind-strike:nth-child(3) { top: 55%; animation: windMovement 3.5s linear infinite 0.5s; }
-.wind-strike:nth-child(4) { top: 75%; animation: windMovement 5s linear infinite 2s; }
-.wind-strike:nth-child(5) { top: 25%; animation: windMovement 4.5s linear infinite 1.5s; }
-.wind-strike:nth-child(6) { top: 85%; animation: windMovement 7s linear infinite 0.2s; }
+/* THE WAVY STRIKES */
+.wind-strike {
+    height: 12px; /* Thicker height to accommodate the wave shape */
+    opacity: 0.6;
+    filter: blur(0.5px);
+}
 
-/* COMBINED ANIMATION: Horizontal move + Sinusoidal Wave */
-@keyframes windMovement {
-    0% {
-        right: -300px;
-        transform: translateY(0);
-    }
-    25% {
-        transform: translateY(30px); /* Wave down */
-    }
-    50% {
-        transform: translateY(0px); /* Mid */
-    }
-    75% {
-        transform: translateY(-30px); /* Wave up */
-    }
-    100% {
-        right: 120%; /* Exit left */
-        transform: translateY(0);
-    }
+/* Shape 1: Gentle S-Curve */
+.wavy-1 {
+    width: 150px;
+    background: currentColor;
+    clip-path: polygon(0% 50%, 10% 40%, 20% 45%, 30% 60%, 40% 70%, 50% 65%, 60% 50%, 70% 35%, 80% 30%, 90% 45%, 100% 50%, 100% 55%, 90% 50%, 80% 35%, 70% 40%, 60% 55%, 50% 70%, 40% 75%, 30% 65%, 20% 50%, 10% 45%, 0% 55%);
+}
+
+/* Shape 2: Sharper Zig-Zag Wind */
+.wavy-2 {
+    width: 200px;
+    background: currentColor;
+    clip-path: polygon(0% 20%, 25% 80%, 50% 20%, 75% 80%, 100% 20%, 100% 30%, 75% 90%, 50% 30%, 25% 90%, 0% 30%);
+}
+
+/* Apply Colors */
+.white { color: #ffffff; }
+.light-blue { color: #93c5fd; }
+.dark-blue { color: #466bc3; }
+
+/* Horizontal Flow */
+@keyframes flow {
+    from { right: -300px; }
+    to { right: 120vw; }
 }

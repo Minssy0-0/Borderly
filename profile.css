@@ -227,44 +227,7 @@
 }
 
 
-
-
-
-
-
-
-
-
 /* Darkened Background */
-.modal-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(0, 0, 0, 0.7); /* The background darkening */
-    display: none; /* Hidden by default */
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    backdrop-filter: blur(5px); /* Optional: adds a nice blur to the profile page */
-}
-
-/* Modal Styling */
-.modal-content-wrapper {
-    width: 900px; /* Matches your post-card width */
-    animation: slideUp 0.3s ease-out;
-}
-
-@keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-.modal-title {
-    color: white;
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 1.8rem;
-}
 
 /* Template Inputs */
 .preview-input, .preview-textarea {
@@ -279,38 +242,6 @@
 .location-field {
     font-weight: 700;
     border-bottom: 1px dashed #cbd5e1;
-}
-
-/* Dollar Sign Logic */
-.d-sign {
-    color: #cbd5e1; /* Gray by default */
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
-
-.d-sign.active-blue {
-    color: #466bc3; /* Borderly Blue */
-}
-
-
-
-/* Interactive Selector in Preview */
-#priceSelector .d-sign {
-    color: #cbd5e1; /* Default Gray */
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: color 0.2s ease, transform 0.1s;
-}
-
-#priceSelector .d-sign:hover {
-    transform: scale(1.2);
-}
-
-/* Reverted logic: blue when active */
-#priceSelector .d-sign.active-blue {
-    color: #466bc3; /* Borderly Blue */
-    text-shadow: 0 0 5px rgba(70, 107, 195, 0.2);
 }
 
 

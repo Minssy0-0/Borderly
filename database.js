@@ -46,24 +46,24 @@ function loginUser(email, password) {
 
 /*Create a Post (Linked to Current User)*/
 function createPost(content, location, priceRating, image = "") {
-    if (!db.currentUser) return { success: false };
+    if (!db.currentUser) return { success: false }; //
 
     const newPost = {
-        id: "post_" + Date.now(),
-        userId: db.currentUser.id,
-        author: db.currentUser.username,
-        authorAvatar: db.currentUser.avatar,
-        content: content,
-        location: location, 
-        price: priceRating, // Number 1-5
-        image: image,
-        likes: [], 
-        date: new Date().toLocaleDateString()
+        id: "post_" + Date.now(), //
+        userId: db.currentUser.id, //
+        author: db.currentUser.username, //
+        authorAvatar: db.currentUser.avatar, //
+        content: content, //
+        location: location, //
+        price: priceRating, // 0 if none selected, 1-5 if clicked
+        image: image, //
+        likes: [], //
+        date: new Date().toLocaleDateString() //
     };
 
-    db.posts.unshift(newPost);
-    saveDB();
-    return { success: true };
+    db.posts.unshift(newPost); //
+    saveDB(); //
+    return { success: true }; //
 }
 
 function registerUser(username, email, password) {

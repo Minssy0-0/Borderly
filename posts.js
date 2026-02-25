@@ -226,14 +226,22 @@ function confirmAndPost() {
 
 
 function setPrice(val) {
-    currentSelectedPrice = val;
+    // 1. Select all dollar signs in the preview
     const signs = document.querySelectorAll('#priceSelector .d-sign');
-    signs.forEach((s, index) => {
-        // Class 'active-blue' turns the sign Borderly Blue
-        if (index < val) {
-            s.classList.add('active-blue');
+    
+    // 2. Loop through them
+    signs.forEach(sign => {
+        // Get the value (1-5) from the data-value attribute
+        const signValue = parseInt(sign.getAttribute('data-value'));
+        
+        // 3. If the sign's value is less than or equal to what was clicked, color it
+        if (signValue <= val) {
+            sign.classList.add('active-blue');
         } else {
-            s.classList.remove('active-blue');
+            sign.classList.remove('active-blue');
         }
     });
+
+    // 4. Store the value globally so your 'confirmPost' function can use it
+    window.selectedPrice = val;
 }
