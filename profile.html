@@ -150,16 +150,41 @@
                 </div>
                 
                 <div class="post-body">
-                    <input type="text" id="postLocation" placeholder="Location (e.g. Rome, Italy)" class="template-input">
+<div class="location-selection-area">
+    <input type="text" id="postPlaceName" placeholder="Place name (e.g., Blue Bottle Coffee)" class="template-input">
+    
+<div class="search-container unified-geo-bar">
+    <i class="fa-solid fa-earth-americas"></i>
+    
+<div class="geo-input-wrapper">
+    <input type="text" id="postCity" placeholder="City" class="geo-field" 
+           oninput="filterCities(this, 'citySuggestions')" autocomplete="off">
+    <div id="citySuggestions" class="custom-suggestions"></div>
+</div>
+
+<div class="vertical-divider"></div>
+
+<div class="geo-input-wrapper">
+    <input type="text" id="postCountry" placeholder="Country" class="geo-field" 
+           oninput="filterCountries(this, 'countrySuggestions')" autocomplete="off">
+    <div id="countrySuggestions" class="custom-suggestions"></div>
+</div>
+</div>
+</div>
                     <textarea id="postContent" placeholder="What's the tip?..." class="template-textarea"></textarea>
                     
-                    <div class="price-rating" id="priceSelector">
-                        <span class="d-sign" data-value="1" onclick="setPrice(1)">$</span>
-                        <span class="d-sign" data-value="2" onclick="setPrice(2)">$</span>
-                        <span class="d-sign" data-value="3" onclick="setPrice(3)">$</span>
-                        <span class="d-sign" data-value="4" onclick="setPrice(4)">$</span>
-                        <span class="d-sign" data-value="5" onclick="setPrice(5)">$</span>
-                    </div>
+<div class="price-rating" id="priceSelector">
+    <div class="reset-price-wrapper" onclick="setPrice(0)" title="No price rating">
+        <i class="fa-solid fa-dollar-sign"></i>
+        <i class="fa-solid fa-slash"></i>
+    </div>
+    
+    <span class="d-sign" data-value="1" onclick="setPrice(1)">$</span>
+    <span class="d-sign" data-value="2" onclick="setPrice(2)">$</span>
+    <span class="d-sign" data-value="3" onclick="setPrice(3)">$</span>
+    <span class="d-sign" data-value="4" onclick="setPrice(4)">$</span>
+    <span class="d-sign" data-value="5" onclick="setPrice(5)">$</span>
+</div>
                 </div>
             </div>
         </div>

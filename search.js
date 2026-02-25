@@ -10,27 +10,76 @@ function handleMainSearch() {
 }
 
 
+
+
 const countries = ["Slovakia", "Slovenia", "Spain", "Turkey", "Thailand", "United Kingdom", "USA", "France", "Germany", "Italy", "Netherlands", "Portugal", "Greece", "Austria", "Belgium", "Denmark", "Finland", "Ireland", "Norway", "Poland", "Sweden", "Switzerland"];
+const cities = [
+    "Bratislava", "Ljubljana", "Madrid", "Barcelona", "Istanbul", "Ankara", 
+    "Bangkok", "London", "Manchester", "New York", "Los Angeles", "Chicago", 
+    "Paris", "Lyon", "Berlin", "Munich", "Rome", "Milan", "Amsterdam", 
+    "Lisbon", "Athens", "Vienna", "Brussels", "Copenhagen", "Helsinki", 
+    "Dublin", "Oslo", "Warsaw", "Stockholm", "Zurich", "Geneva"
+];  
 
 function filterCountries(input, resultsId) {
     const list = document.getElementById(resultsId);
+    if (!list) return;
     const query = input.value.toLowerCase();
+    list.innerHTML = ""; // Clear previous results
 
     if (query.length > 1) {
         const filtered = countries.filter(country => 
             country.toLowerCase().startsWith(query)
         );
 
-        if (filtered.length > 1) {
+        if (filtered.length > 0) {
             list.style.display = "block";
             filtered.forEach(country => {
-                const li = document.createElement("li");
-                li.textContent = country;
-                li.onclick = () => {
+                // Change from 'li' to 'div' + class 'suggestion-item'
+                const div = document.createElement("div");
+                div.className = "suggestion-item"; 
+                div.textContent = country;
+                div.onclick = () => {
                     input.value = country;
                     list.style.display = "none";
+                    // Only call updateResults if it exists (on the checker page)
+                    if (typeof updateResults === "function") updateResults();
+                    // Only call updatePreview if it exists (on the profile page)
+                    if (typeof updatePreview === "function") updatePreview();
                 };
-                list.appendChild(li);
+                list.appendChild(div);
+            });
+        } else {
+            list.style.display = "none";
+        }
+    } else {
+        list.style.display = "none";
+    }
+}
+
+function filterCities(input, resultsId) {
+    const list = document.getElementById(resultsId);
+    if (!list) return;
+    const query = input.value.toLowerCase();
+    list.innerHTML = ""; 
+
+    if (query.length > 1) {
+        const filtered = cities.filter(city => 
+            city.toLowerCase().startsWith(query)
+        );
+
+        if (filtered.length > 0) {
+            list.style.display = "block";
+            filtered.forEach(city => {
+                const div = document.createElement("div");
+                div.className = "suggestion-item";
+                div.textContent = city;
+                div.onclick = () => {
+                    input.value = city;
+                    list.style.display = "none";
+                    if (typeof updatePreview === "function") updatePreview();
+                };
+                list.appendChild(div);
             });
         } else {
             list.style.display = "none";

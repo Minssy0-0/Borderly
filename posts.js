@@ -48,10 +48,6 @@ document.getElementById('openPostModal').onclick = () => {
     document.getElementById('postFormModal').style.display = 'flex';
 };
 
-function closeForm() {
-    document.getElementById('postFormModal').style.display = 'none';
-}
-
 function closePreview() {
     document.getElementById('previewModal').style.display = 'none';
 }
@@ -93,59 +89,6 @@ function showPreview() {
     document.getElementById('previewModal').style.display = 'flex';
 }
 
-// Function to actually save the post using database.js createPost
-function confirmPost() {
-    const content = document.getElementById('postContent').value;
-    const location = document.getElementById('postLocation').value;
-    const price = parseInt(document.getElementById('postPrice').value);
-    const image = document.getElementById('postImage').value;
-
-    const result = createPost(content, location, price, image); // From database.js
-    
-    if (result.success) {
-        alert("Post shared successfully!");
-        location.reload(); // Refresh to show new post
-    }
-}
-
-let selectedPrice = 0; // Starts at 0 (optional/none)
-
-function setPrice(val) {
-    selectedPrice = val;
-    const signs = document.querySelectorAll('#priceSelector .d-sign');
-    
-    signs.forEach(sign => {
-        const signValue = parseInt(sign.getAttribute('data-value'));
-        if (signValue <= val) {
-            sign.classList.add('active'); // Turn Borderly Blue
-        } else {
-            sign.classList.remove('active'); // Stay Gray
-        }
-    });
-}
-
-function updatePreviewImage(url) {
-    document.getElementById('templateImg').src = url || 'images/default-post.png';
-}
-
-function confirmPost() {
-    const content = document.getElementById('postContent').value;
-    const location = document.getElementById('postLocation').value;
-    const image = document.getElementById('postImage').value;
-
-    if (!content || !location) {
-        alert("Please fill in the location and description.");
-        return;
-    }
-
-    // Pass selectedPrice to your database.js function
-    const result = createPost(content, location, selectedPrice, image);
-    
-    if (result.success) {
-        alert("Posted to Profile and Community!");
-        location.reload(); 
-    }
-}
 
 function generatePostHTML(post) {
     // Rule: Dollar signs ONLY show if price > 0
@@ -174,9 +117,6 @@ function generatePostHTML(post) {
 }
 
 
-
-let currentSelectedPrice = 0;
-
 // Open the modal
 document.querySelector('.create-post-btn').onclick = () => {
     document.getElementById('postModalOverlay').style.display = 'flex';
@@ -186,62 +126,80 @@ function closePostModal() {
     document.getElementById('postModalOverlay').style.display = 'none';
 }
 
+
+// 1. GLOBAL STATE
+let currentSelectedPrice = 0; 
+
+// 2. MODAL CONTROLS
+const modal = document.getElementById('postFormModal');
+
+// Handles opening the modal from the Profile 'Share a Tip' button
+const createBtn = document.querySelector('.create-post-btn');
+if (createBtn) {
+    createBtn.onclick = () => {
+        document.getElementById('postFormModal').style.display = 'flex';
+    };
+}
+
+function closeForm() {
+    document.getElementById('postFormModal').style.display = 'none';
+    setPrice(0); // Reset the blue signs when closing
+}
+
+// 3. THE PRICE SELECTOR LOGIC
 function setPrice(val) {
-    currentSelectedPrice = val;
-    const signs = document.querySelectorAll('.d-sign');
-    signs.forEach((s, index) => {
-        // Highlight everything from left to the clicked sign
-        if (index < val) {
-            s.classList.add('active-blue');
-        } else {
-            s.classList.remove('active-blue');
-        }
-    });
-}
-
-function updatePreviewImage(url) {
-    const img = document.getElementById('templateImg');
-    img.src = url || 'images/default-post.png';
-}
-
-function confirmAndPost() {
-    const content = document.getElementById('postContent').value;
-    const locationName = document.getElementById('postLocation').value;
-    const imageUrl = document.getElementById('postImage').value;
-
-    if (!content || !locationName) {
-        alert("Give your tip a location and description!");
-        return;
-    }
-
-    // Use your createPost function from database.js
-    const response = createPost(content, locationName, currentSelectedPrice, imageUrl);
-    
-    if (response.success) {
-        alert("Trip shared!");
-        location.reload(); // Refresh to see the new post in your feed
-    }
-}
-
-
-
-function setPrice(val) {
-    // 1. Select all dollar signs in the preview
+    currentSelectedPrice = val; // val is 0 if slashed dollar is clicked
     const signs = document.querySelectorAll('#priceSelector .d-sign');
     
-    // 2. Loop through them
     signs.forEach(sign => {
-        // Get the value (1-5) from the data-value attribute
         const signValue = parseInt(sign.getAttribute('data-value'));
-        
-        // 3. If the sign's value is less than or equal to what was clicked, color it
+        // If val=0, this is always false, turning all signs gray
         if (signValue <= val) {
             sign.classList.add('active-blue');
         } else {
             sign.classList.remove('active-blue');
         }
     });
+    console.log("Price set to:", currentSelectedPrice);
+}
 
-    // 4. Store the value globally so your 'confirmPost' function can use it
-    window.selectedPrice = val;
+// 4. IMAGE PREVIEW
+function updatePreviewImage(url) {
+    const img = document.getElementById('templateImg');
+    if (img) img.src = url || 'images/default-post.png';
+}
+function updatePreview() {
+    const place = document.getElementById('postPlaceName').value;
+    const city = document.getElementById('postCity').value;
+    const country = document.getElementById('postCountry').value;
+    
+    const previewLocation = document.querySelector('.location span');
+    
+    if (previewLocation) {
+        // Build the string: "Place Name | City, Country"
+        let fullLoc = place;
+        if (city || country) {
+            fullLoc += " | " + city + (city && country ? ", " : "") + country;
+        }
+        previewLocation.textContent = fullLoc || "Location";
+    }
+}
+// 5. FINAL POSTING LOGIC
+function confirmAndPost() {
+    const content = document.getElementById('postContent').value;
+    const locationName = document.getElementById('postLocation').value;
+    const imageUrl = document.getElementById('postImage').value;
+
+    if (!content || !locationName) {
+        alert("Please provide a location and a description!");
+        return;
+    }
+
+    // Passes currentSelectedPrice (could be 0) to your database.js
+    const response = createPost(content, locationName, currentSelectedPrice, imageUrl);
+    
+    if (response.success) {
+        alert("Trip shared!");
+        location.reload(); 
+    }
 }
