@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="shared.css">
   <link rel="stylesheet" href="Main-main.css">
   <link rel="stylesheet" href="posts.css">
+  <link rel="stylesheet" href="visas.css">
 
   <title>Borderly</title>
 </head>
@@ -37,10 +38,10 @@
         </a>
     </div>
     <navmenu class="navmenu" id="cloudMenu">
-        <a href="checker.html">Documents</a>
-        <a href="checker.html">Luggage</a>
-        <a href="checker.html">Vaccines</a>
-        <a href="checker.html">Visas</a>
+        <a href="javascript:openDocumentsModal()">Documents</a>
+        <a href="javascript:openLuggageModal()">Luggage</a>
+        <a href="javascript:openVaccinesModal()">Vaccines</a>
+        <a href="javascript:openVisasModal()">Visas</a>
         <a href="checker.html">Travel Insurance</a>
     </navmenu>
 </div>
@@ -129,7 +130,7 @@
 </section>
 
 <section id="features">
-  <div class="feature-item">
+  <div class="feature-item" onclick="openDocumentsModal()" style="cursor: pointer;">
     <i class="fa-solid fa-file-invoice"></i>
     <div class="feature-text">
       <h3>Documents</h3>
@@ -137,7 +138,7 @@
     </div>
   </div>
 
-  <div class="feature-item">
+  <div class="feature-item" onclick="openLuggageModal()" style="cursor: pointer;">
     <i class="fa-solid fa-suitcase-rolling"></i>
     <div class="feature-text">
       <h3>Luggage</h3>
@@ -145,7 +146,7 @@
     </div>
   </div>
 
-  <div class="feature-item">
+  <div class="feature-item" onclick="openVisasModal()" style="cursor: pointer;">
     <i class="fa-solid fa-passport"></i>
     <div class="feature-text">
       <h3>Visas</h3>
@@ -153,7 +154,7 @@
     </div>
   </div>
 
-  <div class="feature-item">
+  <div class="feature-item" onclick="openVaccinesModal()" style="cursor: pointer;">
     <i class="fa-solid fa-syringe"></i>
     <div class="feature-text">
       <h3>Vaccines</h3>
@@ -279,8 +280,10 @@
 
     <div class="footer-links">
       <h4>Explore</h4>
-      <a href="#">Documents</a>
-      <a href="#">Vaccines</a>
+      <a href="#features">Documents</a>
+      <a href="#features">Luggage</a>
+      <a href="#features">Vaccines</a>
+      <a href="#features">Visas</a>
       <a href="#">Country Rules</a>
       <a href="#">Trip Check</a>
     </div>
@@ -378,6 +381,309 @@
     <script src="cloude.js"></script>
     <script src="pathways.js"></script>
     <script src="posts.js"></script>
+
+    <!-- Documents Modal -->
+    <div id="documentsModal" class="documents-modal" style="display: none;">
+        <div class="documents-modal-content">
+            <span class="documents-modal-close" onclick="closeDocumentsModal()">&times;</span>
+            <h2>Travel Documents Required</h2>
+            <div class="documents-search-bar">
+                <input type="text" id="documentsSearchInput" placeholder="Search country..." oninput="filterDocuments()">
+            </div>
+            <div id="documentsContainer" class="documents-container">
+                <!-- Documents will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openDocumentsModal() {
+            const modal = document.getElementById('documentsModal');
+            modal.style.display = 'flex';
+            populateDocuments();
+        }
+
+        function closeDocumentsModal() {
+            document.getElementById('documentsModal').style.display = 'none';
+        }
+
+        function populateDocuments() {
+            const container = document.getElementById('documentsContainer');
+            const documentsMap = new Map();
+
+            // Extract unique countries and their documents from travelRules
+            for (const key in travelRules) {
+                const [origin, destination] = key.split('-');
+                
+                // Add destination country
+                if (!documentsMap.has(destination)) {
+                    documentsMap.set(destination, travelRules[key].docs);
+                }
+            }
+
+            // Sort countries alphabetically
+            const sortedCountries = Array.from(documentsMap.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+
+            // Create document cards
+            let html = '';
+            for (const [country, docs] of sortedCountries) {
+                html += `
+                    <div class="document-card" data-country="${country}">
+                        <div class="document-header">
+                            <i class="fa-solid fa-passport"></i>
+                            <h3>${country}</h3>
+                        </div>
+                        <p class="document-text">${docs}</p>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function filterDocuments() {
+            const input = document.getElementById('documentsSearchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.document-card');
+
+            cards.forEach(card => {
+                const country = card.getAttribute('data-country').toLowerCase();
+                card.style.display = country.includes(input) ? 'block' : 'none';
+            });
+        }
+
+        // Close modal when clicking outside of it
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('documentsModal');
+            if (e.target === modal) {
+                closeDocumentsModal();
+            }
+        });
+
+        // Luggage Modal Functions
+        function openLuggageModal() {
+            const modal = document.getElementById('luggageModal');
+            modal.style.display = 'flex';
+            populateLuggage();
+        }
+
+        function closeLuggageModal() {
+            document.getElementById('luggageModal').style.display = 'none';
+        }
+
+        function populateLuggage() {
+            const container = document.getElementById('luggageContainer');
+            
+            // Sort airlines alphabetically
+            const sortedAirlines = Object.keys(luggageRules).sort();
+
+            // Create luggage cards
+            let html = '';
+            for (const airline of sortedAirlines) {
+                const rules = luggageRules[airline];
+                html += `
+                    <div class="luggage-card" data-airline="${airline}">
+                        <div class="luggage-header">
+                            <i class="fa-solid fa-plane"></i>
+                            <h3>${airline}</h3>
+                        </div>
+                        <div class="luggage-content">
+                            <p><strong>Cabin:</strong> ${rules.cabin}</p>
+                            <p><strong>Checked:</strong> ${rules.checked}</p>
+                            <p class="luggage-description">${rules.description}</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function filterLuggage() {
+            const input = document.getElementById('luggageSearchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.luggage-card');
+
+            cards.forEach(card => {
+                const airline = card.getAttribute('data-airline').toLowerCase();
+                card.style.display = airline.includes(input) ? 'block' : 'none';
+            });
+        }
+
+        // Close luggage modal when clicking outside of it
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('luggageModal');
+            if (e.target === modal) {
+                closeLuggageModal();
+            }
+        });
+
+        // Visas Modal Functions
+        function openVisasModal() {
+            const modal = document.getElementById('visasModal');
+            modal.style.display = 'flex';
+            populateVisas();
+        }
+
+        function closeVisasModal() {
+            document.getElementById('visasModal').style.display = 'none';
+        }
+
+        function populateVisas() {
+            const container = document.getElementById('visasContainer');
+            const visasMap = new Map();
+
+            // Extract unique countries and their visa requirements from travelRules
+            for (const key in travelRules) {
+                const [origin, destination] = key.split('-');
+                
+                // Add destination country with visa info
+                if (!visasMap.has(destination)) {
+                    visasMap.set(destination, travelRules[key].visa);
+                }
+            }
+
+            // Sort countries alphabetically
+            const sortedCountries = Array.from(visasMap.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+
+            // Create visa cards
+            let html = '';
+            for (const [country, visaInfo] of sortedCountries) {
+                html += `
+                    <div class="visa-card" data-country="${country}">
+                        <div class="visa-header">
+                            <i class="fa-solid fa-passport"></i>
+                            <h3>${country}</h3>
+                        </div>
+                        <p class="visa-text">${visaInfo}</p>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function filterVisas() {
+            const input = document.getElementById('visasSearchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.visa-card');
+
+            cards.forEach(card => {
+                const country = card.getAttribute('data-country').toLowerCase();
+                card.style.display = country.includes(input) ? 'block' : 'none';
+            });
+        }
+
+        // Close visas modal when clicking outside of it
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('visasModal');
+            if (e.target === modal) {
+                closeVisasModal();
+            }
+        });
+
+        // Vaccines Modal Functions
+        function openVaccinesModal() {
+            const modal = document.getElementById('vaccinesModal');
+            modal.style.display = 'flex';
+            populateVaccines();
+        }
+
+        function closeVaccinesModal() {
+            document.getElementById('vaccinesModal').style.display = 'none';
+        }
+
+        function populateVaccines() {
+            const container = document.getElementById('vaccinesContainer');
+            const vaccinesMap = new Map();
+
+            // Extract unique countries and their vaccine requirements from travelRules
+            for (const key in travelRules) {
+                const [origin, destination] = key.split('-');
+                
+                // Add destination country with vaccine info
+                if (!vaccinesMap.has(destination)) {
+                    vaccinesMap.set(destination, travelRules[key].vax);
+                }
+            }
+
+            // Sort countries alphabetically
+            const sortedCountries = Array.from(vaccinesMap.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+
+            // Create vaccine cards
+            let html = '';
+            for (const [country, vaccineInfo] of sortedCountries) {
+                html += `
+                    <div class="vaccine-card" data-country="${country}">
+                        <div class="vaccine-header">
+                            <i class="fa-solid fa-syringe"></i>
+                            <h3>${country}</h3>
+                        </div>
+                        <p class="vaccine-text">${vaccineInfo}</p>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function filterVaccines() {
+            const input = document.getElementById('vaccinesSearchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.vaccine-card');
+
+            cards.forEach(card => {
+                const country = card.getAttribute('data-country').toLowerCase();
+                card.style.display = country.includes(input) ? 'block' : 'none';
+            });
+        }
+
+        // Close vaccines modal when clicking outside of it
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('vaccinesModal');
+            if (e.target === modal) {
+                closeVaccinesModal();
+            }
+        });
+    </script>
+
+    <!-- Luggage Modal -->
+    <div id="luggageModal" class="luggage-modal" style="display: none;">
+        <div class="luggage-modal-content">
+            <span class="luggage-modal-close" onclick="closeLuggageModal()">&times;</span>
+            <h2>Luggage Rules by Airline</h2>
+            <div class="luggage-search-bar">
+                <input type="text" id="luggageSearchInput" placeholder="Search airline..." oninput="filterLuggage()">
+            </div>
+            <div id="luggageContainer" class="luggage-container">
+                <!-- Luggage rules will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Visas Modal -->
+    <div id="visasModal" class="visas-modal" style="display: none;">
+        <div class="visas-modal-content">
+            <span class="visas-modal-close" onclick="closeVisasModal()">&times;</span>
+            <h2>Visa Requirements by Country</h2>
+            <div class="visas-search-bar">
+                <input type="text" id="visasSearchInput" placeholder="Search country..." oninput="filterVisas()">
+            </div>
+            <div id="visasContainer" class="visas-container">
+                <!-- Visa requirements will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Vaccines Modal -->
+    <div id="vaccinesModal" class="vaccines-modal" style="display: none;">
+        <div class="vaccines-modal-content">
+            <span class="vaccines-modal-close" onclick="closeVaccinesModal()">&times;</span>
+            <h2>Vaccination Requirements by Country</h2>
+            <div class="vaccines-search-bar">
+                <input type="text" id="vaccinesSearchInput" placeholder="Search country..." oninput="filterVaccines()">
+            </div>
+            <div id="vaccinesContainer" class="vaccines-container">
+                <!-- Vaccine requirements will be populated here -->
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 

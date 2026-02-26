@@ -1,0 +1,255 @@
+/* Visas Modal Styles */
+.visas-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.visas-modal-content {
+    background: white;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.visas-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 32px;
+    cursor: pointer;
+    color: #64748b;
+    transition: color 0.3s ease;
+}
+
+.visas-modal-close:hover {
+    color: #e74c3c;
+}
+
+.visas-modal-content h2 {
+    color: #0f172a;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.visas-search-bar {
+    margin-bottom: 25px;
+    display: flex;
+    gap: 10px;
+}
+
+.visas-search-bar input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.visas-search-bar input:focus {
+    outline: none;
+    border-color: #466bc3;
+}
+
+.visas-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+.visa-card {
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.visa-card:hover {
+    background: #f0f6ff;
+    border-color: #466bc3;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(70, 107, 195, 0.2);
+}
+
+.visa-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.visa-header i {
+    color: #466bc3;
+    font-size: 24px;
+}
+
+.visa-header h3 {
+    color: #0f172a;
+    font-size: 16px;
+    margin: 0;
+}
+
+.visa-text {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .visas-modal-content {
+        width: 95%;
+        padding: 20px;
+        max-height: 90vh;
+    }
+
+    .visas-container {
+        grid-template-columns: 1fr;
+    }
+
+    .visas-modal-content h2 {
+        font-size: 22px;
+    }
+}
+
+/* Vaccines Modal Styles */
+.vaccines-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.vaccines-modal-content {
+    background: white;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.vaccines-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 32px;
+    cursor: pointer;
+    color: #64748b;
+    transition: color 0.3s ease;
+}
+
+.vaccines-modal-close:hover {
+    color: #e74c3c;
+}
+
+.vaccines-modal-content h2 {
+    color: #0f172a;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.vaccines-search-bar {
+    margin-bottom: 25px;
+    display: flex;
+    gap: 10px;
+}
+
+.vaccines-search-bar input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.vaccines-search-bar input:focus {
+    outline: none;
+    border-color: #466bc3;
+}
+
+.vaccines-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+.vaccine-card {
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.vaccine-card:hover {
+    background: #f0f6ff;
+    border-color: #466bc3;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(70, 107, 195, 0.2);
+}
+
+.vaccine-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.vaccine-header i {
+    color: #466bc3;
+    font-size: 24px;
+}
+
+.vaccine-header h3 {
+    color: #0f172a;
+    font-size: 16px;
+    margin: 0;
+}
+
+.vaccine-text {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .vaccines-modal-content {
+        width: 95%;
+        padding: 20px;
+        max-height: 90vh;
+    }
+
+    .vaccines-container {
+        grid-template-columns: 1fr;
+    }
+
+    .vaccines-modal-content h2 {
+        font-size: 22px;
+    }
+}

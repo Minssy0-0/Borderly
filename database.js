@@ -2706,6 +2706,85 @@ const travelRules = {
     }
 };
 
+// Luggage Rules by Airline
+const luggageRules = {
+    "Ryanair": {
+        cabin: "40 x 20 x 25 cm (10kg)",
+        checked: "10 kg first bag - €10-20, second bag from €9",
+        description: "Strict carry-on size limits"
+    },
+    "EasyJet": {
+        cabin: "45 x 36 x 20 cm (up to 15kg)",
+        checked: "Not included, from €2-30+",
+        description: "Standard carry-on policy"
+    },
+    "Lufthansa": {
+        cabin: "55 x 40 x 20 cm (8kg)",
+        checked: "23 kg first bag included",
+        description: "Generous checked baggage allowance"
+    },
+    "Air France": {
+        cabin: "55 x 35 x 25 cm (12kg)",
+        checked: "23 kg first bag included",
+        description: "Standard European carrier"
+    },
+    "British Airways": {
+        cabin: "56 x 45 x 25 cm (23kg)",
+        checked: "20-23 kg included by class",
+        description: "Allow larger cabin baggage"
+    },
+    "Turkish Airlines": {
+        cabin: "55 x 40 x 20 cm (8kg)",
+        checked: "23 kg included on most routes",
+        description: "Business and Economy available"
+    },
+    "Alitalia": {
+        cabin: "55 x 35 x 25 cm (10kg)",
+        checked: "23 kg first bag included",
+        description: "Standard Italian carrier"
+    },
+    "Iberia": {
+        cabin: "56 x 45 x 25 cm (12kg)",
+        checked: "23 kg included",
+        description: "Spanish carrier with good allowances"
+    },
+    "United Airlines": {
+        cabin: "56 x 36 x 23 cm (10kg)",
+        checked: "23 kg included on transatlantic",
+        description: "US-based international carrier"
+    },
+    "American Airlines": {
+        cabin: "56 x 36 x 23 cm (10kg)",
+        checked: "23 kg included on international",
+        description: "US-based international carrier"
+    },
+    "Japan Airlines": {
+        cabin: "55 x 40 x 20 cm (10kg)",
+        checked: "23 kg included on international",
+        description: "Premium Japanese carrier"
+    },
+    "Thai Airways": {
+        cabin: "56 x 45 x 25 cm (7kg)",
+        checked: "20-30 kg depending on class",
+        description: "Southeast Asian premium airline"
+    },
+    "Emirates": {
+        cabin: "55 x 38 x 20 cm (7kg)",
+        checked: "23-30 kg depending on class",
+        description: "Luxury Middle Eastern carrier"
+    },
+    "Qantas": {
+        cabin: "56 x 36 x 23 cm (7kg)",
+        checked: "20-30 kg on international",
+        description: "Australian premium airline"
+    },
+    "Latam": {
+        cabin: "55 x 35 x 25 cm (10kg)",
+        checked: "23 kg included",
+        description: "South American carrier"
+    }
+};
+
 // 3. The logic that updates the cards
 function updateResults() {
     const fromInput = document.getElementById('originInput');
