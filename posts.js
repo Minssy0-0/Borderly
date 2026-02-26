@@ -203,3 +203,32 @@ function confirmAndPost() {
         location.reload(); 
     }
 }
+
+/*API READER FOR PHOTO UPLOAD*/
+// Function to manually trigger the hidden file input
+function triggerFileInput() {
+    document.getElementById('postImageFile').click();
+}
+
+document.getElementById('postImageFile').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    
+    reader.onload = function(event) {
+        const imageData = event.target.result;
+        const container = document.getElementById('imagePreviewContainer');
+        
+        // 1. Update the visual preview
+        document.getElementById('templateImg').src = imageData;
+        
+        // 2. Save the string into the hidden input
+        document.getElementById('postImage').value = imageData;
+        
+        // 3. Toggle classes to hide the big "Upload" label and show "Replace" button
+        container.classList.add('image-uploaded');
+    };
+
+    reader.readAsDataURL(file);
+});
