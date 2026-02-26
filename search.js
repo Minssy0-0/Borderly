@@ -12,13 +12,90 @@ function handleMainSearch() {
 
 
 
-const countries = ["Slovakia", "Slovenia", "Spain", "Turkey", "Thailand", "United Kingdom", "USA", "France", "Germany", "Italy", "Netherlands", "Portugal", "Greece", "Austria", "Belgium", "Denmark", "Finland", "Ireland", "Norway", "Poland", "Sweden", "Switzerland"];
+const countries = [
+    "Slovakia", "Slovenia", "Spain", "Turkey", "Thailand", "United Kingdom",
+    "USA", "France", "Germany", "Italy", "Netherlands", "Portugal",
+    "Greece", "Austria", "Belgium", "Denmark", "Finland", "Ireland",
+    "Norway", "Poland", "Sweden", "Switzerland",
+
+    // Europe
+    "Bulgaria", "Romania", "Hungary", "Czech Republic", "Croatia",
+    "Serbia", "Bosnia and Herzegovina", "Montenegro", "Albania",
+    "North Macedonia", "Estonia", "Latvia", "Lithuania", "Iceland",
+    "Luxembourg", "Malta", "Cyprus", "Ukraine", "Belarus", "Moldova",
+
+    // North America
+    "Canada", "Mexico", "Cuba", "Jamaica", "Dominican Republic",
+    "Costa Rica", "Panama", "Guatemala", "Honduras", "El Salvador",
+    "Nicaragua",
+
+    // South America
+    "Brazil", "Argentina", "Chile", "Peru", "Colombia", "Ecuador",
+    "Venezuela", "Bolivia", "Paraguay", "Uruguay", "Guyana", "Suriname",
+
+    // Asia
+    "Japan", "South Korea", "China", "India", "Indonesia", "Malaysia",
+    "Singapore", "Vietnam", "Philippines", "Pakistan", "Bangladesh",
+    "Sri Lanka", "Nepal", "Mongolia", "Kazakhstan", "Uzbekistan",
+    "United Arab Emirates", "Saudi Arabia", "Qatar", "Kuwait", "Oman",
+    "Israel", "Jordan", "Lebanon", "Iran", "Iraq",
+
+    // Africa
+    "Egypt", "Morocco", "Algeria", "Tunisia", "Libya",
+    "South Africa", "Nigeria", "Kenya", "Ethiopia", "Ghana",
+    "Senegal", "Tanzania", "Uganda", "Angola", "Zimbabwe",
+
+    // Oceania
+    "Australia", "New Zealand", "Fiji", "Papua New Guinea"
+];
+
+
 const cities = [
     "Bratislava", "Ljubljana", "Madrid", "Barcelona", "Istanbul", "Ankara", 
     "Bangkok", "London", "Manchester", "New York", "Los Angeles", "Chicago", 
     "Paris", "Lyon", "Berlin", "Munich", "Rome", "Milan", "Amsterdam", 
     "Lisbon", "Athens", "Vienna", "Brussels", "Copenhagen", "Helsinki", 
-    "Dublin", "Oslo", "Warsaw", "Stockholm", "Zurich", "Geneva"
+    "Dublin", "Oslo", "Warsaw", "Stockholm", "Zurich", "Geneva",
+
+    // Europe
+    "Prague", "Budapest", "Bucharest", "Sofia", "Belgrade", "Zagreb", 
+    "Sarajevo", "Skopje", "Tirana", "Podgorica", "Vilnius", "Riga", 
+    "Tallinn", "Reykjavik", "Luxembourg", "Valencia", "Seville", 
+    "Naples", "Turin", "Florence", "Bologna", "Cologne", "Hamburg", 
+    "Frankfurt", "Stuttgart", "Dusseldorf", "Nice", "Marseille", 
+    "Toulouse", "Bordeaux", "Porto", "Krakow", "Gdansk", "Wroclaw",
+
+    // North America
+    "San Francisco", "Miami", "Houston", "Dallas", "Seattle", "Boston", 
+    "Washington", "Atlanta", "Philadelphia", "Toronto", "Vancouver", 
+    "Montreal", "Ottawa", "Calgary", "Mexico City", "Guadalajara", 
+    "Monterrey",
+
+    // South America
+    "Buenos Aires", "Sao Paulo", "Rio de Janeiro", "Brasilia", 
+    "Santiago", "Lima", "Bogota", "Quito", "Caracas", "Montevideo", 
+    "La Paz", "Asuncion",
+
+    // Asia
+    "Tokyo", "Osaka", "Kyoto", "Seoul", "Busan", "Beijing", "Shanghai", 
+    "Shenzhen", "Hong Kong", "Taipei", "Singapore", "Kuala Lumpur", 
+    "Jakarta", "Manila", "Hanoi", "Ho Chi Minh City", "Delhi", 
+    "Mumbai", "Bangalore", "Dubai", "Abu Dhabi", "Doha", "Riyadh", 
+    "Jeddah", "Tel Aviv", "Jerusalem",
+
+    // Africa
+    "Cairo", "Alexandria", "Casablanca", "Marrakesh", "Tunis", 
+    "Algiers", "Lagos", "Abuja", "Nairobi", "Addis Ababa", 
+    "Johannesburg", "Cape Town", "Durban", "Accra", "Dakar",
+
+    // Oceania
+    "Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide", 
+    "Auckland", "Wellington", "Christchurch",
+
+    // Extra popular tourist cities
+    "Venice", "Edinburgh", "Glasgow", "Birmingham", "Liverpool", 
+    "Las Vegas", "Orlando", "San Diego", "Honolulu", "Reykjavik", 
+    "Antalya", "Izmir", "Phuket", "Bali", "Santorini", "Mykonos"
 ];  
 
 function filterCountries(input, resultsId) {

@@ -66,6 +66,42 @@ function createPost(content, location, priceRating, image = "") {
     return { success: true }; //
 }
 
+/*Save Post to Diary*/
+function saveToDiary(postId) {
+    const post = db.posts.find(p => p.id === postId);
+    if (!post) {
+        alert("Post not found!");
+        return false;
+    }
+
+    // Get existing diary items from localStorage
+    let diaryItems = JSON.parse(localStorage.getItem('diary_items')) || [];
+    
+    // Check if post is already in diary
+    const exists = diaryItems.some(item => item.id === postId);
+    if (exists) {
+        alert("This destination is already in your diary!");
+        return false;
+    }
+
+    // Create diary item object
+    const diaryItem = {
+        id: postId,
+        title: post.location,
+        country: post.location.split(',').pop().trim() || 'Unknown',
+        image: post.image || 'images/default-post.png',
+        timestamp: new Date().toISOString(),
+        postContent: post.content
+    };
+
+    // Add to diary and save
+    diaryItems.push(diaryItem);
+    localStorage.setItem('diary_items', JSON.stringify(diaryItems));
+    
+    alert("Added to your travel diary!");
+    return true;
+}
+
 function registerUser(username, email, password) {
     const exists = db.users.find(u => u.email === email);
     if (exists) return { success: false, message: "Email already registered." };
