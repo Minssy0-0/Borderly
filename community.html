@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community Feed | Borderly</title>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link rel="stylesheet" href="shared.css">
-    <link rel="stylesheet" href="posts.css"> </head>
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="posts.css">
+    <link rel="stylesheet" href="community.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <body>
 <header>
   <nav>
@@ -77,20 +78,61 @@
   </nav>
 </header>
 
-<main>
-    <section class="community-hero">
-        <h1 class="page-title">Community Board</h1>
-        <p class="page-description">Real stories and recommendations from travelers like you.</p>
-    </section>
+<main class="community-container">
+    <div class="community-layout">
+        <div class="posts-section">
+            <div id="communityGrid" class="community-grid">
+                <div id="postExpander" class="row-expander" style="display: none;">
+                    <div class="expander-container">
+                        <button class="close-btn" onclick="closeExpander()">&times;</button>
+                        <div id="expanderContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div id="globalFeed" class="feed-container">
-        <div class="loading-msg">Loading travel gems...</div>
+<aside class="filter-sidebar">
+    <div class="filter-box">
+        <h3><i class="fa-solid fa-sliders"></i> Filters</h3>
+        
+        <div class="filter-group">
+            <label>Country</label>
+            <div class="search-suggest-wrapper">
+                <input type="text" id="filterCountry" placeholder="e.g. Spain" 
+                       autocomplete="off" oninput="filterCountries(this, 'countrySuggestions')">
+                <div id="countrySuggestions" class="suggestion-box" style="display: none;"></div>
+            </div>
+        </div>
+
+        <div class="filter-group">
+            <label>City</label>
+            <div class="search-suggest-wrapper">
+                <input type="text" id="filterCity" placeholder="e.g. Madrid" 
+                       autocomplete="off" oninput="filterCities(this, 'citySuggestions')">
+                <div id="citySuggestions" class="suggestion-box" style="display: none;"></div>
+            </div>
+        </div>
+
+        <div class="filter-group">
+            <label>Budget</label>
+            <div class="price-pill-selector">
+                <span onclick="setFilterPrice(1)">$</span>
+                <span onclick="setFilterPrice(2)">$$</span>
+                <span onclick="setFilterPrice(3)">$$$</span>
+            </div>
+        </div>
+
+        <button class="apply-filters-btn" onclick="applyCommunityFilters()">Apply Filters</button>
+        <button class="clear-filters-link" onclick="clearAllFilters()">Clear All</button>
+    </div>
+</aside>
     </div>
 </main>
-    <script src="database.js"></script>
-    <script src="search.js"></script>
-    <script src="cloude.js"></script>
-    <script src="pathways.js"></script>
-    <script src="posts.js"></script>
+<script src="database.js"></script>
+<script src="search.js"></script>
+<script src="cloude.js"></script>
+<script src="pathways.js"></script>
+<script src="posts.js"></script>
+<script src="profile.js"></script>
 </body>
 </html>

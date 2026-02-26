@@ -390,7 +390,9 @@ html {
     gap: 40px;
   }
   .feature-item {
-    flex: none;
+    text-decoration: none; /* Removes the underline */
+    color: inherit;        /* Keeps your original text color */
+    display: block;
     width: 40%; /* Shows 2 items per row on tablets */
   }
 }

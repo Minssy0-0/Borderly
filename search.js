@@ -166,6 +166,49 @@ function filterCities(input, resultsId) {
     }
 }
 
+let activePriceFilter = null;
+
+function setFilterPrice(val) {
+    activePriceFilter = val;
+    // Optional: Add a class to the spans to show which is selected
+    console.log("Price filter set to:", val);
+}
+
+function applyCommunityFilters() {
+    const countryVal = document.getElementById('filterCountry').value.toLowerCase();
+    const cityVal = document.getElementById('filterCity').value.toLowerCase();
+    
+    closeExpander(); // Close any open post details
+
+    const allCards = document.querySelectorAll('.mini-card');
+    
+    allCards.forEach(card => {
+        const postId = card.id.replace('mini-', '');
+        const post = db.posts.find(p => p.id == postId);
+        
+        if (!post) return;
+
+        // Logic: If the box is empty, it's an automatic match. 
+        // If not empty, check if post location/country contains the text.
+        const matchesCountry = countryVal === "" || post.location.toLowerCase().includes(countryVal);
+        const matchesCity = cityVal === "" || post.location.toLowerCase().includes(cityVal);
+        const matchesPrice = activePriceFilter === null || post.price === activePriceFilter;
+
+        if (matchesCountry && matchesCity && matchesPrice) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+function clearAllFilters() {
+    document.getElementById('filterCountry').value = "";
+    document.getElementById('filterCity').value = "";
+    activePriceFilter = null;
+    applyCommunityFilters(); // Reset the grid
+}
+
 // Close dropdown if user clicks outside
 document.addEventListener("click", (e) => {
     if (!e.target.closest(".input-wrapper")) {
