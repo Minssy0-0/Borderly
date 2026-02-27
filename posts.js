@@ -176,7 +176,6 @@ function updatePreview() {
     const previewLocation = document.querySelector('.location span');
     
     if (previewLocation) {
-        // Build the string: "Place Name | City, Country"
         let fullLoc = place;
         if (city || country) {
             fullLoc += " | " + city + (city && country ? ", " : "") + country;
@@ -184,23 +183,28 @@ function updatePreview() {
         previewLocation.textContent = fullLoc || "Location";
     }
 }
-// 5. FINAL POSTING LOGIC
+/*FINAL POSTING LOGIC*/
+/* REPLACE the old confirmAndPost with this */
 function confirmAndPost() {
     const content = document.getElementById('postContent').value;
     const locationName = document.getElementById('postLocation').value;
     const imageUrl = document.getElementById('postImage').value;
+    
+    // Grab the value that was set by your working pickCategory() function
+    const category = document.getElementById('postCategory').value;
 
-    if (!content || !locationName) {
-        alert("Please provide a location and a description!");
+    // Validation: Don't let them post if the category is empty
+    if (!content || !locationName || !category) {
+        alert("Please provide a location, description, and category!");
         return;
     }
 
-    // Passes currentSelectedPrice (could be 0) to your database.js
-    const response = createPost(content, locationName, currentSelectedPrice, imageUrl);
+    // This calls the function in database.js
+    const response = createPost(content, locationName, currentSelectedPrice, imageUrl, category);
     
     if (response.success) {
         alert("Trip shared!");
-        location.reload(); 
+        location.reload(); // Refreshes to show the new post
     }
 }
 
@@ -219,16 +223,56 @@ document.getElementById('postImageFile').addEventListener('change', function(e) 
     reader.onload = function(event) {
         const imageData = event.target.result;
         const container = document.getElementById('imagePreviewContainer');
-        
-        // 1. Update the visual preview
+
         document.getElementById('templateImg').src = imageData;
-        
-        // 2. Save the string into the hidden input
+
         document.getElementById('postImage').value = imageData;
-        
-        // 3. Toggle classes to hide the big "Upload" label and show "Replace" button
+
         container.classList.add('image-uploaded');
     };
 
     reader.readAsDataURL(file);
+});
+
+function toggleDropdown() {
+    document.getElementById('categoryOptions').classList.toggle('show');
+}
+
+function selectOption(val, label) {
+    document.getElementById('postCategory').value = val;
+
+    document.getElementById('selectedTypeText').innerText = label;
+
+    document.getElementById('categoryOptions').classList.remove('show');
+}
+
+window.onclick = function(event) {
+    if (!event.target.matches('.dropdown-selected') && !event.target.matches('#selectedTypeText')) {
+        const dropdowns = document.getElementsByClassName("dropdown-options");
+        for (let i = 0; i < dropdowns.length; i++) {
+            if (dropdowns[i].classList.contains('show')) {
+                dropdowns[i].classList.remove('show');
+            }
+        }
+    }
+}
+
+function toggleCategoryMenu() {
+    document.getElementById('categoryMenu').classList.toggle('show');
+}
+
+function pickCategory(val, label) {
+    document.getElementById('postCategory').value = val;
+    document.getElementById('selectedCategoryText').innerText = label;
+    document.getElementById('selectedCategoryText').style.color = "#466bc3";
+    document.getElementById('categoryMenu').classList.remove('show');
+}
+
+// Close dropdown if user clicks elsewhere
+window.addEventListener('click', function(e) {
+    const menu = document.getElementById('categoryMenu');
+    const trigger = document.getElementById('categoryTrigger');
+    if (menu && menu.classList.contains('show') && !trigger.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.remove('show');
+    }
 });

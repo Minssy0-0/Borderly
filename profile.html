@@ -160,6 +160,26 @@
                 <div class="post-body">
 <div class="location-selection-area">
     <input type="text" id="postPlaceName" placeholder="Place name (e.g., Blue Bottle Coffee)" class="template-input">
+<div class="template-row">
+    <div class="custom-category-dropdown" id="categoryWrapper">
+<div class="category-selected" id="categoryTrigger" onclick="toggleCategoryMenu()">
+    <span id="selectedCategoryText">Select Type</span>
+    <i class="fa-solid fa-chevron-down"></i>
+</div>
+
+<div class="category-menu" id="categoryMenu">
+    <div class="cat-option" onclick="pickCategory('Cafe', 'Cafe')">Cafe</div>
+    <div class="cat-option" onclick="pickCategory('Restaurant', 'Restaurant')">Restaurant</div>
+    <div class="cat-option" onclick="pickCategory('Bakery', 'Bakery')">Bakery</div>
+    <div class="cat-option" onclick="pickCategory('Landmark', 'Landmark')">Landmark</div>
+    <div class="cat-option" onclick="pickCategory('Nature', 'Nature')">Nature</div>
+    <div class="cat-option" onclick="pickCategory('Activity', 'Activity')">Activity</div>
+    <div class="cat-option" onclick="pickCategory('Other', 'Other')">Other</div>
+</div>
+
+        <input type="hidden" id="postCategory" value="">
+    </div>
+</div>
     
 <div class="search-container unified-geo-bar">
     <i class="fa-solid fa-earth-americas"></i>
