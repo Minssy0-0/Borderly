@@ -1,22 +1,35 @@
 /* REPLACE the old applyCommunityFilters with this */
 function applyCommunityFilters() {
+    // 1. Get all the values from your filters
     const countryVal = document.getElementById('filterCountry').value.toLowerCase();
     const cityVal = document.getElementById('filterCity').value.toLowerCase();
-    const categoryVal = document.getElementById('filterCategory').value; 
+    const categoryVal = document.getElementById('filterCategory').value; // NEW
     
+    // Close the post expander if it's open
+    if (typeof closeExpander === 'function') closeExpander();
+
+    // 2. Get all the mini-cards currently on the screen
     const allCards = document.querySelectorAll('.mini-card');
+    
     allCards.forEach(card => {
+        // Find the post data in our database using the ID on the card
         const postId = card.id.replace('mini-', '');
         const post = db.posts.find(p => p.id == postId);
         
         if (post) {
+            // Logic for Country/City
             const matchesCountry = countryVal === "" || post.location.toLowerCase().includes(countryVal);
             const matchesCity = cityVal === "" || post.location.toLowerCase().includes(cityVal);
-            const matchesPrice = (activeCommunityPrice === 0) || (post.price === activeCommunityPrice);
             
-            // Matches if "All" is selected OR if the post category matches the filter
-            const matchesCategory = (categoryVal === "all" || categoryVal === "") || (post.category === categoryVal);
+            // Logic for Price (ensure activeCommunityPrice is defined in your JS)
+            const matchesPrice = (typeof activeCommunityPrice === 'undefined' || activeCommunityPrice === 0) 
+                                 || (post.price === activeCommunityPrice);
+            
+            // Logic for Category (NEW)
+            // It matches if 'all' is selected OR if the post's category matches the dropdown
+            const matchesCategory = (categoryVal === "all") || (post.category === categoryVal);
 
+            // 3. FINAL CHECK: Only show if it matches EVERYTHING
             if (matchesCountry && matchesCity && matchesPrice && matchesCategory) {
                 card.style.display = 'flex';
             } else {

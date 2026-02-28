@@ -78,6 +78,14 @@
   </nav>
 </header>
 
+
+
+<div class="community-header">
+    <h1 class="bubbly-title">Borderly Board</h1>
+    <p class="bubbly-subtitle">Discover hidden gems, local tips, and your next big adventure.</p>
+</div>
+
+<div class="community-container">
 +-<main class="community-container">
     <div class="community-layout">
         <div class="posts-section">
@@ -113,6 +121,20 @@
             </div>
         </div>
 
+        <div class="filter-group">
+    <label>Type of Place</label>
+    <select id="filterCategory" class="filter-input-select" onchange="applyCommunityFilters()">
+        <option value="all">All Categories</option>
+        <option value="Cafe">Cafe</option>
+        <option value="Restaurant">Restaurant</option>
+        <option value="Bakery">Bakery</option>
+        <option value="Landmark">Landmark</option>
+        <option value="Nature">Nature</option>
+        <option value="Activity">Activity</option>
+        <option value="Other">Other</option>
+    </select>
+</div>
+
 <label>Price Rating</label>
 <div class="price-rating" id="priceSelector">
     <div class="reset-price-wrapper" onclick="setPrice(0)" title="No price rating">
@@ -128,7 +150,7 @@
 </div>
 
         <button class="apply-filters-btn" onclick="applyCommunityFilters()">Apply Filters</button>
-        <button class="clear-filters-link" onclick="clearAllFilters()">Clear All</button>
+        <button class="apply-filters-btn clear-btn-style" onclick="clearAllFilters()">Clear All</button>
     </div>
 </aside>
     </div>

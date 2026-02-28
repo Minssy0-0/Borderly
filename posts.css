@@ -269,14 +269,13 @@
 
 
 /* INTERACTIVE DOLLAR SIGNS */
-/* The Unified Container */
 #priceSelector {
     display: inline-flex;
     align-items: center;
     gap: 5px;
     padding: 6px 18px 6px 45px;
-    border: 1.5px solid #cbd5e1; /* Single border around everything */
-    border-radius: 30px; /* Highly curved "pill" corners */
+    border: 1.5px solid #cbd5e1; 
+    border-radius: 30px;
     background: #ffffff;
     transition: border-color 0.3s ease;
 }
@@ -285,14 +284,12 @@
 #priceSelector:hover {
     border-color: #94a3b8;
 }
-
-/* Individual Dollar Signs (Remove their individual borders) */
 #priceSelector .d-sign {
     color: #cbd5e1;
     font-size: 1.4rem;
     cursor: pointer;
     padding: 0 5px;
-    border: none; /* Removed individual borders */
+    border: none;
     background: none;
     transition: all 0.2s ease;
 }

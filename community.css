@@ -1,14 +1,53 @@
+/* Import the Bubbly Font */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap');
+
+.community-header {
+    text-align: center;
+    margin-top: 100px; /* Adjust based on your nav height */
+    margin-bottom: -80px; /* Pulls the container closer to the title */
+    padding: 0 20px;
+}
+
+.bubbly-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    
+    /* The Gradient Effect */
+    background: linear-gradient(135.2deg, #466bc3 10%, #8ea6df 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    
+    /* Makes it look more 'bubbly' */
+    letter-spacing: -1px;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+}
+
+.bubbly-subtitle {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.2rem;
+    color: #64748b;
+    font-weight: 400;
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.8;
+}
+
 .community-page {
     max-width: 1100px;
     margin: 100px auto;
     padding: 20px;
 }
 
-/* The main wrapper with the gap from the page edges */
+
+.community-container {
 .community-container {
     max-width: 1300px;
-    margin: 12rem auto; 
-    padding: 0 20px; /* The gap between it and the page */
+    margin: 7rem auto; 
+    padding: 0 20px;
+}
 }
 
 .community-layout {
@@ -39,8 +78,8 @@
     background: white;
     border: 1px solid #e2e8f0;
     border-radius: 20px;
-    padding: 25px;
-    position: sticky; /* Keeps filters visible while scrolling */
+    padding: 15px 25px;
+    position: sticky; 
     top: 110px;
 }
 
@@ -185,16 +224,12 @@
     cursor: pointer;
 }
 
-.d-sign {
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: #cbd5e1;
-    transition: all 0.2s ease;
-}
-
-.d-sign.active {
-    color: #466bc3 !important;
-    font-weight: bold;
+label{
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #64748b;
+    padding: 0 0 3px 0;
+    text-transform: uppercase;
 }
 
 .reset-price-wrapper {
@@ -215,4 +250,84 @@
 }
 @media (max-width: 500px) {
     .community-grid { grid-template-columns: 1fr; }
+
+
+    .filter-box {
+    display: flex;
+    flex-direction: column;
+    height: 30px;
+    padding-bottom: 30px;
+}
+
+    .filter-input-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background-color: white;
+    color: #64748b;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.filter-input-select:focus {
+    border-color: #466bc3;
+}
+}
+
+/* 1. Make the Category Dropdown match the sidebar font and color */
+#filterCategory {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background-color: white;
+    
+    /* Matching your Sidebar labels/inputs */
+    font-family: inherit; 
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #64748bca; 
+    
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease;
+    appearance: none; /* Removes default browser arrow for a cleaner look */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 15px;
+}
+
+#filterCategory:focus {
+    border-color: #466bc3;
+    color: #466bc3;
+}
+
+/* 2. Styling the Clear All button to match Apply Filters */
+.clear-btn-style {
+    margin-top: 10px; /* Space between the two buttons */
+    background-color: #f1f5f9; /* Slightly lighter than the blue to distinguish them */
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+}
+
+.clear-btn-style:hover {
+    background-color: #e2e8f0;
+    color: #475569;
+    transform: translateY(-2px);
+}
+
+/* 3. Ensure your existing apply-filters-btn has these base properties */
+.apply-filters-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    display: block;
 }

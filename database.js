@@ -6,13 +6,15 @@ window.redirectToAuth = function() {
 const db = {
     users: JSON.parse(localStorage.getItem('borderly_users')) || [],
     posts: JSON.parse(localStorage.getItem('borderly_posts')) || [],
-    currentUser: JSON.parse(localStorage.getItem('borderly_session')) || null
+    currentUser: JSON.parse(localStorage.getItem('borderly_session')) || null,
+    folders: JSON.parse(localStorage.getItem('borderly_folders')) || ["General", "Summer 2026", "Hidden Gems"]
 };
 
 function saveDB() {
     localStorage.setItem('borderly_users', JSON.stringify(db.users));
     localStorage.setItem('borderly_posts', JSON.stringify(db.posts));
     localStorage.setItem('borderly_session', JSON.stringify(db.currentUser));
+    localStorage.setItem('borderly_folders', JSON.stringify(db.folders)); 
 }
 
 function logout() {
@@ -32,27 +34,24 @@ function loginUser(email, password) {
     return false;
 }
 
-function createPost(content, location, price, image, category) {
-    if (!db.currentUser) {
-        alert("You must be logged in to post!");
-        return { success: false };
-    }
+function createPost(content, location, price, image, category, folder = "General") {
+    if (!db.currentUser) return { success: false };
 
     const newPost = {
         id: Date.now(),
         author: db.currentUser.username,
-        authorAvatar: db.currentUser.profilePic || 'images/default-user.png',
         content: content,
         location: location,
-        price: parseInt(price), // Ensures it's a number
-        category: category,      // <--- THIS IS THE NEW LINE
+        price: price,
+        category: category,
+        folder: folder, // <--- SAVED IN FOLDER
         image: image,
         likes: [],
         createdAt: new Date().toISOString()
     };
 
-    db.posts.unshift(newPost); // Adds to the top of the list
-    saveDB(); // This updates your localStorage
+    db.posts.unshift(newPost);
+    saveDB();
     return { success: true, post: newPost };
 }
 
