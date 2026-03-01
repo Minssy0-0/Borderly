@@ -1,4 +1,4 @@
-// ADD THIS TO THE VERY TOP OF database.js
+
 window.redirectToAuth = function() {
     console.log("Redirect blocked by Stylization Mode");
 };
@@ -7,19 +7,19 @@ const db = {
     users: JSON.parse(localStorage.getItem('borderly_users')) || [],
     posts: JSON.parse(localStorage.getItem('borderly_posts')) || [],
     currentUser: JSON.parse(localStorage.getItem('borderly_session')) || null,
-    folders: JSON.parse(localStorage.getItem('borderly_folders')) || ["General", "Summer 2026", "Hidden Gems"]
+    folders: JSON.parse(localStorage.getItem('borderly_folders')) || ["General", "Summer 2025", "Hidden Gems"]
 };
 
 function saveDB() {
     localStorage.setItem('borderly_users', JSON.stringify(db.users));
     localStorage.setItem('borderly_posts', JSON.stringify(db.posts));
     localStorage.setItem('borderly_session', JSON.stringify(db.currentUser));
-    localStorage.setItem('borderly_folders', JSON.stringify(db.folders)); 
+    localStorage.setItem('borderly_folders', JSON.stringify(db.folders)); // Save folders
 }
 
 function logout() {
     db.currentUser = null;
-    saveDB();
+    localStorage.removeItem('borderly_session');
     window.location.href = 'index.html';
 }
 
@@ -100,7 +100,7 @@ function registerUser(username, email, password) {
         username: username,
         email: email,
         password: password,
-        avatar: "images/default-user.png",
+        avatar: null,
         followers: [],
         following: [], 
         posts: [],     
@@ -2833,12 +2833,16 @@ window.addEventListener('load', () => {
             if (typeof updateResults === 'function') updateResults();
         }
     }
+});
 
-    /* TEMPORARILY DISABLED FOR STYLIZATION:
-       This was forcing you back to the login page.
-    
-    if (window.location.pathname.includes('profile.html') && !db.currentUser) {
+// The Master Gatekeeper
+function gatekeeper(destination) {
+    if (db.currentUser) {
+        // If logged in, go to the intended page
+        window.location.href = destination;
+    } else {
+        // If NOT logged in, save where they wanted to go and send to Auth
+        localStorage.setItem('redirectAfterAuth', destination);
         window.location.href = 'auth.html';
     }
-    */
-});
+}

@@ -10,63 +10,37 @@
 </head>
 <body>
     <header>
-        <nav>
+  <nav>
     <div class="navbar">
         <div class="cover-up"></div>
   
 <div class="nav-left">
-  <button id="cloudToggle" class="cloud-nav" aria-label="Open navigation">☁️</button>
- <a href="auth.html" class="profile-link-wrapper" id="profileLink">
-   <div class="profile-circle">
-      <img src="images/default-user.png" alt="Profile" class="nav-avatar">
-   </div>
-</a>
+    <button id="cloudToggle" class="cloud-nav" aria-label="Open navigation">☁️</button>
+    <div id="navAuthSection" class="nav-auth-group">
+        <a href="javascript:void(0)" onclick="gatekeeper('profile.html')" class="nav-icon-link" title="Profile">
+            <div class="profile-circle">
+                <img src="images/default-user.png" id="navAvatar" alt="User" class="nav-avatar">
+            </div>
+        </a>
 
-  <a href="profile.html" class="profile-link-wrapper" id="profileLink">
-    <div class="profile-circle">
-      <img src="images/default-user.png" alt="Profile" class="nav-avatar">
+        <button id="authBtn" class="nav-auth-btn"></button>
     </div>
-  </a>
-
-  <navmenu class="navmenu" id="cloudMenu">
-    <a href="#">Documents</a>
-    <a href="#">Luggage</a>
-    <a href="#">Vaccines</a>
-    <a href="#">Visas</a>
-    <a href="#">Travel Insurance</a>
-  </navmenu>
+</div>
+    <navmenu class="navmenu" id="cloudMenu">
+        <a href="javascript:openDocumentsModal()">Documents</a>
+        <a href="javascript:openLuggageModal()">Luggage</a>
+        <a href="javascript:openVaccinesModal()">Vaccines</a>
+        <a href="javascript:openVisasModal()">Visas</a>
+        <a href="checker.html">Travel Insurance</a>
+    </navmenu>
 </div>
       <div class="logo">
         <a href="index.html"><img src="images/logo.png" alt="Borderly Logo"></a>
       </div>
-      <div class="nav-right">
-  <div class="diary-wrapper">
-    <a href="diary.html" class="diary-link">
-      <div class="diary-circle">
-        <i class="fa-solid fa-book-bookmark"></i>
-        <span>Trip Diary</span>
-      </div>
-    </a>
+<div class="nav-right" style="display: flex; gap: 20px; align-items: center; padding-right: 20px;">
     
-    <div class="diary-dropdown">
-      <div class="dropdown-header">Recent Saves</div>
-      <div class="dropdown-item">
-        <img src="images/tokyo-cafe.jpg" alt="item">
-        <div class="item-info">
-          <strong>Shimokitazawa Cafe</strong>
-          <p>Tokyo, Japan</p>
-        </div>
-      </div>
-      <div class="dropdown-item">
-        <img src="images/rome-pantheon.jpg" alt="item">
-        <div class="item-info">
-          <strong>Pantheon</strong>
-          <p>Rome, Italy</p>
-        </div>
-      </div>
-      <a href="diary.html" class="view-all">View Full Diary</a>
+<div id="dynamicDiaryWrapper" class="diary-wrapper" style="display: flex;">
     </div>
-  </div>
 </div>
     </div>
   </nav>
@@ -85,120 +59,53 @@
             </div>
             <h2>Your diary is waiting...</h2>
             <p>You haven't saved any travel gems yet. Explore the feed to find places you'd love to visit!</p>
-            <a href="index.html" class="explore-btn">Explore Feed</a>
+            <a href="community.html" class="explore-btn">Explore Feed</a>
         </section>
 
-        <section id="diaryGrid" class="diary-grid">
-            <div class="diary-card">
-                <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=400" alt="Paris">
-                    <button class="remove-btn" title="Remove from diary">&times;</button>
-                </div>
-                <div class="card-content">
-                    <span class="tag">Sightseeing</span>
-                    <h3>Eiffel Tower Glow</h3>
-                    <p>Go at 10 PM for the best sparkle show without the massive crowds.</p>
-                </div>
+        <section id="filledDiary" class="diary-filled-state" style="display: none;">
+            <div class="filled-header">
+                <h1>My Travel Diary</h1>
+                <p>Your curated collection of travel gems and tips.</p>
             </div>
-
-            <div class="diary-card">
-                <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=400" alt="Food">
-                    <button class="remove-btn" title="Remove from diary">&times;</button>
+            <div class="recent-badge">LATEST MEMORIES</div>
+            <div id="fullPostsPreview" class="full-posts-preview-row">
                 </div>
-                <div class="card-content">
-                    <span class="tag food">Food</span>
-                    <h3>Le Petit Bistro</h3>
-                    <p>The truffle pasta here is life-changing. Book 2 days in advance.</p>
-                </div>
-            </div>
         </section>
-        </section>
-    </main>
 
-    <!-- MODAL POP-UP -->
-    <div id="destinationModal" class="modal">
-        <div class="modal-content">
-            <button id="closeModal" class="close-modal">&times;</button>
-            
-            <div class="modal-body">
-                <!-- Left side - Image Carousel -->
-                <div class="modal-images">
-                    <div class="image-carousel">
-                        <img id="carouselImage" src="" alt="Destination">
-                    </div>
-                    <div class="carousel-controls">
-                        <button id="prevBtn" class="carousel-btn"><i class="fa-solid fa-chevron-left"></i></button>
-                        <span id="imageCounter" class="image-counter">1/3</span>
-                        <button id="nextBtn" class="carousel-btn"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                </div>
-
-                <!-- Right side - Description and Reviews -->
-                <div class="modal-info">
-                    <h2 id="modalTitle">Destination Title</h2>
-                    <p id="modalDescription" class="modal-description">Description here</p>
-                    
-                    <div class="reviews-section">
-                        <h3>Reviews from Travelers</h3>
-                        <div id="reviewsContainer" class="reviews-container">
-                            <!-- Reviews will be added here -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+     <div class="folders-management-section">
+    <div class="folder-header-container">
+        <h3 class="section-label">My Collections</h3>
+        <button class="create-folder-btn" onclick="openNewFolderPrompt()">
+            <i class="fa-solid fa-plus"></i> New Folder
+        </button>
     </div>
 
-    <script src="cloude.js"></script>
+    <div id="foldersGrid" class="folders-grid">
+        <div class="folder-card">
+            <button class="delete-folder-btn" title="Delete Folder">×</button>
+            <div class="folder-icon">
+                <i class="fa-solid fa-folder"></i>
+            </div>
+            <h4>General</h4>
+            <span class="post-count">0 POSTS</span>
+        </div>
+        
+        </div>
+</div>
 
-<script src="database.js"></script>
-<script src="cloude.js"></script>
+<div id="folderContentArea" class="folder-content-area" style="display: none;">
+    <div class="content-header">
+        <h2 id="activeFolderName">Folder Name</h2>
+        <button onclick="closeFolderView()" class="close-view-btn">×</button>
+    </div>
+    
+    <div id="diaryPostsGrid" class="community-grid"> 
+        </div>
+</div>
 
+
+        
 <script>
-// Destination details with images and reviews
-const destinationDetails = {
-    'France': {
-        images: [
-            'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600',
-            'https://images.unsplash.com/photo-1499856871726-6d212b834fcd?auto=format&fit=crop&w=600',
-            'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600'
-        ],
-        description: 'France is a country of unparalleled charm, blending historical grandeur with modern elegance. From the iconic Eiffel Tower to the lavender fields of Provence, every corner tells a story of art, culture, and romance.',
-        reviews: [
-            { name: 'Sarah M.', rating: 5, text: 'The food is absolutely incredible! I spent two weeks exploring Paris and every meal was a masterpiece.' },
-            { name: 'John D.', rating: 5, text: 'Breathtaking landscapes and history at every corner. Highly recommend visiting in spring!' },
-            { name: 'Emma L.', rating: 4, text: 'Beautiful country with amazing art museums. A bit crowded in tourist areas though.' }
-        ]
-    },
-    'Japan': {
-        images: [
-            'https://images.unsplash.com/photo-1480044965905-02098d419e3e?auto=format&fit=crop&w=600',
-            'https://images.unsplash.com/photo-1522383507527-d8f693bfb05d?auto=format&fit=crop&w=600',
-            'https://images.unsplash.com/photo-1480044965905-02098d419e3e?auto=format&fit=crop&w=600'
-        ],
-        description: 'Japan offers a perfect blend of ancient traditions and cutting-edge technology. Experience serene temples, bustling cities, and world-class cuisine all in one extraordinary destination.',
-        reviews: [
-            { name: 'Michael K.', rating: 5, text: 'Tokyo is mind-blowing! The energy, the food, the technology - all incredible. Will definitely return!' },
-            { name: 'Lisa T.', rating: 5, text: 'The temples in Kyoto were so peaceful and beautiful. Japanese hospitality is unmatched.' },
-            { name: 'David R.', rating: 5, text: 'Best trip of my life! Everything is so organized and clean. Highly recommended for everyone.' }
-        ]
-    },
-    'Italy': {
-        images: [
-            'https://images.unsplash.com/photo-1517322034827-86f3929c8318?auto=format&fit=crop&w=600',
-            'https://images.unsplash.com/photo-1535369959375-4e2e3d46b4ba?auto=format&fit=crop&w=600',
-            'https://images.unsplash.com/photo-1517322034827-86f3929c8318?auto=format&fit=crop&w=600'
-        ],
-        description: 'Italy is a treasure trove of history, art, and gastronomy. Walk through cobblestone streets in Rome, explore Venice\'s canals, and indulge in authentic Italian cuisine that has shaped culinary traditions worldwide.',
-        reviews: [
-            { name: 'Isabella N.', rating: 5, text: 'Rome is eternal! The Colosseum, Vatican, and food... I could live there forever.' },
-            { name: 'Marco V.', rating: 5, text: 'Venice is magical, especially at sunset. Romantic and unforgettable experience.' },
-            { name: 'Sofia C.', rating: 4, text: 'Great food and amazing architecture. Venice can be very crowded during peak season.' }
-        ]
-    }
-};
-
 document.addEventListener('DOMContentLoaded', () => {
     // Load saved diary items from localStorage
     function loadSavedDiary() {
@@ -371,6 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
     <script src="database.js"></script>
+    <script src="auth.js"></script>
     <script src="search.js"></script>
     <script src="cloude.js"></script>
     <script src="pathways.js"></script>

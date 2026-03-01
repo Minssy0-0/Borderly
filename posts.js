@@ -73,7 +73,7 @@ function showPreview() {
             </div>
             <div class="post-right">
                 <div class="post-user-header">
-                    <img src="${db.currentUser?.avatar || 'images/default-user.png'}" class="user-avatar">
+                    <img src="${db.currentUser?.avatar || 'Stock/defaultPic.webp'}" class="user-avatar">
                     <span class="username">${db.currentUser?.username || 'Styling_Guest'}</span>
                 </div>
                 <div class="post-body">
@@ -184,32 +184,28 @@ function updatePreview() {
     }
 }
 /*FINAL POSTING LOGIC*/
-/* REPLACE the old confirmAndPost with this */
+
 function confirmAndPost() {
     const content = document.getElementById('postContent').value;
     const locationName = document.getElementById('postLocation').value;
     const imageUrl = document.getElementById('postImage').value;
-    
-    // Grab the value that was set by your working pickCategory() function
+
     const category = document.getElementById('postCategory').value;
 
-    // Validation: Don't let them post if the category is empty
+
     if (!content || !locationName || !category) {
         alert("Please provide a location, description, and category!");
         return;
     }
 
-    // This calls the function in database.js
     const response = createPost(content, locationName, currentSelectedPrice, imageUrl, category);
     
     if (response.success) {
         alert("Trip shared!");
-        location.reload(); // Refreshes to show the new post
+        location.reload(); 
     }
 }
 
-/*API READER FOR PHOTO UPLOAD*/
-// Function to manually trigger the hidden file input
 function triggerFileInput() {
     document.getElementById('postImageFile').click();
 }
@@ -276,3 +272,35 @@ window.addEventListener('click', function(e) {
         menu.classList.remove('show');
     }
 });
+
+function saveToDiary(postId) {
+    const originalPost = db.posts.find(p => p.id == postId);
+
+    if (!db.currentUser) {
+        alert("Please log in to save posts!");
+        return;
+    }
+
+    const diaryEntry = {
+        ...originalPost,
+        id: Date.now().toString(), 
+        author: db.currentUser.username,
+        folder: "General", 
+        createdAt: new Date().toISOString()
+    };
+
+
+    db.posts.push(diaryEntry);
+    saveDB(); 
+    alert("Saved to your diary!");
+}
+
+const authorAvatar = post.authorAvatar || "Stock/defaultPic.webp";
+
+return `
+    <div class="post-card">
+        ...
+        <img src="${authorAvatar}" class="user-avatar">
+        ...
+    </div>
+`;

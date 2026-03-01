@@ -6,7 +6,12 @@ window.addEventListener('load', () => {
 
     if (savedName) document.getElementById('displayUsername').innerText = savedName;
     if (savedBio) document.getElementById('displayBio').innerText = savedBio;
-    if (savedAvatar) document.getElementById('mainProfilePic').src = savedAvatar;
+    // Use Stock/defaultPic.webp if no avatar or avatar is empty/unchanged
+    if (savedAvatar && savedAvatar !== '' && savedAvatar !== 'Stock/defaultPic.webp') {
+        document.getElementById('mainProfilePic').src = savedAvatar;
+    } else {
+        document.getElementById('mainProfilePic').src = 'Stock/defaultPic.webp';
+    }
 });
 
 function openEditModal() {

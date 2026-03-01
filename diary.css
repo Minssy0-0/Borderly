@@ -407,3 +407,398 @@
         margin: 20% auto;
     }
 }
+
+/* --- Base Container Setup --- */
+.diary-container {
+    max-width: 1100px;
+    margin: 110px auto 60px;
+    padding: 0 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+.diary-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.diary-header h1 {
+    font-size: 2.5rem;
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+.diary-header p {
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+/* --- EMPTY STATE (Your Existing Style) --- */
+.diary-empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 30px;
+    border: 2px dashed #e2e8f0;
+    margin-bottom: 60px; /* Space before folders start */
+}
+
+.empty-illustration {
+    font-size: 4rem;
+    color: #cbd5e1;
+    margin-bottom: 20px;
+}
+
+/* --- FOLDER MANAGEMENT SECTION --- */
+.folders-management-section {
+    margin-top: 20px;
+    border-top: 1px solid #f1f5f9;
+}
+
+/* Centered Header with Side Button */
+.folder-header-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+    min-height: 50px;
+}
+
+.section-label {
+    font-family: 'Fredoka', sans-serif;
+    color: #0f172a;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(135deg, #466bc3 0%, #8ea6df 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.create-folder-btn {
+    position: absolute;
+    left: 0;
+    margin-top: 4.5rem;
+    background: #f1f5f9;
+    color: #466bc3;
+    border: 2px solid #e2e8f0;
+    padding: 10px 20px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.create-folder-btn:hover {
+    background: #466bc3;
+    color: white;
+    border-color: #466bc3;
+    transform: translateY(-2px);
+}
+
+/* --- THE FOLDER GRID --- */
+.folders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+/* Individual Folder Card */
+.folder-card {
+    position: relative;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    padding: 35px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.folder-card:hover {
+    border-color: #466bc3;
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(70, 107, 195, 0.1);
+}
+
+.folder-icon {
+    font-size: 2.5rem;
+    color: #8ea6df;
+    margin-bottom: 12px;
+}
+
+.folder-card h4 {
+    margin: 0;
+    color: #0f172a;
+    font-size: 1.2rem;
+    font-family: 'Fredoka', sans-serif;
+}
+
+.post-count {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.75rem;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-weight: 700;
+}
+
+/* --- DELETE BUTTON (Small X on hover) --- */
+.delete-folder-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #fee2e2;
+    color: #ef4444;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.folder-card:hover .delete-folder-btn {
+    opacity: 1;
+}
+
+.delete-folder-btn:hover {
+    background: #ef4444;
+    color: white;
+}
+
+/* --- FOLDER VIEW (Inside a Folder) --- */
+.view-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.back-link {
+    background: #f1f5f9;
+    color: #466bc3;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.diary-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+
+/*INSIDE A FOLDER*/
+.folder-content-area {
+    margin-top: 50px;
+    padding: 40px;
+    background: #f8fafc; /* Light distinct background */
+    border-radius: 30px;
+    border: 2px solid #e2e8f0;
+    animation: fadeIn 0.4s ease;
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.content-header h2 {
+    font-family: 'Fredoka', sans-serif;
+    color: #466bc3;
+    font-size: 2rem;
+    margin: 0;
+}
+
+.close-view-btn {
+    background: white;
+    border: 1px solid #e2e8f0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #64748b;
+    transition: 0.2s;
+}
+
+.close-view-btn:hover {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+/* Ensure the grid matches community page logic */
+.diary-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+/*FILLED FOLDER VIEW*/
+/* --- FILLED STATE STYLING --- */
+.diary-filled-state {
+    padding: 40px 0;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.filled-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.recent-badge {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #466bc3;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+}
+
+.full-posts-preview-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Creates two equal columns */
+    gap: 25px;
+    margin-bottom: 60px;
+}
+
+/* The Full Post Card */
+.diary-full-card {
+    position: relative;
+    display: flex;
+    flex-direction: column; 
+    background: white;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    height: 100%; 
+}
+
+.diary-full-card:hover {
+    transform: translateY(-5px);
+}
+
+.diary-full-card img {
+    width: 100%;
+    height: 250px; /* Fixed height for the top image */
+    object-fit: cover;
+}
+
+.diary-full-content {
+    padding: 30px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.diary-full-content .post-folder {
+    font-weight: 800;
+    font-size: 0.7rem;
+    color: #8ea6df;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.diary-full-content h2 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 2.2rem;
+    color: #0f172a;
+    margin-bottom: 15px;
+}
+
+.diary-full-content p {
+    color: #64748b;
+    line-height: 1.8;
+    font-size: 1rem;
+    margin-bottom: 25px;
+}
+
+.post-footer-meta {
+    margin-top: auto;
+    display: flex;
+    gap: 20px;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.card-like-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #ef4444; /* Heart color */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+
+.card-like-btn:hover {
+    transform: scale(1.1);
+    background: #fff;
+}
+
+.post-meta-footer {
+    display: flex;
+    justify-content: space-between; /* Pushes date to left, likes to right */
+    align-items: center;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.likes-display {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 700;
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 900px) {
+    .diary-full-card {
+        grid-template-columns: 1fr;
+    }
+    .diary-full-content {
+        padding: 30px;
+    }
+}

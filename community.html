@@ -17,63 +17,33 @@
         <div class="cover-up"></div>
   
 <div class="nav-left">
-  <button id="cloudToggle" class="cloud-nav" aria-label="Open navigation">☁️</button>
- <a href="auth.html" class="profile-link-wrapper" id="profileLink">
-   <div class="profile-circle">
-      <img src="images/default-user.png" alt="Profile" class="nav-avatar">
-   </div>
-</a>
+    <button id="cloudToggle" class="cloud-nav" aria-label="Open navigation">☁️</button>
+    <div id="navAuthSection" class="nav-auth-group">
+        <a href="javascript:void(0)" onclick="gatekeeper('profile.html')" class="nav-icon-link" title="Profile">
+            <div class="profile-circle">
+                <img src="images/default-user.png" id="navAvatar" alt="User" class="nav-avatar">
+            </div>
+        </a>
 
-  <a href="profile.html" class="profile-link-wrapper" id="profileLink">
-    <div class="profile-circle">
-      <img src="images/default-user.png" alt="Profile" class="nav-avatar">
+        <button id="authBtn" class="nav-auth-btn"></button>
     </div>
-  </a>
-
-  <navmenu class="navmenu" id="cloudMenu">
-    <a href="#">Documents</a>
-    <a href="#">Luggage</a>
-    <a href="#">Vaccines</a>
-    <a href="#">Visas</a>
-    <a href="#">Travel Insurance</a>
-  </navmenu>
+</div>
+    <navmenu class="navmenu" id="cloudMenu">
+        <a href="javascript:openDocumentsModal()">Documents</a>
+        <a href="javascript:openLuggageModal()">Luggage</a>
+        <a href="javascript:openVaccinesModal()">Vaccines</a>
+        <a href="javascript:openVisasModal()">Visas</a>
+        <a href="checker.html">Travel Insurance</a>
+    </navmenu>
 </div>
       <div class="logo">
         <a href="index.html"><img src="images/logo.png" alt="Borderly Logo"></a>
       </div>
-<div class="nav-right" style="display: flex; gap: 20px;">
+<div class="nav-right" style="display: flex; gap: 20px; align-items: center; padding-right: 20px;">
     
-    <div class="diary-wrapper pathway-guest">
-        <a href="auth.html" style="text-decoration: none;">
-            <div class="diary-circle" style="border: 2px dashed #cbd5e1;">
-                <i class="fa-solid fa-lock" style="color: #94a3b8;"></i>
-                <span style="color: #94a3b8;">Guest</span>
-            </div>
-        </a>
-        <div class="diary-dropdown">
-            <div class="guest-prompt" style="text-align: center;">
-                <i class="fa-solid fa-lock" style="font-size: 1.5rem; color: #cbd5e1; margin-bottom: 10px; display: block;"></i>
-                <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 10px;">Sign in to save gems!</p>
-                <a href="auth.html" style="display: block; background: #466bc3; color: white; padding: 6px; border-radius: 4px; text-decoration: none; font-size: 0.7rem; font-weight: bold;">Login</a>
-            </div>
-        </div>
+<div id="dynamicDiaryWrapper" class="diary-wrapper" style="display: flex;">
     </div>
-
-    <div class="diary-wrapper pathway-member">
-        <a href="diary.html" style="text-decoration: none;">
-            <div class="diary-circle" style="border: 2px solid #f3a333;">
-                <i class="fa-solid fa-book-bookmark" style="color: #466bc3;"></i>
-                <span style="color: #334155;">Member</span>
-            </div>
-        </a>
-        <div class="diary-dropdown">
-            <div style="font-weight: 800; font-size: 0.7rem; color: #94a3b8; margin-bottom: 10px;">YOUR SAVES</div>
-            <p style="font-size: 0.8rem; color: #64748b;">Your diary is empty.</p>
-            <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 10px 0;">
-            <a href="diary.html" style="display: block; text-align: center; color: #466bc3; font-weight: 700; text-decoration: none; font-size: 0.75rem;">Open Diary</a>
-        </div>
-    </div>
-    </div>
+</div>
     </div>
   </nav>
 </header>
@@ -155,11 +125,11 @@
 </aside>
     </div>
 </main>
-<script src="database.js"></script>
-<script src="search.js"></script>
-<script src="cloude.js"></script>
-<script src="pathways.js"></script>
-<script src="posts.js"></script>
-<script src="profile.js"></script>
+    <script src="database.js"></script>
+    <script src="auth.js"></script>
+    <script src="search.js"></script>
+    <script src="cloude.js"></script>
+    <script src="pathways.js"></script>
+    <script src="posts.js"></script>
 </body>
 </html>
