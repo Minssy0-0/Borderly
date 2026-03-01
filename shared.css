@@ -217,7 +217,7 @@ header {
 }
 
 .nav-left {
-  position: relative;
+  position: absolute;
 }
 
 .logo {
@@ -225,7 +225,11 @@ header {
 }
 
 .logo img {
-  height: 40px;
+  position: relative;
+  height: 90px;
+  margin-top: -100px;
+  z-index: 10;
+  margin-bottom: 28px;
 }
 
 .nav-right {
