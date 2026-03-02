@@ -9,6 +9,17 @@ function handleMainSearch() {
     }
 }
 
+// navigate to popular destinations page from main banner
+function goToPopularPage() {
+    let country = document.getElementById('destinationInput')?.value.trim();
+    if (country) {
+        country = encodeURIComponent(country);
+        window.location.href = `popular.html?country=${country}`;
+    } else {
+        window.location.href = 'popular.html';
+    }
+}
+
 
 
 
@@ -98,6 +109,207 @@ const cities = [
     "Antalya", "Izmir", "Phuket", "Bali", "Santorini", "Mykonos"
 ];  
 
+
+// Popular city suggestions per country (top 3)
+const popularCitiesByCountry = {
+    "Slovakia": ["Bratislava", "Kosice", "Zilina"],
+    "Slovenia": ["Ljubljana", "Maribor", "Koper"],
+    "Spain": ["Madrid", "Barcelona", "Valencia"],
+    "Turkey": ["Istanbul", "Ankara", "Izmir"],
+    "Thailand": ["Bangkok", "Chiang Mai", "Phuket"],
+    "United Kingdom": ["London", "Manchester", "Edinburgh"],
+    "USA": ["New York", "Los Angeles", "Chicago"],
+    "France": ["Paris", "Lyon", "Nice"],
+    "Germany": ["Berlin", "Munich", "Hamburg"],
+    "Italy": ["Rome", "Milan", "Venice"],
+    "Netherlands": ["Amsterdam", "Rotterdam", "The Hague"],
+    "Portugal": ["Lisbon", "Porto", "Faro"],
+    "Greece": ["Athens", "Thessaloniki", "Santorini"],
+    "Austria": ["Vienna", "Salzburg", "Graz"],
+    "Belgium": ["Brussels", "Antwerp", "Bruges"],
+    "Denmark": ["Copenhagen", "Aarhus", "Odense"],
+    "Finland": ["Helsinki", "Tampere", "Turku"],
+    "Ireland": ["Dublin", "Cork", "Galway"],
+    "Norway": ["Oslo", "Bergen", "Trondheim"],
+    "Poland": ["Warsaw", "Krakow", "Gdansk"],
+    "Sweden": ["Stockholm", "Gothenburg", "Malmo"],
+    "Switzerland": ["Zurich", "Geneva", "Bern"],
+
+    "Bulgaria": ["Sofia", "Plovdiv", "Varna"],
+    "Romania": ["Bucharest", "Cluj-Napoca", "Timisoara"],
+    "Hungary": ["Budapest", "Debrecen", "Szeged"],
+    "Czech Republic": ["Prague", "Brno", "Ostrava"],
+    "Croatia": ["Zagreb", "Split", "Dubrovnik"],
+    "Serbia": ["Belgrade", "Novi Sad", "Nis"],
+    "Bosnia and Herzegovina": ["Sarajevo", "Mostar", "Banja Luka"],
+    "Montenegro": ["Podgorica", "Budva", "Kotor"],
+    "Albania": ["Tirana", "Durres", "Vlore"],
+    "North Macedonia": ["Skopje", "Ohrid", "Bitola"],
+    "Estonia": ["Tallinn", "Tartu", "Narva"],
+    "Latvia": ["Riga", "Daugavpils", "Liepaja"],
+    "Lithuania": ["Vilnius", "Kaunas", "Klaipeda"],
+    "Iceland": ["Reykjavik", "Akureyri", "Keflavik"],
+    "Luxembourg": ["Luxembourg City", "Esch-sur-Alzette", "Differdange"],
+    "Malta": ["Valletta", "Sliema", "St. Julian's"],
+    "Cyprus": ["Nicosia", "Limassol", "Larnaca"],
+    "Ukraine": ["Kyiv", "Lviv", "Odessa"],
+    "Belarus": ["Minsk", "Gomel", "Brest"],
+    "Moldova": ["Chisinau", "Balti", "Tiraspol"],
+
+    "Canada": ["Toronto", "Vancouver", "Montreal"],
+    "Mexico": ["Mexico City", "Guadalajara", "Monterrey"],
+    "Cuba": ["Havana", "Santiago de Cuba", "Varadero"],
+    "Jamaica": ["Kingston", "Montego Bay", "Ocho Rios"],
+    "Dominican Republic": ["Santo Domingo", "Punta Cana", "Santiago"],
+    "Costa Rica": ["San Jose", "Limon", "Alajuela"],
+    "Panama": ["Panama City", "Colon", "David"],
+    "Guatemala": ["Guatemala City", "Antigua", "Quetzaltenango"],
+    "Honduras": ["Tegucigalpa", "San Pedro Sula", "La Ceiba"],
+    "El Salvador": ["San Salvador", "Santa Ana", "San Miguel"],
+    "Nicaragua": ["Managua", "Leon", "Granada"],
+
+    "Brazil": ["Sao Paulo", "Rio de Janeiro", "Brasilia"],
+    "Argentina": ["Buenos Aires", "Cordoba", "Rosario"],
+    "Chile": ["Santiago", "Valparaiso", "Concepcion"],
+    "Peru": ["Lima", "Cusco", "Arequipa"],
+    "Colombia": ["Bogota", "Medellin", "Cartagena"],
+    "Ecuador": ["Quito", "Guayaquil", "Cuenca"],
+    "Venezuela": ["Caracas", "Maracaibo", "Valencia"],
+    "Bolivia": ["La Paz", "Santa Cruz", "Cochabamba"],
+    "Paraguay": ["Asuncion", "Ciudad del Este", "Encarnacion"],
+    "Uruguay": ["Montevideo", "Punta del Este", "Salto"],
+    "Guyana": ["Georgetown", "Linden", "New Amsterdam"],
+    "Suriname": ["Paramaribo", "Lelydorp", "Nieuw Nickerie"],
+
+    "Japan": ["Tokyo", "Osaka", "Kyoto"],
+    "South Korea": ["Seoul", "Busan", "Incheon"],
+    "China": ["Beijing", "Shanghai", "Shenzhen"],
+    "India": ["Delhi", "Mumbai", "Bangalore"],
+    "Indonesia": ["Jakarta", "Bali", "Surabaya"],
+    "Malaysia": ["Kuala Lumpur", "Penang", "Johor Bahru"],
+    "Singapore": ["Singapore", "Jurong", "Woodlands"],
+    "Vietnam": ["Hanoi", "Ho Chi Minh City", "Da Nang"],
+    "Philippines": ["Manila", "Cebu", "Davao"],
+    "Pakistan": ["Karachi", "Lahore", "Islamabad"],
+    "Bangladesh": ["Dhaka", "Chittagong", "Khulna"],
+    "Sri Lanka": ["Colombo", "Kandy", "Galle"],
+    "Nepal": ["Kathmandu", "Pokhara", "Lalitpur"],
+    "Mongolia": ["Ulaanbaatar", "Erdenet", "Darkhan"],
+    "Kazakhstan": ["Almaty", "Astana", "Shymkent"],
+    "Uzbekistan": ["Tashkent", "Samarkand", "Bukhara"],
+    "United Arab Emirates": ["Dubai", "Abu Dhabi", "Sharjah"],
+    "Saudi Arabia": ["Riyadh", "Jeddah", "Mecca"],
+    "Qatar": ["Doha", "Al Wakrah", "Al Khor"],
+    "Kuwait": ["Kuwait City", "Hawalli", "Salmiya"],
+    "Oman": ["Muscat", "Salalah", "Sohar"],
+    "Israel": ["Tel Aviv", "Jerusalem", "Haifa"],
+    "Jordan": ["Amman", "Aqaba", "Irbid"],
+    "Lebanon": ["Beirut", "Tripoli", "Sidon"],
+    "Iran": ["Tehran", "Isfahan", "Shiraz"],
+    "Iraq": ["Baghdad", "Erbil", "Basra"],
+
+    "Egypt": ["Cairo", "Alexandria", "Giza"],
+    "Morocco": ["Casablanca", "Marrakesh", "Rabat"],
+    "Algeria": ["Algiers", "Oran", "Constantine"],
+    "Tunisia": ["Tunis", "Sfax", "Sousse"],
+    "Libya": ["Tripoli", "Benghazi", "Misrata"],
+    "South Africa": ["Johannesburg", "Cape Town", "Durban"],
+    "Nigeria": ["Lagos", "Abuja", "Ibadan"],
+    "Kenya": ["Nairobi", "Mombasa", "Kisumu"],
+    "Ethiopia": ["Addis Ababa", "Dire Dawa", "Mekelle"],
+    "Ghana": ["Accra", "Kumasi", "Takoradi"],
+    "Senegal": ["Dakar", "Saint-Louis", "Touba"],
+    "Tanzania": ["Dar es Salaam", "Dodoma", "Arusha"],
+    "Uganda": ["Kampala", "Entebbe", "Jinja"],
+    "Angola": ["Luanda", "Huambo", "Lobito"],
+    "Zimbabwe": ["Harare", "Bulawayo", "Mutare"],
+
+    "Australia": ["Sydney", "Melbourne", "Brisbane"],
+    "New Zealand": ["Auckland", "Wellington", "Christchurch"],
+    "Fiji": ["Suva", "Nadi", "Lautoka"],
+    "Papua New Guinea": ["Port Moresby", "Lae", "Mount Hagen"]
+};
+
+function updateRecommendationHeader() {
+    const dest = document.getElementById('destinationInput');
+    const title = document.getElementById('recommendationTitle');
+    if (!title || !dest) return;
+    if (dest.value.trim().length > 0) {
+        title.textContent = 'Recommended Cities';
+    } else {
+        title.textContent = 'Recommended Countries';
+    }
+}
+
+function updateRecommendedCities() {
+    const destInput = document.getElementById('destinationInput');
+    if (!destInput) return;
+    const raw = destInput.value.trim();
+    const cardGrid = document.getElementById('cardGrid');
+    if (!cardGrid) return;
+
+    // Clear existing cards
+    cardGrid.innerHTML = '';
+
+    if (!raw) return;
+
+    const normalized = raw.toLowerCase();
+
+    // Try to match country directly (exact, startsWith, includes)
+    let matchKey = Object.keys(popularCitiesByCountry).find(k => {
+        const kl = k.toLowerCase();
+        return kl === normalized || normalized.startsWith(kl) || normalized.includes(kl);
+    });
+
+    // If still not found, check if the input matches a popular city and map back to its country
+    if (!matchKey) {
+        for (const [country, list] of Object.entries(popularCitiesByCountry)) {
+            for (const c of list) {
+                if (c.toLowerCase() === normalized || normalized.startsWith(c.toLowerCase()) || normalized.includes(c.toLowerCase())) {
+                    matchKey = country;
+                    break;
+                }
+            }
+            if (matchKey) break;
+        }
+    }
+
+    if (!matchKey) return; // nothing we can recommend
+
+    const citiesList = popularCitiesByCountry[matchKey] || [];
+    if (citiesList.length === 0) return;
+
+    // Build up to three city cards
+    citiesList.slice(0,3).forEach(cityName => {
+        const card = document.createElement('div');
+        card.className = 'city-card';
+
+        const img = document.createElement('div');
+        img.className = 'card-img';
+        img.style.background = '#ddd';
+
+        const info = document.createElement('div');
+        info.className = 'card-info';
+        const h3 = document.createElement('h3');
+        h3.textContent = cityName;
+        const p = document.createElement('p');
+        p.textContent = `Top sights & local tips in ${cityName}`;
+
+        const stats = document.createElement('div');
+        stats.className = 'post-stats';
+        stats.innerHTML = '<span><i class="fa-regular fa-heart"></i> 124</span> <button class="add-diary-btn"><i class="fa-solid fa-plus"></i> Add to Diary</button>';
+
+        info.appendChild(h3);
+        info.appendChild(p);
+        info.appendChild(stats);
+
+        card.appendChild(img);
+        card.appendChild(info);
+
+        cardGrid.appendChild(card);
+    });
+}
+
 function filterCountries(input, resultsId) {
     const list = document.getElementById(resultsId);
     if (!list) return;
@@ -123,6 +335,11 @@ function filterCountries(input, resultsId) {
                     if (typeof updateResults === "function") updateResults();
                     // Only call updatePreview if it exists (on the profile page)
                     if (typeof updatePreview === "function") updatePreview();
+                    // update recommendation header and cities if this was destination field
+                    if (input && input.id === 'destinationInput') {
+                        updateRecommendationHeader();
+                        updateRecommendedCities();
+                    }
                 };
                 list.appendChild(div);
             });
@@ -301,6 +518,17 @@ window.addEventListener('load', () => {
             originBox.value = fromParam;
             destBox.value = toParam;
             updateResults(); // This triggers the info cards to appear
+            updateRecommendationHeader();
+            updateRecommendedCities();
         }
+    }
+
+    // listen for changes in destination typing to adjust recommendations
+    const destBox = document.getElementById('destinationInput');
+    if (destBox) {
+        destBox.addEventListener('input', () => {
+            updateRecommendationHeader();
+            updateRecommendedCities();
+        });
     }
 });

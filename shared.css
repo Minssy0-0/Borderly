@@ -950,3 +950,18 @@ header {
 .diary-wrapper:hover .diary-dropdown {
     display: block;
 }
+
+/* Explore button under recommendations */
+.explore-btn {
+    background: #0077cc;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.explore-btn:hover {
+    background: #005fa3;
+}
