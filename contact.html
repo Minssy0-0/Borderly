@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="Main-main.css">
+  <link rel="stylesheet" href="posts.css">
+  <link rel="stylesheet" href="visas.css">
+
+  <title>Contact Us - Borderly</title>
+</head>
+
+<body class="contact-page">
+<header>
+  <nav>
+    <div class="navbar">
+        <div class="cover-up"></div>
+  
+<div class="nav-left">
+    <button id="cloudToggle" class="cloud-nav" aria-label="Open navigation">☁️</button>
+<navmenu>
+    <a href="javascript:openDocumentsModal()">Documents</a>
+    <a href="javascript:openLuggageModal()">Luggage</a>
+    <a href="javascript:openVaccinesModal()">Vaccines</a>
+    <a href="javascript:openVisasModal()">Visas</a>
+    <a href="checker.html">Travel Insurance</a>
+
+    <div id="cloudAuthArea"></div> 
+</navmenu>
+    <div id="navAuthSection" class="nav-auth-group">
+        <a href="javascript:void(0)" onclick="gatekeeper('profile.html')" class="nav-icon-link" title="Profile">
+            <div class="profile-circle">
+                <img src="Stock/defaultPic.webp" id="navAvatar" alt="User" class="nav-avatar">
+            </div>
+        </a>
+    </div>
+</div>
+    <navmenu class="navmenu" id="cloudMenu">
+</div>
+      <div class="logo">
+        <a href="index.html"><img src="stock/logo sample (2).png" alt="Borderly Logo"></a>
+      </div>
+<div class="nav-right" id="navRightControls"></div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section id="contact">
+    <div class="contact-section">
+      <h1><i class="fa-solid fa-envelope" style="margin-right:8px;color:#466bc3;"></i>Get in Touch</h1>
+      <p>Have questions or need assistance? We're here to help!</p>
+    <form class="contact-form" action="#" method="post">
+      <div class="input-group1">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required>
+      </div>
+
+      <div class="input-group2">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="input-group3">
+      <label for="topic">Topic</label>
+        <select id="topic" name="topic" required>
+          <option>General Question</option>
+          <option>Documents</option>
+          <option>Luggage Rules</option>
+          <option>Vaccines</option>
+          <option>Country Laws</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="input-group4">
+      <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" placeholder="Enter your message here..." required></textarea>
+      </div>
+      <button type="submit" class="send-btn">Send</button>
+    </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+
+    <div class="footer-brand">
+      <img src="Stock/logo sample (2).png" alt="Borderly logo">
+      <p>Making global travel safer, clearer, and legally right — all in one place.</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Explore</h4>
+      <a href="#features">Documents</a>
+      <a href="#features">Luggage</a>
+      <a href="#features">Vaccines</a>
+      <a href="#features">Visas</a>
+      <a href="#">Country Rules</a>
+      <a href="#">Trip Check</a>
+    </div>
+
+    <div class="footer-links">
+      <h4>Company</h4>
+      <a href="#">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+    </div>
+
+    <div class="footer-sitemap footer-links">
+      <h4>Site Map</h4>
+      <a href="index.html">Home</a>
+      <a href="community.html">Community</a>
+      <a href="posts.html">Posts</a>
+      <a href="diary.html">Diary</a>
+      <a href="visas.html">Visas</a>
+      <a href="checker.html">Travel Insurance</a>
+      <a href="profile.html">Profile</a>
+    </div>
+
+    <div class="footer-social">
+      <h4>Follow</h4>
+      <div class="social-icons">
+        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 Borderly. All rights reserved.
+  </div>
+</footer>
+
+<script src="database.js"></script>
+<script src="auth.js"></script>
+<script>
+    if (typeof updateNavbarUI === 'function') {
+        window.addEventListener('DOMContentLoaded', updateNavbarUI);
+    }
+</script>
+
+<script src="search.js"></script>
+<script src="cloude.js"></script>
+<script src="pathways.js"></script>
+<script src="posts.js"></script>
+
+<!-- Ensure Trip Diary button is rendered after all scripts and DOM are loaded -->
+<script>
+    window.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('load', function() {
+            if (typeof updateNavbarUI === 'function') updateNavbarUI();
+        });
+    });
+</script>
+</body>
+</html>
