@@ -287,13 +287,32 @@ header {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  /* brand occupies 2fr, then four equal-width columns for links/social/sitemap */
+  grid-template-columns: 2fr repeat(4, 1fr);
   gap: 40px;
 }
 
 .footer-brand img {
   width: 140px;
   margin-bottom: 16px;
+}
+
+/* sitemap column shares same link styling but can be identified for semantics */
+.footer-sitemap h4 {
+  margin-bottom: 14px;
+  font-size: 1rem;
+  color: white;
+}
+
+.footer-sitemap a {
+  display: block;
+  color: #cbd5f5;
+  text-decoration: none;
+  margin-bottom: 8px;
+}
+
+.footer-sitemap a:hover {
+  color: white;
 }
 
 .footer-brand p {
