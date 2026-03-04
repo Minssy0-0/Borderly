@@ -532,3 +532,92 @@ window.addEventListener('load', () => {
         });
     }
 });
+
+// Run this when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    const destInput = document.getElementById('destinationInput');
+    
+    // Initial load: show the 3 latest posts globally
+    renderRecommended();
+
+    // Listen for typing in the "Traveling To" field
+    destInput.addEventListener('input', (e) => {
+        const query = e.target.value.trim();
+        renderRecommended(query);
+    });
+});
+
+function renderRecommended(countryQuery = "") {
+    const grid = document.getElementById('recommendedGrid');
+    if (!grid) return;
+
+    let filteredPosts = [];
+
+    // Logic for filtering (same as before)
+    if (!countryQuery) {
+        filteredPosts = [...db.posts]
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .slice(0, 3);
+    } else {
+        filteredPosts = db.posts
+            .filter(post => post.location.toLowerCase().includes(countryQuery.toLowerCase()))
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .slice(0, 3);
+    }
+
+    // Clear grid for the new results
+    grid.innerHTML = '';
+
+    if (filteredPosts.length === 0) {
+        grid.innerHTML = `<p class="no-results">No gems found in "${countryQuery}" yet.</p>`;
+        return;
+    }
+
+    // Create cards but keep them hidden initially
+    filteredPosts.forEach((post, index) => {
+        const card = document.createElement('div');
+        card.className = 'mini-card';
+        card.style.opacity = '0'; // Start invisible
+        
+        card.innerHTML = `
+            <div class="mini-card-image">
+                <img src="${post.image}" alt="${post.location}">
+            </div>
+            <div class="mini-card-info">
+                <div class="mini-card-header">
+                    <span class="mini-category">${post.category}</span>
+                    <div class="mini-price">${"$".repeat(post.price)}</div>
+                </div>
+                <h4 class="mini-location">${post.location}</h4>
+            </div>
+        `;
+
+        grid.appendChild(card);
+
+        // TRIGGER ANIMATION: Staggered entry (100ms apart)
+        setTimeout(() => {
+            card.classList.add('reveal-card');
+        }, index * 100); 
+    });
+}
+
+let typingTimer;
+destInput.addEventListener('input', (e) => {
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(() => {
+        renderRecommended(e.target.value.trim());
+    }, 300);
+});
+
+card.onclick = () => openGemModal(post.id); 
+
+function openGemModal(postId) {
+    const post = db.posts.find(p => p.id == postId);
+    const modal = document.getElementById('gemModal');
+    const container = document.getElementById('modalContentContainer');
+
+    container.innerHTML = generatePostHTML(post);
+    
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('active'), 10);
+}

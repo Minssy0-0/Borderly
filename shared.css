@@ -91,7 +91,7 @@ body.contact-page {
 }
 
 main {
-  padding-top: 90px; /* ensure content sits below fixed header */
+  padding-top: 0; /* ensure content sits below fixed header */
 }
 
 nav{
@@ -964,4 +964,54 @@ header {
 }
 .explore-btn:hover {
     background: #005fa3;
+}
+
+#recommendedGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.mini-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+
+.mini-card:hover {
+    transform: translateY(-5px);
+}
+
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #64748b;
+    padding: 40px;
+}
+
+/* Animation Keyframes */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* The class we will add via JavaScript */
+.reveal-card {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+#recommendedGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    min-height: 350px; /* Prevents the page from jumping when empty */
 }

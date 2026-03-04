@@ -25,22 +25,37 @@ function generatePostHTML(post) {
     </div>`;
 }
 
-// 2. The Feed Controller (decides which posts go where)
 function renderAllFeeds() {
-    const globalFeed = document.getElementById('globalFeed'); // For community.html
-    const userFeed = document.getElementById('userPublicFeed'); // For profile.html
-    const homeFeed = document.getElementById('homeRecentFeed'); // For index.html
+    const globalFeed = document.getElementById('globalFeed');
+    if (!globalFeed) return;
 
-    if (globalFeed) {
-        globalFeed.innerHTML = db.posts.map(p => generatePostHTML(p)).join('');
+    // 1. Get the featured ID and clear it immediately so it doesn't stay stuck
+    const featuredId = localStorage.getItem('featuredPostId');
+    localStorage.removeItem('featuredPostId'); 
+
+    let postsToRender = [...db.posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    // 2. If there's a featured post, move it to index 0
+    if (featuredId) {
+        const featuredIndex = postsToRender.findIndex(p => p.id == featuredId);
+        if (featuredIndex > -1) {
+            const featuredPost = postsToRender.splice(featuredIndex, 1)[0];
+            postsToRender.unshift(featuredPost);
+        }
     }
-    
-    if (homeFeed) {
-        const recent = db.posts.slice(0, 3);
-        homeFeed.innerHTML = recent.map(p => generatePostHTML(p)).join('');
-    }
+
+    // 3. Render the posts
+    globalFeed.innerHTML = postsToRender.map((post, index) => {
+        let html = generatePostHTML(post);
+        
+        // 4. If it's the first post and we had a featuredId, make it start "Opened"
+        if (index === 0 && featuredId) {
+            // We inject a temporary style or class to keep it expanded
+            return html.replace('class="post-card"', 'class="post-card featured-expanded"');
+        }
+        return html;
+    }).join('');
 }
-document.addEventListener('DOMContentLoaded', renderAllFeeds);
 
 
 // Open/Close Form
