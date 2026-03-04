@@ -387,7 +387,6 @@ let activePriceFilter = null;
 
 function setFilterPrice(val) {
     activePriceFilter = val;
-    // Optional: Add a class to the spans to show which is selected
     console.log("Price filter set to:", val);
 }
 
@@ -395,7 +394,7 @@ function applyCommunityFilters() {
     const countryVal = document.getElementById('filterCountry').value.toLowerCase();
     const cityVal = document.getElementById('filterCity').value.toLowerCase();
     
-    closeExpander(); // Close any open post details
+    closeExpander(); 
 
     const allCards = document.querySelectorAll('.mini-card');
     
@@ -404,9 +403,6 @@ function applyCommunityFilters() {
         const post = db.posts.find(p => p.id == postId);
         
         if (!post) return;
-
-        // Logic: If the box is empty, it's an automatic match. 
-        // If not empty, check if post location/country contains the text.
         const matchesCountry = countryVal === "" || post.location.toLowerCase().includes(countryVal);
         const matchesCity = cityVal === "" || post.location.toLowerCase().includes(cityVal);
         const matchesPrice = activePriceFilter === null || post.price === activePriceFilter;
@@ -621,3 +617,17 @@ function openGemModal(postId) {
     modal.style.display = 'flex';
     setTimeout(() => modal.classList.add('active'), 10);
 }
+
+
+card.innerHTML = `
+    <div class="mini-card-image">
+        <img src="${post.image}" alt="${post.location}">
+    </div>
+    <div class="mini-card-info">
+        <div class="mini-card-header">
+            <span class="mini-category">${post.category}</span>
+            <div class="mini-price">${"$".repeat(post.price)}</div>
+        </div>
+        <h4 class="mini-location">${post.location}</h4>
+    </div>
+`;
