@@ -1,19 +1,40 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="shared.css">
   <link rel="stylesheet" href="Main-main.css">
   <link rel="stylesheet" href="posts.css">
   <link rel="stylesheet" href="visas.css">
-
-  <title>Contact Us - Borderly</title>
+    <title>Privacy Policy - Travel Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 10px auto;
+            padding: 0 15px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            margin-top: 120px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 25px; }
+        p { margin-bottom: 15px; }
+        ul { margin-bottom: 15px; }
+        .last-updated { font-style: italic; color: #7f8c8d; }
+        .contact-box { background: #eef2f3; padding: 15px; border-left: 5px solid #052c47; }
+    </style>
 </head>
-
-<body class="contact-page">
+<body>
 <header>
   <nav>
     <div class="navbar">
@@ -48,44 +69,44 @@
   </nav>
 </header>
 
-<main>
-  <section id="contact">
-    <div class="contact-section">
-      <h1><i class="fa-solid fa-envelope" style="margin-right:8px;color:#466bc3;"></i>Get in Touch</h1>
-      <p>Have questions or need assistance? We're here to help!</p>
-    <form class="contact-form" action="#" method="post">
-      <div class="input-group1">
-      <label for="name">Full Name</label>
-      <input type="text" id="name" name="name" placeholder="Enter your name" required>
-      </div>
+<div class="container">
+    <h1>Privacy Policy</h1>
+    <p class="last-updated">Last Updated: March 04, 2026</p>
 
-      <div class="input-group2">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email" required>
-      </div>
+    <p>Welcome to <strong>Borderly</strong>. Your privacy is important to us. This Privacy Policy document outlines the types of personal information that is received and collected and how it is used.</p>
 
-      <div class="input-group3">
-      <label for="topic">Topic</label>
-        <select id="topic" name="topic" required>
-          <option>General Question</option>
-          <option>Documents</option>
-          <option>Luggage Rules</option>
-          <option>Vaccines</option>
-          <option>Country Laws</option>
-          <option>Other</option>
-        </select>
-      </div>
+    <h2>1. Information We Collect</h2>
+    <p>We may collect personal information in the following ways:</p>
+    <ul>
+        <li><strong>Personal Data:</strong> Name and email address when you register.</li>
+        <li><strong>Derivative Data:</strong> IP address, browser type, and operating system, automatically collected when you access the Site.</li>
+        <li><strong>Cookies:</strong> We use cookies to store information about visitor preferences and to personalize content.</li>
+    </ul>
 
-      <div class="input-group4">
-      <label for="message">Message</label>
-        <textarea id="message" name="message" rows="5" placeholder="Enter your message here..." required></textarea>
-      </div>
-      <button type="submit" class="send-btn">Send</button>
-    </form>
+    <h2>2. Use of Your Information</h2>
+    <p>The information we collect is used to:</p>
+    <ul>
+        <li>Maintain and improve our travel guides and blog posts.</li>
+        <li>Respond to user inquiries and comments.</li>
+        <li>Monitor website performance and prevent security threats.</li>
+    </ul>
+
+    <h2>3. Third-Party Disclosures</h2>
+    <p>We do not sell, trade, or otherwise transfer your personal information to outside parties, except for trusted third parties who assist us in operating our website (e.g., Google Analytics), so long as those parties agree to keep this information confidential.</p>
+
+    <h2>4. GDPR & User Rights</h2>
+    <p>If you are located in the European Union, you have the following rights:</p>
+    <ul>
+        <li>The right to access the data we hold about you.</li>
+        <li>The right to request deletion of your personal data.</li>
+    </ul>
+
+    <h2>5. Contact Information</h2>
+    <div class="contact-box">
+        <p>If you have any questions about this Privacy Policy, please contact us at:</p>
+        <p><strong>Email:</strong> [Your-Email@example.com]</p>
     </div>
-  </section>
-</main>
-
+</div>
 <footer class="site-footer">
   <div class="footer-inner">
 
@@ -118,7 +139,6 @@
       <a href="community.html">Community</a>
       <a href="posts.html">Posts</a>
       <a href="diary.html">Diary</a>
-      <a href="visas.html">Visas</a>
       <a href="checker.html">Travel Insurance</a>
       <a href="profile.html">Profile</a>
     </div>
@@ -138,27 +158,5 @@
     © 2026 Borderly. All rights reserved.
   </div>
 </footer>
-
-<script src="database.js"></script>
-<script src="auth.js"></script>
-<script>
-    if (typeof updateNavbarUI === 'function') {
-        window.addEventListener('DOMContentLoaded', updateNavbarUI);
-    }
-</script>
-
-<script src="search.js"></script>
-<script src="cloude.js"></script>
-<script src="pathways.js"></script>
-<script src="posts.js"></script>
-
-<!-- Ensure Trip Diary button is rendered after all scripts and DOM are loaded -->
-<script>
-    window.addEventListener('DOMContentLoaded', function() {
-        window.addEventListener('load', function() {
-            if (typeof updateNavbarUI === 'function') updateNavbarUI();
-        });
-    });
-</script>
 </body>
 </html>
