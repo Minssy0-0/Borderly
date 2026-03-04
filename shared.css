@@ -629,12 +629,6 @@ header {
 
 /* --- SIMPLE PROFILE ICON --- */
 
-.nav-left {
-  display: flex;
-  align-items: center;
-  gap: 20px; /* Space between Cloud Menu and Profile */
-}
-
 .profile-link-wrapper {
   text-decoration: none;
   display: block;
