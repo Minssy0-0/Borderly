@@ -573,15 +573,12 @@ header {
   text-decoration: underline;
 }
 
-
-
-
 /* --- PROFILE ICON & DROPDOWN --- */
 
 .nav-left {
   display: flex;
   align-items: center;
-  gap: 15px; /* Spacing between Cloud and Profile */
+  gap: 30px; /* Spacing between Cloud and Profile */
   position: relative;
 }
 
