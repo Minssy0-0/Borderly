@@ -380,24 +380,34 @@ html {
     padding: 40px;
 }
 
-/* Container Spacing */
 #recommendations {
     position: relative;
-    padding: 80px 0;
+    padding: 80px 0 40px 0;
     background-color: #ffffff; 
-    overflow: hidden; /* This is crucial to keep the circle 'clipped' to the side */
+    overflow: hidden; 
 
-    /* The Geometric Circle Logic */
+    /* YOUR EXACT BACKGROUND - DO NOT CHANGE */
     background-image: radial-gradient(
-        circle at 0% 50%,              /* Anchor the center exactly on the left edge */
-        rgba(243, 163, 51, 0.5) 0%,    /* Rich Borderly Orange at the core */
-        rgba(255, 214, 107, 0.3) 15%,  /* Transition to Yellow */
-        rgba(255, 248, 225, 0.1) 30%,  /* Quick fade to Cream */
-        transparent 45%                /* Ends the 'Circle' shape early */
+        circle at 0% 50%,
+        rgba(243, 163, 51, 0.5) 0%,   
+        rgba(255, 213, 107, 0.401) 20%,  
+        rgba(255, 248, 225, 0.175) 30%,  
+        transparent 45%
+    ),              
+    radial-gradient(
+        circle at 100% 50%,
+        rgba(70, 108, 195, 0.344) 10%,
+        rgba(121, 201, 255, 0.15) 25%, 
+        rgba(235, 246, 255, 0.292) 50%, 
+        transparent 45%
     );
     
     background-repeat: no-repeat;
     background-size: 100% 100%;
+
+    /* THE FLUID EFFECT: We use a mask to make the edges wobble */
+    mask-image: radial-gradient(circle, black 20%, transparent 20%, transparent 20%, black 10%);
+    -webkit-mask-box-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1000 1000' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M950 500Q950 750 750 750L250 750Q50 750 50 500L50 250Q50 50 250 50L750 50Q950 50 950 250Z' fill='black'%3E%3Canimate attributeName='d' dur='15s' repeatCount='indefinite' values='M950 500Q950 750 750 750L250 750Q50 750 50 500L50 250Q50 50 250 50L750 50Q950 50 950 250Z; M950 500Q850 900 750 750L250 850Q150 750 50 500L150 150Q250 50 250 250L750 150Q850 250 950 500Z; M950 500Q950 750 750 750L250 750Q50 750 50 500L50 250Q50 50 250 50L750 50Q950 50 950 250Z'/%3E%3C/path%3E%3C/svg%3E");
 }
 
 .recommended-section {
@@ -433,7 +443,7 @@ html {
     margin-top: -20px; /* Keep it high as we discussed */
     margin-bottom: 8px; /* Tighten space to the subtitle */
     font-family: 'Fredoka', sans-serif;
-    color: #0f172a;
+    color: #1f2e53df;
 }
 
 .section-subtitle {
@@ -504,7 +514,6 @@ html {
     display: flex;
     justify-content: center; /* Centers the button under the grid */
     margin-top: 50px;
-    padding-bottom: 20px;
 }
 
 .explore-btn {
@@ -512,12 +521,12 @@ html {
     align-items: center;
     gap: 12px;
     padding: 14px 32px;
-    background-color: #466bc3; /* Borderly Blue */
+    background-color: #466bc3; 
     color: #ffffff;
     text-decoration: none;
     font-family: 'Fredoka', sans-serif;
     font-size: 1.1rem;
-    border-radius: 50px; /* Pill shape */
+    border-radius: 50px; 
     transition: all 0.3s ease;
     box-shadow: 0 10px 20px rgba(70, 107, 195, 0.2);
 }
@@ -527,13 +536,13 @@ html {
 }
 
 .explore-btn:hover {
-    background-color: #3554a3; /* Slightly darker blue */
+    background-color: #3554a3; 
     transform: translateY(-3px);
     box-shadow: 0 15px 30px rgba(70, 107, 195, 0.3);
 }
 
 .explore-btn:hover i {
-    transform: translateX(5px); /* Arrow nudges right on hover */
+    transform: translateX(5px); 
 }
 
 .bloom-item {
@@ -565,11 +574,39 @@ html {
 .explore-btn:hover .pos-8 { transform: translate(-430%, -60%) scale(1.2) rotate(35deg); opacity: 1; }  
 .explore-btn:hover .pos-9 { transform: translate(-240%, -190%) scale(0.9) rotate(15deg); opacity: 1; } 
 
+.explore-container {
+    flex-direction: column; 
+    align-items: center;
+    text-align: center;
+    margin-top: 60px;
+}
+
+.explore-teaser {
+    font-family: 'Fredoka', sans-serif; 
+    font-size: 1.4rem;
+    color: #5252529c; 
+    font-weight: bold;
+    margin-bottom: 25px;
+    max-width: 600px;
+    line-height: 1.4;
+    animation: fadeIn 1s ease-in;
+}
+
+
+.explore-teaser span {
+    color: #f3a333; 
+    font-weight: 600;
+}
+
 
 /*BOTANICAL DIVIDER BTWN RECOMM AND FEATURES SEC*/
 .botanical-divider {
     width: 100%;
     height: 40px;
+  border-top: 2px solid #466bc3; 
+  border-bottom: 2px solid #f3a333; 
+  border-left: none;
+  border-right: none;
     position: relative;
     opacity: 0.6;
     background-color: white;

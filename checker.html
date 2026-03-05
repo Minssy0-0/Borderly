@@ -58,6 +58,7 @@
   </nav>
 </header>
 <main>
+    <section class="banner">
     <section id="Searchbar">
             <h1 class="page-title">Travel Checker</h1>
     <p class="page-description">Easily check travel requirements for any route for an ease of mind</p>
@@ -76,54 +77,135 @@
 
 <button class="search-btn" onclick="handleMainSearch()">Check</button>
 </div>
-
-
-<main id="results-container">
-<div id="status-badge" class="badge-hidden">
-    <i class="fa-solid fa-circle-check"></i> Verified for 2026
-</div>
-    <section id="docs-section" class="wide-card">
-        <div class="card-header">
-            <i class="fa-solid fa-file-invoice"></i>
-            <h2>Passport & Documents</h2>
-        </div>
-        <div class="card-content">
-            <p id="docsText">Select a route to view required documents...</p>
-        </div>
     </section>
 
-    <section id="visa-section" class="wide-card">
-        <div class="card-header">
-            <i class="fa-solid fa-passport"></i>
-            <h2>Visa Requirements</h2>
-        </div>
-        <div class="card-content">
-            <p id="visaText">Information about entry permits will appear here.</p>
-        </div>
-    </section>
 
-    <section id="vax-section" class="wide-card">
-        <div class="card-header">
-            <i class="fa-solid fa-syringe"></i>
-            <h2>Health & Vaccines</h2>
+<section id="results-container">
+    <div class="requirement-row">
+        <section id="docs-section" class="wide-card">
+            <div class="card-header"><i class="fa-solid fa-file-invoice"></i></div>
+            <div class="card-content">
+                <h2>Passport & Documents</h2>
+                <p id="docsText">Select a route to view required documents...</p>
+            </div>
+        </section>
+        <div class="explanation-box">
+            <h4>Identification</h4>
+            <ul>
+                <li>Validates your identity at borders</li>
+                <li>Proof of legal nationality</li>
+                <li>Required for airline check-in</li>
+            </ul>
         </div>
-        <div class="card-content">
-            <p id="vaxText">Mandatory and recommended health safety measures.</p>
-        </div>
-    </section>
+    </div>
 
-    <section id="ins-section" class="wide-card">
-        <div class="card-header">
-            <i class="fa-solid fa-shield-heart"></i>
-            <h2>Travel Insurance</h2>
+    <div class="requirement-row">
+        <section id="visa-section" class="wide-card">
+            <div class="card-header"><i class="fa-solid fa-passport"></i></div>
+            <div class="card-content">
+                <h2>Visa Requirements</h2>
+                <p id="visaText">Information about entry permits will appear here.</p>
+            </div>
+        </section>
+        <div class="explanation-box">
+            <h4>Legal Entry</h4>
+            <ul>
+                <li>Grants legal permission to stay</li>
+                <li>Prevents fines or deportation</li>
+                <li>Specifies allowed travel duration</li>
+            </ul>
         </div>
-        <div class="card-content">
-            <p id="insText">Stay protected with the right coverage for your destination.</p>
-        </div>
-    </section>
+    </div>
 
+    <div class="requirement-row">
+        <section id="vax-section" class="wide-card">
+            <div class="card-header"><i class="fa-solid fa-syringe"></i></div>
+            <div class="card-content">
+                <h2>Health & Vaccines</h2>
+                <p id="vaxText">Mandatory health safety measures.</p>
+            </div>
+        </section>
+        <div class="explanation-box">
+            <h4>Biosecurity</h4>
+            <ul>
+                <li>Prevents spread of local diseases</li>
+                <li>Required for health clearance</li>
+                <li>Ensures personal travel safety</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="requirement-row">
+        <section id="ins-section" class="wide-card">
+            <div class="card-header"><i class="fa-solid fa-shield-heart"></i></div>
+            <div class="card-content">
+                <h2>Travel Insurance</h2>
+                <p id="insText">Stay protected with the right coverage.</p>
+            </div>
+        </section>
+        <div class="explanation-box">
+            <h4>Protection</h4>
+            <ul>
+                <li>Covers emergency medical costs</li>
+                <li>Protects against trip cancellations</li>
+                <li>Provides 24/7 travel assistance</li>
+            </ul>
+        </div>
+    </div>
+</section>
+ </section>
 </main>
+<footer class="site-footer">
+  <div class="footer-inner">
 
+    <div class="footer-brand">
+      <img src="Stock/logo sample (2).png" alt="Borderly logo">
+      <p>Making global travel safer, clearer, and legally right — all in one place.</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Explore</h4>
+      <a href="#features">Documents</a>
+      <a href="#features">Luggage</a>
+      <a href="#features">Vaccines</a>
+      <a href="#features">Visas</a>
+      <a href="#">Country Rules</a>
+      <a href="#">Trip Check</a>
+    </div>
+
+    <div class="footer-links">
+      <h4>Company</h4>
+      <a href="aboutus.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+    </div>
+
+    <div class="footer-sitemap footer-links">
+      <h4>Site Map</h4>
+      <a href="index.html">Home</a>
+      <a href="community.html">Community</a>
+      <a href="posts.html">Posts</a>
+      <a href="diary.html">Diary</a>
+      <a href="checker.html">Travel Insurance</a>
+      <a href="profile.html">Profile</a>
+    </div>
+
+    <div class="footer-social">
+      <h4>Follow</h4>
+      <div class="social-icons">
+        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 Borderly. All rights reserved.
+  </div>
+</footer>
     <script src="database.js"></script>
     <script src="auth.js"></script>
     <script src="search.js"></script>

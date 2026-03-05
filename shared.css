@@ -90,10 +90,6 @@ body.contact-page {
   background: linear-gradient(180deg, #f5f7fa 0%, #e0e7ff 100%);
 }
 
-main {
-  padding-top: 0; /* ensure content sits below fixed header */
-}
-
 nav{
  position: relative;
  left: 0;
@@ -333,7 +329,8 @@ header {
 .site-footer {
   background: #0f172a; /* deep navy */
   color: #e5e7eb;
-  padding: 60px 20px 20px;
+  padding: 40px 20px 20px;
+  margin-top: 0.5rem;
   font-size: 0.95rem;
 }
 
