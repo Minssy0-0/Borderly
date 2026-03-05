@@ -14,43 +14,45 @@
 <header>
   <nav>
     <div class="navbar">
-        <div class="cover-up"></div>
-  
-<div class="nav-left">
-    <button id="cloudToggle" class="cloud-nav" aria-label="Open navigation">☁️</button>
-    <navmenu>
-    <a href="javascript:openDocumentsModal()">Documents</a>
-    <a href="javascript:openLuggageModal()">Luggage</a>
-    <a href="javascript:openVaccinesModal()">Vaccines</a>
-    <a href="javascript:openVisasModal()">Visas</a>
-    <a href="checker.html">Travel Insurance</a>
-
-    <div id="cloudAuthArea"></div> 
-</navmenu>
-    <div id="navAuthSection" class="nav-auth-group">
+      <div class="nav-left">
+          <button id="cloudToggle" class="cloud-nav">☁️</button>
+          <navmenu>
+              <a href="javascript:openDocumentsModal()">Documents</a>
+              <a href="javascript:openLuggageModal()">Luggage</a>
+              <a href="javascript:openVaccinesModal()">Vaccines</a>
+              <a href="javascript:openVisasModal()">Visas</a>
+              <a href="checker.html">Travel Insurance</a>
+          </navmenu>
+          <div id="navAuthSection" class="nav-auth-group">
         <a href="javascript:void(0)" onclick="gatekeeper('profile.html')" class="nav-icon-link" title="Profile">
             <div class="profile-circle">
                 <img src="Stock/defaultPic.webp" id="navAvatar" alt="User" class="nav-avatar">
             </div>
         </a>
     </div>
-</div>
-    <navmenu class="navmenu" id="cloudMenu">
-        <a href="javascript:openDocumentsModal()">Documents</a>
-        <a href="javascript:openLuggageModal()">Luggage</a>
-        <a href="javascript:openVaccinesModal()">Vaccines</a>
-        <a href="javascript:openVisasModal()">Visas</a>
-        <a href="checker.html">Travel Insurance</a>
-    </navmenu>
-</div>
-      <div class="logo">
-        <a href="index.html"><img src="Stock/logo sample (2).png" alt="Borderly Logo"></a>
       </div>
-<div class="nav-right" style="display: flex; gap: 20px; align-items: center; padding-right: 20px;">
-    
-<div id="dynamicDiaryWrapper" class="diary-wrapper" style="display: flex;">
-    </div>
-</div>
+
+      <div class="logo">
+        <a href="index.html"><img src="Stock/logo sample (2).png" alt="Borderly logo"></a>
+      </div>
+
+
+      <div class="nav-right">
+          <div class="diary-wrapper-outer">
+              <div class="diary-wrapper" id="globalDiaryWrapper">
+                  <a href="javascript:void(0)" onclick="handleDiaryClick()" class="diary-link">
+                      <div class="diary-circle" id="diaryCircle">
+                          <i class="fa-solid fa-book-atlas"></i>
+                          <span>Diary</span>
+                      </div>
+                  </a>
+                  <div class="diary-dropdown" id="diaryDropdown">
+                      <div class="dropdown-header">Trip Diary</div>
+                      <div id="diaryPreviewContent"></div>
+                  </div>
+              </div>
+          </div>
+      </div>
     </div>
   </nav>
 </header>

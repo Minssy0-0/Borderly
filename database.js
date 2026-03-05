@@ -34,6 +34,49 @@ function loginUser(email, password) {
     return false;
 }
 
+function updateGlobalDiaryUI() {
+    const diaryCircle = document.getElementById('diaryCircle');
+    const diaryIcon = document.getElementById('diaryIcon');
+    const previewContent = document.getElementById('diaryPreviewContent');
+    const user = JSON.parse(localStorage.getItem('borderly_session'));
+
+    if (user) {
+        // LOGGED IN STATE
+        diaryCircle.className = "diary-circle diary-member-circle";
+        diaryIcon.className = "fa-solid fa-book-atlas diary-member-icon";
+        
+        // Show latest 2 saves in the preview
+        const userPosts = (db.posts || []).filter(p => p.author === user.username);
+        if (userPosts.length > 0) {
+            const latest = userPosts.slice(-2).reverse();
+            previewContent.innerHTML = latest.map(post => `
+                <div class="mini-preview-item">
+                    <strong>${post.location}</strong>
+                    <p>${post.category}</p>
+                </div>
+            `).join('') + `<hr><a href="diary.html" class="view-all-link">View All</a>`;
+        } else {
+            previewContent.innerHTML = "<p class='diary-empty'>Your diary is empty. Start saving!</p>";
+        }
+    } else {
+        // GUEST STATE
+        diaryCircle.className = "diary-circle diary-guest-circle";
+        diaryIcon.className = "fa-solid fa-book-atlas diary-guest-icon";
+        previewContent.innerHTML = `
+            <p class="diary-empty">Log in to save your travel plans and view your diary.</p>
+            <button onclick="gatekeeper('diary.html')" class="diary-login-btn">Log In</button>
+        `;
+    }
+}
+
+// What happens when you click the icon
+function handleDiaryClick() {
+    gatekeeper('diary.html'); // This function in your database.js already handles the redirect logic
+}
+
+// Run this on every page load
+document.addEventListener('DOMContentLoaded', updateGlobalDiaryUI);
+
 function createPost(content, location, price, image, category, folder = "General") {
     if (!db.currentUser) return { success: false };
 

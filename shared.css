@@ -1,3 +1,7 @@
+header, nav {
+    height: auto !important; /* Prevents parent tags from squishing the bar */
+}
+
 /* --- Trip Diary Button & Dropdown (Navbar) --- */
 .diary-wrapper-outer {
   display: flex;
@@ -127,10 +131,7 @@ nav .navbar{
   transform: scaleY(1);
 }
 
-/* 1. The Container for the Cloud & Menu */
-.nav-left {
-  position: relative;
-}
+
 
 /* 2. The Cloud Button */
 .cloud-nav {
@@ -218,31 +219,60 @@ header {
 
 
 .navbar {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  padding: 16px 24px;
-  position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 110px;
+    padding: 0 40px;
+    background: white;
+    box-sizing: border-box;
+    width: 100%;
 }
 
-.nav-left {
-  position: absolute;
+.nav-left, .nav-right {
+    flex: 1; 
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
-.logo {
-  text-align: center;
+/* Ensure the Diary Circle doesn't break the height */
+.diary-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #f8fafc;
+    transition: transform 0.2s ease;
 }
 
-.logo img {
-  position: relative;
-  height: 90px;
-  margin-top: -100px;
-  z-index: 10;
-  margin-bottom: 28px;
+.nav-auth-group {
+    display: flex;
+    align-items: center;
 }
 
 .nav-right {
-  text-align: right;
+    justify-content: flex-end;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    flex: 0;
+}
+
+.logo img {
+    height: 5rem;
+    width: 10rem;;
 }
 
 /* ===== CONTACT LINK ===== */
@@ -415,9 +445,12 @@ header {
 /* --- DIARY NAVBAR ICON --- */
 
 .diary-wrapper {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    cursor: pointer;
 }
+
+.diary-member-circle { border: 2px solid #f3a333; }
+.diary-guest-circle { border: 2px dashed #cbd5e1; }
 
 .diary-circle {
   display: flex;
@@ -455,25 +488,20 @@ header {
 /* --- DIARY DROPDOWN PREVIEW --- */
 
 .diary-dropdown {
-  position: absolute;
-  top: 85px;
-  right: 0;
-  width: 260px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-  padding: 15px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(10px);
-  transition: all 0.3s ease;
-  z-index: 100;
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 220px;
+    background: white;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 10px;
 }
 
 .diary-wrapper:hover .diary-dropdown {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+    display: block; 
 }
 
 .dropdown-header {
@@ -571,13 +599,6 @@ header {
 }
 
 /* --- PROFILE ICON & DROPDOWN --- */
-
-.nav-left {
-  display: flex;
-  align-items: center;
-  gap: 30px; /* Spacing between Cloud and Profile */
-  position: relative;
-}
 
 .profile-wrapper {
   position: relative;
@@ -883,16 +904,6 @@ header {
 }
 
 .cat-option:hover { background: #f1f5f9; color: #466bc3; }
-
-
-/* Position the Diary Circle on the Right */
-.nav-right {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-left: auto; /* Forces it to the far right */
-    padding-right: 20px;
-}
 
 .diary-circle {
     width: 42px;
