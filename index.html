@@ -236,6 +236,25 @@
     © 2026 Borderly. All rights reserved.
   </div>
 </footer>
+
+
+
+<script src="database.js"></script>
+<script src="auth.js"></script>
+<script src="cloude.js"></script>
+<script src="posts.js"></script>
+<script src="profile.js"></script> 
+<script src="community.js"></script>
+<script src="search.js"></script>
+
+
+
+
+
+
+
+
+
 <script>
     // Handle Add to Diary button clicks
     const addDiaryBtns = document.querySelectorAll('.add-diary-btn');
@@ -300,19 +319,11 @@
         // Use this only for small page-specific checks
         console.log("Borderly initialized. User:", db.currentUser ? db.currentUser.username : "Guest");
     </script>
-
-    <script src="database.js"></script>
-        <script src="auth.js"></script>
         <script>
             if (typeof updateNavbarUI === 'function') {
                 window.addEventListener('DOMContentLoaded', updateNavbarUI);
             }
         </script>
-
-        <script src="search.js"></script>
-        <script src="cloude.js"></script>
-        <script src="pathways.js"></script>
-        <script src="posts.js"></script>
 
                 <!-- Ensure Trip Diary button is rendered after all scripts and DOM are loaded -->
                 <script>

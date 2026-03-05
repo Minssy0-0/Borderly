@@ -148,7 +148,7 @@
 .post-right {
     display: flex;
     flex-direction: column;
-    height: 100%; /* Ensure it fills the card height */
+    height: 100%;
 }
 
 .post-body {
@@ -223,6 +223,15 @@
     object-fit: cover; /* Ensures image fills the space without stretching */
 }
 
+#templateImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the castle fits perfectly without stretching */
+    display: block; 
+    min-height: 200px; /* Gives the box "weight" even before the image loads */
+    background-color: #f0f0f0;
+}
+
 /* RIGHT SIDE: THE INFO */
 .post-right {
     flex: 1;
@@ -267,6 +276,25 @@
     margin-bottom: 15px;
 }
 
+.post-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.delete-btn {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.delete-btn:hover {
+    background: #cc0000;
+}
 
 /* INTERACTIVE DOLLAR SIGNS */
 #priceSelector {
@@ -300,13 +328,34 @@
     transform: scale(1.1);
 }
 
+/* Old name: .price-rating -> New name: .price-picker-container */
+.price-picker-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 10px;
+    /* ... keep your existing border/background here ... */
+}
+
+/* New style for the dollars that appear in the preview card */
+.price-rating-result {
+    display: inline-block;
+    color: #466bc3;
+    background: #f0f4ff;
+    border: 1px solid #cbd5e1;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
 .reset-price-wrapper {
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 38px;
-    height: 37px;
+    width: 40px;
+    height: 46px;
     margin-left: -45px; 
     border: 1.5px solid #cbd5e1;
     border-radius: 50%;

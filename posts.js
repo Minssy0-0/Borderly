@@ -1,321 +1,238 @@
+function initShareButton() {
+    const shareBtn = document.getElementById('openPostModal');
+    const postModal = document.getElementById('postFormModal');
 
+    if (shareBtn) {
+        shareBtn.onclick = (e) => {
+            e.preventDefault();
+            
+            if (typeof db !== 'undefined' && !db.currentUser) {
+                alert("Please log in to share a tip!");
+                return;
+            }
+            
+            if (postModal) {
+                postModal.style.display = 'flex'; 
+            } else {
+                console.error("Could not find modal with ID 'postFormModal'");
+            }
+            const modalUsername = document.querySelector('#postFormModal .username');
+const modalAvatar = document.querySelector('#postFormModal .user-avatar');
 
-// 1. The Dynamic HTML Builder
+if (modalUsername && db.currentUser) {
+    modalUsername.innerText = db.currentUser.username;
+}
+if (modalAvatar && db.currentUser) {
+    modalAvatar.src = db.currentUser.avatar || 'Stock/defaultPic.webp';
+}
+        };
+    }
+const contentInput = document.getElementById('postContent');
+const placeInput = document.getElementById('postPlaceName');
+
+if (contentInput) contentInput.oninput = window.showPreview;
+if (placeInput) placeInput.oninput = window.showPreview;
+}
+
+window.closeForm = function() {
+    const modal = document.getElementById('postFormModal');
+    if (modal) modal.style.display = 'none';
+};
+
+window.toggleCategoryMenu = function() {
+    const menu = document.getElementById('categoryMenu');
+    if (menu) menu.classList.toggle('show');
+};
+
+window.pickCategory = function(val, label) {
+    const hiddenInput = document.getElementById('postCategory');
+    const displaySpan = document.getElementById('selectedCategoryText');
+    if (hiddenInput) hiddenInput.value = val;
+    if (displaySpan) {
+        displaySpan.innerText = label;
+        displaySpan.style.color = "#466bc3";
+    }
+    const menu = document.getElementById('categoryMenu');
+    if (menu) menu.classList.remove('show');
+};
+
+window.currentPriceRating = 0;
+window.setPrice = function(val) {
+    // Save the number so showPreview can see it
+    window.currentPriceRating = val; 
+
+    // Visual feedback for the dollar signs in the modal
+    const signs = document.querySelectorAll('.d-sign');
+    signs.forEach((s, index) => {
+        if (index < val) {
+            s.style.color = '#466bc3';
+            s.style.opacity = '1';
+        } else {
+            s.style.color = '#cbd5e1';
+            s.style.opacity = '0.5';
+        }
+    });
+
+    // Run the preview immediately so the dollars appear before you even start typing
+    window.showPreview();
+};
+
 function generatePostHTML(post) {
-    let priceDisplay = post.price > 0 ? `<div class="price-rating">${"$".repeat(post.price)}</div>` : "";
+    const authorData = db.users.find(u => u.username === post.author);
+    const avatar = authorData?.avatar || 'images/default-user.png';
     
+    let priceHTML = (post.price && post.price > 0) ? `<div class="price-rating">${"$".repeat(post.price)}</div>` : "";
+    const isOwner = db.currentUser && db.currentUser.username === post.author;
+    const isProfilePage = window.location.pathname.includes('profile.html');
+
+    
+    
+    // Only show delete button if both are true
+    const deleteBtn = (isOwner && isProfilePage) 
+        ? `<button class="delete-btn" onclick="deletePost('${post.id}')"><i class="fa-solid fa-trash"></i></button>` 
+        : "";
+
     return `
     <div class="post-card">
-        <div class="post-left"><img src="${post.image}"></div>
+        <div class="post-left">
+            <img src="${post.image || 'images/default-post.png'}" alt="Trip Image">
+        </div>
         <div class="post-right">
             <div class="post-user-header">
-                <img src="${post.authorAvatar}" class="user-avatar">
+                <img src="${avatar}" class="user-avatar">
                 <a href="profile.html?user=${post.author}" class="username">${post.author}</a>
             </div>
             <div class="post-body">
                 <p class="description">${post.content}</p>
                 <div class="location"><i class="fa-solid fa-location-dot"></i> ${post.location}</div>
-                ${priceDisplay}
+                ${priceHTML}
             </div>
             <div class="post-footer">
-                <div class="likes"><i class="fa-solid fa-heart"></i> ${post.likes.length}</div>
-                <button class="diary-btn" onclick="saveToDiary('${post.id}')">Save to Diary</button>
+                <div class="likes">
+                    <i class="fa-solid fa-heart"></i> ${post.likes ? post.likes.length : 0}
+                </div>
+                <div class="post-actions">
+                    <button class="diary-btn" onclick="saveToDiary('${post.id}')">Add to Diary</button>
+                    ${deleteBtn}
+                </div>
             </div>
         </div>
     </div>`;
 }
-
-function renderAllFeeds() {
+window.renderAllFeeds = function() {
     const globalFeed = document.getElementById('globalFeed');
-    if (!globalFeed) return;
+    if (!globalFeed || typeof db === 'undefined') return;
 
-    // 1. Get the featured ID and clear it immediately so it doesn't stay stuck
-    const featuredId = localStorage.getItem('featuredPostId');
-    localStorage.removeItem('featuredPostId'); 
-
-    let postsToRender = [...db.posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-    // 2. If there's a featured post, move it to index 0
-    if (featuredId) {
-        const featuredIndex = postsToRender.findIndex(p => p.id == featuredId);
-        if (featuredIndex > -1) {
-            const featuredPost = postsToRender.splice(featuredIndex, 1)[0];
-            postsToRender.unshift(featuredPost);
-        }
-    }
-
-    // 3. Render the posts
-    globalFeed.innerHTML = postsToRender.map((post, index) => {
-        let html = generatePostHTML(post);
-        
-        // 4. If it's the first post and we had a featuredId, make it start "Opened"
-        if (index === 0 && featuredId) {
-            // We inject a temporary style or class to keep it expanded
-            return html.replace('class="post-card"', 'class="post-card featured-expanded"');
-        }
-        return html;
-    }).join('');
-}
-
-
-// Open/Close Form
-document.getElementById('openPostModal').onclick = () => {
-    document.getElementById('postFormModal').style.display = 'flex';
+    const postsToRender = [...db.posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    globalFeed.innerHTML = postsToRender.map(post => generatePostHTML(post)).join('');
 };
 
-function closePreview() {
-    document.getElementById('previewModal').style.display = 'none';
-}
-
-// THE PREVIEW ENGINE
-function showPreview() {
+window.confirmPost = function() {
     const content = document.getElementById('postContent').value;
-    const location = document.getElementById('postLocation').value;
-    const price = parseInt(document.getElementById('postPrice').value);
-    const image = document.getElementById('postImage').value || 'images/default-post.png';
+    const place = document.getElementById('postPlaceName').value;
+    const city = document.getElementById('postCity').value;
+    const country = document.getElementById('postCountry').value;
+    const image = document.getElementById('templateImg').src;
+    const category = document.getElementById('postCategory').value;
+    const price = window.currentPriceRating;
 
-    if (!content || !location) {
-        alert("Please provide a location and a description!");
+    if (!place || !content) {
+        alert("Please provide a place name and a description!");
         return;
     }
 
-    // Creating the HTML using your post-card structure
-    const priceDisplay = "$".repeat(price);
-    const previewHTML = `
-        <div class="post-card" style="box-shadow: none; border: 2px solid #466bc3;">
-            <div class="post-left">
-                <img src="${image}" alt="Preview">
-            </div>
-            <div class="post-right">
-                <div class="post-user-header">
-                    <img src="${db.currentUser?.avatar || 'Stock/defaultPic.webp'}" class="user-avatar">
-                    <span class="username">${db.currentUser?.username || 'Styling_Guest'}</span>
-                </div>
-                <div class="post-body">
-                    <p class="description">${content}</p>
-                    <div class="location"><i class="fa-solid fa-location-dot"></i> ${location}</div>
-                    <div class="price-rating">${priceDisplay}</div>
-                </div>
-            </div>
-        </div>
-    `;
-
-    document.getElementById('previewContainer').innerHTML = previewHTML;
-    document.getElementById('previewModal').style.display = 'flex';
-}
-
-
-function generatePostHTML(post) {
-    // Rule: Dollar signs ONLY show if price > 0
-    let priceHTML = "";
-    if (post.price && post.price > 0) {
-        priceHTML = `<div class="price-rating">${"$".repeat(post.price)}</div>`;
+    if (typeof createPost === 'function') {
+        createPost(content, `${place}, ${city}, ${country}`, price, image, category);
+        window.closeForm();
+        location.reload();
     }
-
-    return `
-    <div class="post-card">
-        <div class="post-left"><img src="${post.image || 'images/default-post.png'}"></div>
-        <div class="post-right">
-            <div class="post-user-header">
-                <img src="${post.authorAvatar}" class="user-avatar">
-                <a href="profile.html?user=${post.author}" class="username">${post.author}</a>
-            </div>
-            <div class="post-body">
-                <p class="description">${post.content}</p>
-                <div class="location"><i class="fa-solid fa-location-dot"></i> ${post.location}</div>
-                ${priceHTML} </div>
-            <div class="post-footer">
-                <div class="likes"><i class="fa-solid fa-heart"></i> ${post.likes ? post.likes.length : 0}</div>
-                <button class="diary-btn" onclick="saveToDiary('${post.id}')">Add to Diary</button> </div>
-        </div>
-    </div>`;
-}
-
-
-// Open the modal
-document.querySelector('.create-post-btn').onclick = () => {
-    document.getElementById('postModalOverlay').style.display = 'flex';
 };
 
-function closePostModal() {
-    document.getElementById('postModalOverlay').style.display = 'none';
-}
+window.deletePost = function(postId) {
+    if (!confirm("Are you sure you want to delete this tip?")) return;
+    db.posts = db.posts.filter(p => p.id != postId);
+    if (typeof saveDB === 'function') {
+        saveDB();
+        renderAllFeeds(); 
+    }
+};
+
+window.saveToDiary = function(postId) {
+    const originalPost = db.posts.find(p => p.id == postId);
+    if (!db.currentUser || !originalPost) return;
+
+    const diaryEntry = {
+        ...originalPost,
+        id: Date.now().toString(),
+        author: db.currentUser.username,
+        folder: "General",
+        createdAt: new Date().toISOString()
+    };
+
+    db.posts.push(diaryEntry);
+    if (typeof saveDB === 'function') saveDB();
+    alert("Saved to Diary!");
+};
 
 
-// 1. GLOBAL STATE
-let currentSelectedPrice = 0; 
+document.addEventListener('DOMContentLoaded', () => {
+    initShareButton();
+    renderAllFeeds();
+});
 
-// 2. MODAL CONTROLS
-const modal = document.getElementById('postFormModal');
+window.triggerFileInput = function() {
+    document.getElementById('postImageFile').click();
+};
 
-// Handles opening the modal from the Profile 'Share a Tip' button
-const createBtn = document.querySelector('.create-post-btn');
-if (createBtn) {
-    createBtn.onclick = () => {
-        document.getElementById('postFormModal').style.display = 'flex';
+const fileInput = document.getElementById('postImageFile');
+if (fileInput) {
+    fileInput.onchange = function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('uploadLabel').style.display = 'none';
+                document.getElementById('replaceBtn').style.display = 'flex';
+                window.showPreview();
+            };
+            reader.readAsDataURL(file);
+        }
     };
 }
 
-function closeForm() {
-    document.getElementById('postFormModal').style.display = 'none';
-    setPrice(0); // Reset the blue signs when closing
-}
-
-// 3. THE PRICE SELECTOR LOGIC
-function setPrice(val) {
-    currentSelectedPrice = val; // val is 0 if slashed dollar is clicked
-    const signs = document.querySelectorAll('#priceSelector .d-sign');
-    
-    signs.forEach(sign => {
-        const signValue = parseInt(sign.getAttribute('data-value'));
-        // If val=0, this is always false, turning all signs gray
-        if (signValue <= val) {
-            sign.classList.add('active-blue');
-        } else {
-            sign.classList.remove('active-blue');
-        }
-    });
-    console.log("Price set to:", currentSelectedPrice);
-}
-
-// 4. IMAGE PREVIEW
-function updatePreviewImage(url) {
-    const img = document.getElementById('templateImg');
-    if (img) img.src = url || 'images/default-post.png';
-}
-function updatePreview() {
+window.showPreview = function() {
+    // 1. Grab all the current values
+    const content = document.getElementById('postContent').value;
     const place = document.getElementById('postPlaceName').value;
     const city = document.getElementById('postCity').value;
     const country = document.getElementById('postCountry').value;
     
-    const previewLocation = document.querySelector('.location span');
-    
-    if (previewLocation) {
-        let fullLoc = place;
-        if (city || country) {
-            fullLoc += " | " + city + (city && country ? ", " : "") + country;
-        }
-        previewLocation.textContent = fullLoc || "Location";
-    }
-}
-/*FINAL POSTING LOGIC*/
+    // CRITICAL: Look at the global price variable
+    const price = window.currentPriceRating || 0; 
 
-function confirmAndPost() {
-    const content = document.getElementById('postContent').value;
-    const locationName = document.getElementById('postLocation').value;
-    const imageUrl = document.getElementById('postImage').value;
-
-    const category = document.getElementById('postCategory').value;
-
-
-    if (!content || !locationName || !category) {
-        alert("Please provide a location, description, and category!");
-        return;
+    // 2. Update the Text Description
+    const previewContent = document.querySelector('.post-body .description');
+    if (previewContent) {
+        previewContent.innerText = content; 
     }
 
-    const response = createPost(content, locationName, currentSelectedPrice, imageUrl, category);
-    
-    if (response.success) {
-        alert("Trip shared!");
-        location.reload(); 
+    // 3. Update the Location
+    const previewLoc = document.querySelector('.post-body .location');
+    if (previewLoc) {
+        const locationStr = `${place}${city ? ', ' + city : ''}${country ? ', ' + country : ''}`;
+        previewLoc.innerHTML = `<i class="fa-solid fa-location-dot"></i> ${locationStr}`;
     }
-}
 
-function triggerFileInput() {
-    document.getElementById('postImageFile').click();
-}
-
-document.getElementById('postImageFile').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    
-    reader.onload = function(event) {
-        const imageData = event.target.result;
-        const container = document.getElementById('imagePreviewContainer');
-
-        document.getElementById('templateImg').src = imageData;
-
-        document.getElementById('postImage').value = imageData;
-
-        container.classList.add('image-uploaded');
-    };
-
-    reader.readAsDataURL(file);
-});
-
-function toggleDropdown() {
-    document.getElementById('categoryOptions').classList.toggle('show');
-}
-
-function selectOption(val, label) {
-    document.getElementById('postCategory').value = val;
-
-    document.getElementById('selectedTypeText').innerText = label;
-
-    document.getElementById('categoryOptions').classList.remove('show');
-}
-
-window.onclick = function(event) {
-    if (!event.target.matches('.dropdown-selected') && !event.target.matches('#selectedTypeText')) {
-        const dropdowns = document.getElementsByClassName("dropdown-options");
-        for (let i = 0; i < dropdowns.length; i++) {
-            if (dropdowns[i].classList.contains('show')) {
-                dropdowns[i].classList.remove('show');
-            }
+    // 4. Update the Dollars (This prevents them from disappearing)
+    const previewPrice = document.querySelector('.post-body .price-rating');
+    if (previewPrice) {
+        if (price > 0) {
+            previewPrice.innerText = "$".repeat(price);
+            previewPrice.style.display = "inline-block"; // Ensure it's visible
+            previewPrice.style.visibility = "visible";   // Double check visibility
+        } else {
+            previewPrice.innerText = "";
+            previewPrice.style.display = "none"; 
         }
     }
-}
-
-function toggleCategoryMenu() {
-    document.getElementById('categoryMenu').classList.toggle('show');
-}
-
-function pickCategory(val, label) {
-    document.getElementById('postCategory').value = val;
-    document.getElementById('selectedCategoryText').innerText = label;
-    document.getElementById('selectedCategoryText').style.color = "#466bc3";
-    document.getElementById('categoryMenu').classList.remove('show');
-}
-
-// Close dropdown if user clicks elsewhere
-window.addEventListener('click', function(e) {
-    const menu = document.getElementById('categoryMenu');
-    const trigger = document.getElementById('categoryTrigger');
-    if (menu && menu.classList.contains('show') && !trigger.contains(e.target) && !menu.contains(e.target)) {
-        menu.classList.remove('show');
-    }
-});
-
-function saveToDiary(postId) {
-    const originalPost = db.posts.find(p => p.id == postId);
-
-    if (!db.currentUser) {
-        alert("Please log in to save posts!");
-        return;
-    }
-
-    const diaryEntry = {
-        ...originalPost,
-        id: Date.now().toString(), 
-        author: db.currentUser.username,
-        folder: "General", 
-        createdAt: new Date().toISOString()
-    };
-
-
-    db.posts.push(diaryEntry);
-    saveDB(); 
-    alert("Saved to your diary!");
-}
-
-const authorAvatar = post.authorAvatar || "Stock/defaultPic.webp";
-
-return `
-    <div class="post-card">
-        ...
-        <img src="${authorAvatar}" class="user-avatar">
-        ...
-    </div>
-`;
+};

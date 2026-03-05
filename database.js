@@ -1,4 +1,3 @@
-
 window.redirectToAuth = function() {
     console.log("Redirect blocked by Stylization Mode");
 };
@@ -69,33 +68,31 @@ function updateGlobalDiaryUI() {
     }
 }
 
-// What happens when you click the icon
 function handleDiaryClick() {
-    gatekeeper('diary.html'); // This function in your database.js already handles the redirect logic
+    gatekeeper('diary.html');
 }
-
-// Run this on every page load
 document.addEventListener('DOMContentLoaded', updateGlobalDiaryUI);
 
-function createPost(content, location, price, image, category, folder = "General") {
-    if (!db.currentUser) return { success: false };
-
+function createPost(content, location, price, image, category) {
     const newPost = {
-        id: Date.now(),
+        id: Date.now().toString(),
         author: db.currentUser.username,
         content: content,
         location: location,
         price: price,
-        category: category,
-        folder: folder, // <--- SAVED IN FOLDER
         image: image,
-        likes: [],
-        createdAt: new Date().toISOString()
+        category: category,
+        createdAt: new Date().toISOString(),
+        likes: []
     };
-
-    db.posts.unshift(newPost);
-    saveDB();
-    return { success: true, post: newPost };
+    
+    db.posts.push(newPost);
+    
+    if (typeof saveDB === 'function') {
+        saveDB(); // This is the line that makes it stay!
+    }
+    
+    return newPost;
 }
 
 /*Save Post to Diary*/
@@ -2817,12 +2814,12 @@ const luggageRules = {
     }
 };
 
-// 3. The logic that updates the cards
+
 function updateResults() {
     const fromInput = document.getElementById('originInput');
     const toInput = document.getElementById('destinationInput');
     
-    if (!fromInput || !toInput) return; // Stop if we aren't on the checker page
+    if (!fromInput || !toInput) return;
 
     const from = fromInput.value;
     const to = toInput.value;
@@ -2842,25 +2839,7 @@ function updateResults() {
     }
 }
 
-// 4. Handle data coming from the Main Page URL
-/*
-window.addEventListener('load', () => {
-    const params = new URLSearchParams(window.location.search);
-    const fromParam = params.get('from');
-    const toParam = params.get('to');
 
-    if (fromParam && toParam) {
-        const originBox = document.getElementById('originInput');
-        const destBox = document.getElementById('destinationInput');
-        
-        if (originBox && destBox) {
-            originBox.value = fromParam;
-            destBox.value = toParam;
-            updateResults();
-        }
-    }
-});*/
-// 4. Handle data coming from the Main Page URL
 window.addEventListener('load', () => {
     const params = new URLSearchParams(window.location.search);
     const fromParam = params.get('from');
@@ -2878,13 +2857,11 @@ window.addEventListener('load', () => {
     }
 });
 
-// The Master Gatekeeper
+
 function gatekeeper(destination) {
     if (db.currentUser) {
-        // If logged in, go to the intended page
         window.location.href = destination;
     } else {
-        // If NOT logged in, save where they wanted to go and send to Auth
         localStorage.setItem('redirectAfterAuth', destination);
         window.location.href = 'auth.html';
     }
