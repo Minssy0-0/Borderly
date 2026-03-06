@@ -226,9 +226,8 @@
 #templateImg {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures the castle fits perfectly without stretching */
-    display: block; 
-    min-height: 200px; /* Gives the box "weight" even before the image loads */
+    object-fit: cover;
+    display: none;
     background-color: #f0f0f0;
 }
 
