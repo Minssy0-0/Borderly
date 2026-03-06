@@ -60,4 +60,83 @@ function updateNavbarUI() {
         if (cloudAuth) cloudAuth.innerHTML = '';
     }
 }
+function handleLogin(e) {
+    if(e) e.preventDefault();
+    
+    const emailInput = document.getElementById('loginEmail').value;
+    const passInput = document.getElementById('loginPass').value;
 
+    // We look inside window.db.users
+    const user = window.db.users.find(u => u.email === emailInput && u.password === passInput);
+
+    if (user) {
+        window.db.currentUser = user;
+        window.saveDB(); // This locks the session in
+        alert("Login Successful!");
+        window.location.href = 'index.html';
+    } else {
+        alert("Invalid email or password. Please try again.");
+    }
+}
+
+function handleSignUp(e) {
+    if(e) e.preventDefault();
+
+    const name = document.getElementById('regName').value;
+    const email = document.getElementById('regEmail').value;
+    const pass = document.getElementById('regPass').value;
+
+    // Check if user already exists
+    if (window.db.users.find(u => u.email === email)) {
+        alert("This email is already registered!");
+        return;
+    }
+
+    const newUser = {
+        username: name,
+        email: email,
+        password: pass,
+        avatar: 'Stock/defaultPic.webp',
+        bio: "Traveler"
+    };
+
+    window.db.users.push(newUser);
+    window.saveDB(); 
+    console.log("Sign up complete. Redirecting...");
+    alert("Account created! You can now log in.");
+    showLoginForm(); 
+}
+
+
+window.switchTab = function(tab) {
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const loginBtn = document.getElementById('loginTabBtn');
+    const signupBtn = document.getElementById('signupTabBtn');
+    const tabsContainer = document.querySelector('.auth-tabs');
+
+    // 1. Handle the Visual Tabs (Colors & Slider)
+    if (tab === 'signup') {
+        tabsContainer.classList.add('signup-active');
+        signupBtn.classList.add('active');
+        loginBtn.classList.remove('active');
+    } else {
+        tabsContainer.classList.remove('signup-active');
+        loginBtn.classList.add('active');
+        signupBtn.classList.remove('active');
+    }
+
+    // 2. Handle the Form Visibility (Fade effect from before)
+    if (tab === 'signup') {
+        loginForm.style.display = 'none';
+        signupForm.style.display = 'block';
+        // Add a tiny delay to trigger the opacity fade-in
+        setTimeout(() => signupForm.classList.add('active-form'), 10);
+        loginForm.classList.remove('active-form');
+    } else {
+        signupForm.style.display = 'none';
+        loginForm.style.display = 'block';
+        setTimeout(() => loginForm.classList.add('active-form'), 10);
+        signupForm.classList.remove('active-form');
+    }
+};

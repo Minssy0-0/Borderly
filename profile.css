@@ -400,6 +400,10 @@
     border-radius: 8px;
     border: none;
 }
+
+.modal-actions  {
+justify-content: center; margin-top: 25px;
+}
 .modal-footer .cancel-link:hover { background: #f1f5f9; }
 
 /* Make the edit button feel like a primary action in header */

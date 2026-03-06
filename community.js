@@ -1,36 +1,23 @@
-/* REPLACE the old applyCommunityFilters with this */
 function applyCommunityFilters() {
-    // 1. Get all the values from your filters
     const countryVal = document.getElementById('filterCountry').value.toLowerCase();
     const cityVal = document.getElementById('filterCity').value.toLowerCase();
-    const categoryVal = document.getElementById('filterCategory').value; // NEW
+    const categoryVal = document.getElementById('filterCategory').value;
     
-    // Close the post expander if it's open
-    if (typeof closeExpander === 'function') closeExpander();
-
-    // 2. Get all the mini-cards currently on the screen
     const allCards = document.querySelectorAll('.mini-card');
     
     allCards.forEach(card => {
-        // Find the post data in our database using the ID on the card
         const postId = card.id.replace('mini-', '');
-        const post = db.posts.find(p => p.id == postId);
+        const post = window.db.posts.find(p => p.id == postId);
         
         if (post) {
-            // Logic for Country/City
-            const matchesCountry = countryVal === "" || post.location.toLowerCase().includes(countryVal);
-            const matchesCity = cityVal === "" || post.location.toLowerCase().includes(cityVal);
-            
-            // Logic for Price (ensure activeCommunityPrice is defined in your JS)
-            const matchesPrice = (typeof activeCommunityPrice === 'undefined' || activeCommunityPrice === 0) 
-                                 || (post.price === activeCommunityPrice);
-            
-            // Logic for Category (NEW)
-            // It matches if 'all' is selected OR if the post's category matches the dropdown
-            const matchesCategory = (categoryVal === "all") || (post.category === categoryVal);
+            // If search box is empty, it counts as a match (matchesEverything)
+            const matchesCountry = countryVal === "" || post.country.toLowerCase().includes(countryVal);
+            const matchesCity = cityVal === "" || post.city.toLowerCase().includes(cityVal);
+            const matchesCategory = categoryVal === "all" || post.category === categoryVal;
+            const matchesPrice = (activePriceFilter === 0) || (post.price === activePriceFilter);
 
-            // 3. FINAL CHECK: Only show if it matches EVERYTHING
-            if (matchesCountry && matchesCity && matchesPrice && matchesCategory) {
+            // ONLY hide if it fails one of the ACTIVE filters
+            if (matchesCountry && matchesCity && matchesCategory && matchesPrice) {
                 card.style.display = 'flex';
             } else {
                 card.style.display = 'none';
@@ -79,3 +66,94 @@ function setPrice(val) {
     // 3. Trigger the filter
     applyCommunityFilters();
 }
+
+function renderCommunityFeed() {
+    const feedGrid = document.querySelector('.feed-grid');
+    if (!feedGrid) return;
+
+    // 1. Sort posts: Newest first (Latest to Oldest)
+    const sortedPosts = [...window.db.posts].sort((a, b) => 
+        new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
+    // 2. Clear the grid
+    feedGrid.innerHTML = '';
+
+    // 3. Render all posts
+    sortedPosts.forEach(post => {
+        // We use your existing mini-card HTML structure
+        const cardHTML = `
+            <div class="mini-card" id="mini-${post.id}" onclick="expandPost(${post.id})">
+                <div class="mini-card-image">
+                    <img src="${post.image}" alt="${post.location}">
+                    <div class="mini-card-price">${"$".repeat(post.price)}</div>
+                </div>
+                <div class="mini-card-info">
+                    <div class="mini-author">
+                        <img src="${post.authorAvatar}" class="author-img">
+                        <span>${post.author}</span>
+                    </div>
+                    <h3>${post.location}</h3>
+                    <p class="mini-category">${post.category}</p>
+                </div>
+            </div>
+        `;
+        feedGrid.innerHTML += cardHTML;
+    });
+}
+
+// Ensure this runs when the page loads
+document.addEventListener('DOMContentLoaded', renderCommunityFeed);
+
+
+/**
+ * Renders the 3 most recent posts for the home page 'Recommended' section.
+ */
+function renderRecommendedPosts() {
+    const recGrid = document.getElementById('recommendedFeed');
+    if (!recGrid) return; // Stop if we are not on the home page
+
+    // 1. Sort posts by newest first
+    const sortedPosts = [...window.db.posts].sort((a, b) => 
+        new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
+    // 2. Take only the first 3
+    const latestThree = sortedPosts.slice(0, 3);
+
+    // 3. Clear and Render
+    recGrid.innerHTML = '';
+    
+    if (latestThree.length === 0) {
+        recGrid.innerHTML = '<p class="empty-msg">No tips shared yet. Be the first!</p>';
+        return;
+    }
+
+    latestThree.forEach(post => {
+        // Reuse your existing mini-card HTML structure
+        const cardHTML = `
+            <div class="mini-card" id="mini-${post.id}" onclick="window.location.href='community.html'">
+                <div class="mini-card-image">
+                    <img src="${post.image}" alt="${post.location}">
+                    <div class="mini-card-price">${"$".repeat(post.price)}</div>
+                </div>
+                <div class="mini-card-info">
+                    <div class="mini-author">
+                        <img src="${post.authorAvatar || 'Stock/defaultPic.webp'}" class="author-img">
+                        <span>${post.author}</span>
+                    </div>
+                    <h3>${post.location}</h3>
+                    <p class="mini-category">${post.category}</p>
+                </div>
+            </div>
+        `;
+        recGrid.innerHTML += cardHTML;
+    });
+}
+
+// CALL IT: Run this when the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('recommendedFeed')) {
+        renderRecommendedPosts();
+    }
+});

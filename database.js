@@ -1,26 +1,42 @@
-window.redirectToAuth = function() {
-    console.log("Redirect blocked by Stylization Mode");
-};
 
-const db = {
+
+window.db = {
     users: JSON.parse(localStorage.getItem('borderly_users')) || [],
     posts: JSON.parse(localStorage.getItem('borderly_posts')) || [],
     currentUser: JSON.parse(localStorage.getItem('borderly_session')) || null,
     folders: JSON.parse(localStorage.getItem('borderly_folders')) || ["General", "Summer 2025", "Hidden Gems"]
 };
 
-function saveDB() {
-    localStorage.setItem('borderly_users', JSON.stringify(db.users));
-    localStorage.setItem('borderly_posts', JSON.stringify(db.posts));
-    localStorage.setItem('borderly_session', JSON.stringify(db.currentUser));
-    localStorage.setItem('borderly_folders', JSON.stringify(db.folders)); // Save folders
+if (!Array.isArray(window.db.posts)) {
+    window.db.posts = [];
+    console.warn("Database 'posts' was corrupted. Reset to empty array.");
 }
+window.db.posts.forEach(post => {
+    if (!post.createdAt) post.createdAt = new Date().toISOString();
+});
 
-function logout() {
-    db.currentUser = null;
+window.saveDB = function() {
+    try {
+        // We log exactly what we are about to save for debugging
+        console.log("Saving users to storage...", window.db.users);
+        
+        localStorage.setItem('borderly_users', JSON.stringify(window.db.users));
+        localStorage.setItem('borderly_posts', JSON.stringify(window.db.posts));
+        localStorage.setItem('borderly_session', JSON.stringify(window.db.currentUser));
+        localStorage.setItem('borderly_folders', JSON.stringify(window.db.folders));
+        
+        console.log("✅ ALL DATA SAVED TO LOCALSTORAGE");
+    } catch (e) {
+        console.error("❌ SAVE FAILED:", e);
+    }
+};
+
+// --- LOGOUT FUNCTION ---
+window.logout = function() {
+    window.db.currentUser = null;
     localStorage.removeItem('borderly_session');
     window.location.href = 'index.html';
-}
+};
 
  /*to Log In*/
 function loginUser(email, password) {
@@ -153,19 +169,6 @@ function registerUser(username, email, password) {
     db.currentUser = newUser;
     saveDB();
     return { success: true };
-}
-
-// Inside auth.html script
-function handleLogin() {
-    const email = document.querySelector('#loginForm input[type="text"]').value;
-    const pass = document.querySelector('#loginForm input[type="password"]').value;
-
-    // Use the function from database.js
-    if (loginUser(email, pass)) {
-        window.location.href = 'index.html'; // Redirect to home
-    } else {
-        alert("Invalid credentials! Try: (your registered email/pass)");
-    }
 }
 
 

@@ -1,39 +1,74 @@
 function initShareButton() {
     const shareBtn = document.getElementById('openPostModal');
     const postModal = document.getElementById('postFormModal');
+    const imageInput = document.getElementById('postImageInput'); // Ensure this ID matches your HTML <input type="file">
 
     if (shareBtn) {
         shareBtn.onclick = (e) => {
             e.preventDefault();
-            
             if (typeof db !== 'undefined' && !db.currentUser) {
                 alert("Please log in to share a tip!");
                 return;
             }
+            if (postModal) postModal.style.display = 'flex';
             
-            if (postModal) {
-                postModal.style.display = 'flex'; 
-            } else {
-                console.error("Could not find modal with ID 'postFormModal'");
-            }
             const modalUsername = document.querySelector('#postFormModal .username');
-const modalAvatar = document.querySelector('#postFormModal .user-avatar');
-
-if (modalUsername && db.currentUser) {
-    modalUsername.innerText = db.currentUser.username;
-}
-if (modalAvatar && db.currentUser) {
-    modalAvatar.src = db.currentUser.avatar || 'Stock/defaultPic.webp';
-}
+            const modalAvatar = document.querySelector('#postFormModal .user-avatar');
+            if (modalUsername && db.currentUser) modalUsername.innerText = db.currentUser.username;
+            if (modalAvatar && db.currentUser) modalAvatar.src = db.currentUser.avatar || 'Stock/defaultPic.webp';
+        };
+        // Add this inside the end of initShareButton function
+    const fileInput = document.getElementById('postImageFile');
+    if (fileInput) {
+        fileInput.onchange = function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const imgElement = document.getElementById('templateImg');
+                    if (imgElement) {
+                        imgElement.src = event.target.result; 
+                        
+                        // Hide prompt, show replace button
+                        const uploadLabel = document.getElementById('uploadLabel');
+                        const replaceBtn = document.getElementById('replaceBtn');
+                        if (uploadLabel) uploadLabel.style.display = 'none';
+                        if (replaceBtn) replaceBtn.style.display = 'flex';
+                        
+                        window.showPreview(); // Sync the card preview
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
         };
     }
-const contentInput = document.getElementById('postContent');
-const placeInput = document.getElementById('postPlaceName');
+    }
 
-if (contentInput) contentInput.oninput = window.showPreview;
-if (placeInput) placeInput.oninput = window.showPreview;
+    // --- NEW READER LOGIC ---
+    if (imageInput) {
+        imageInput.onchange = function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onloadend = function() {
+                    const base64String = reader.result;
+                    // Update the preview image in the modal
+                    const previewImg = document.getElementById('previewImg');
+                    if (previewImg) previewImg.src = base64String;
+                    
+                    // Save it to a global variable so the Post function can grab it
+                    window.tempUploadedImage = base64String;
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+    }
+
+    const contentInput = document.getElementById('postContent');
+    const placeInput = document.getElementById('postPlaceName');
+    if (contentInput) contentInput.oninput = window.showPreview;
+    if (placeInput) placeInput.oninput = window.showPreview;
 }
-
 window.closeForm = function() {
     const modal = document.getElementById('postFormModal');
     if (modal) modal.style.display = 'none';
@@ -128,23 +163,43 @@ window.renderAllFeeds = function() {
 };
 
 window.confirmPost = function() {
+    // 1. Grab values from the modal inputs
     const content = document.getElementById('postContent').value;
-    const place = document.getElementById('postPlaceName').value;
     const city = document.getElementById('postCity').value;
     const country = document.getElementById('postCountry').value;
-    const image = document.getElementById('templateImg').src;
-    const category = document.getElementById('postCategory').value;
-    const price = window.currentPriceRating;
+    const category = document.getElementById('selectedCategoryName').innerText;
+    const image = document.getElementById('previewImg').src;
 
-    if (!place || !content) {
-        alert("Please provide a place name and a description!");
+    // 2. Validation
+    if (!content || !city || !country) {
+        alert("Please fill in the location and description!");
         return;
     }
 
-    if (typeof createPost === 'function') {
-        createPost(content, `${place}, ${city}, ${country}`, price, image, category);
-        window.closeForm();
-        location.reload();
+    // 3. The "Birth Certificate" (Must match community.js filters)
+    const newPost = {
+        id: Date.now(),
+        author: window.db.currentUser.username,
+        authorAvatar: window.db.currentUser.avatar || 'Stock/defaultPic.webp',
+        location: `${city}, ${country}`, 
+        city: city,       // Used by community.js filter
+        country: country, // Used by community.js filter
+        content: content,
+        image: image,
+        price: window.currentPriceRating || 0,
+        category: category,
+        createdAt: new Date().toISOString()
+    };
+
+    try {
+        window.db.posts.unshift(newPost); // Add to the top of the list
+        window.saveDB();                  // Securely save to LocalStorage
+        console.log("Post saved successfully:", newPost);
+        
+        alert("Tip Shared!");
+        window.location.href = "community.html"; // Redirect to see the post
+    } catch (err) {
+        console.error("Critical Save Error:", err);
     }
 };
 
@@ -234,5 +289,58 @@ window.showPreview = function() {
             previewPrice.innerText = "";
             previewPrice.style.display = "none"; 
         }
+    }
+};
+
+// --- THE POSTING ENGINE ---
+window.createNewPost = function() {
+    if (!window.db.currentUser) {
+        alert("You must be logged in to post!");
+        return;
+    }
+
+    const place = document.getElementById('postPlaceName').value;
+    const city = document.getElementById('postCity').value;
+    const country = document.getElementById('postCountry').value;
+    const content = document.getElementById('postContent').value;
+    const category = document.getElementById('postCategorySelect')?.value || 'Other';
+    const price = window.currentPriceRating || 1;
+
+    // Use the uploaded image, or a default if they didn't upload anything
+    const finalImage = window.tempUploadedImage || 'Stock/default-trip.webp';
+
+    if (!place || !content) {
+        alert("Please provide at least a place name and description!");
+        return;
+    }
+
+    const newPost = {
+        id: Date.now(), 
+        author: window.db.currentUser.username,
+        authorAvatar: window.db.currentUser.avatar || 'Stock/defaultPic.webp',
+        location: `${place}, ${city}, ${country}`,
+        city: city,
+        country: country,
+        category: category,
+        price: price,
+        image: finalImage, // This is now the Base64 string!
+        content: content,
+        createdAt: new Date().toISOString(),
+        folder: "General"
+    };
+
+    try {
+        window.db.posts.unshift(newPost); // Adds to the start of the list
+        window.saveDB();
+        
+        // Clear temp storage after successful post
+        window.tempUploadedImage = null; 
+        
+        alert("Post shared successfully!");
+        window.closeForm(); 
+        window.location.href = "community.html";
+    } catch (err) {
+        console.error("Save Error:", err);
+        alert("Could not save post. The image might be too large for the browser memory.");
     }
 };

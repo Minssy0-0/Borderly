@@ -16,10 +16,11 @@
         <a href="index.html"><img src="Stock/logo sample-Photoroom.png" alt="Borderly Logo"></a>
     </div>
 
-    <div class="auth-tabs">
-        <div class="tab active" id="loginTab" onclick="switchTab('login')">Login</div>
-        <div class="tab" id="signupTab" onclick="switchTab('signup')">Create Account</div>
-    </div>
+<div class="auth-tabs">
+    <div class="tab-slider"></div>
+    <button type="button" id="loginTabBtn" class="tab-btn active" onclick="switchTab('login')">Log In</button>
+    <button type="button" id="signupTabBtn" class="tab-btn" onclick="switchTab('signup')">Create Account</button>
+</div>
 
     <form id="loginForm">
         <div class="form-group">
@@ -62,26 +63,6 @@
 
 
 <script>
-    function switchTab(mode) {
-        const loginForm = document.getElementById('loginForm');
-        const signupForm = document.getElementById('signupForm');
-        const loginTab = document.getElementById('loginTab');
-        const signupTab = document.getElementById('signupTab');
-
-
-        if (mode === 'signup') {
-            loginForm.style.display = 'none';
-            signupForm.style.display = 'block';
-            loginTab.classList.remove('active');
-            signupTab.classList.add('active');
-            toggleLink.innerHTML = 'Already have an account? <span onclick="switchTab(\'login\')">Sign in instead</span>';
-        } else {
-            loginForm.style.display = 'block';
-            signupForm.style.display = 'none';
-            loginTab.classList.add('active');
-            signupTab.classList.remove('active');
-        }
-    }
 
 function toggleVisibility(inputId, icon) {
     const input = document.getElementById(inputId);
