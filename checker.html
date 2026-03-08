@@ -76,7 +76,7 @@
     <ul id="destinationResults" class="custom-dropdown"></ul>
 </div>
 
-<button class="search-btn" onclick="handleMainSearch()">Check</button>
+<button type="button" class="search-btn" onclick="handleMainSearch()">Check</button>
 </div>
     </section>
 
@@ -153,6 +153,90 @@
             </ul>
         </div>
     </div>
+
+    <div class="requirement-row">
+    <section id="luggage-checker-section" class="wide-card">
+        <div class="card-header"><i class="fa-solid fa-suitcase-rolling"></i></div>
+        <div class="card-content">
+            <h2>Airline Luggage</h2>
+            
+            <div class="airline-search-container">
+                <input type="text" id="airlineSearch" placeholder="Search airline (e.g. Ryanair)...">
+                <button id="checkLuggageBtn" class="checkluggage-btn">Check</button>
+                <ul id="airlineResults" class="custom-dropdown"></ul>
+            </div>
+
+            <div id="luggageDisplay">
+                <p id="luggageText">Select an airline to see carry-on and check-in limits.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="explanation-box">
+        <h4>Packing Smart</h4>
+        <ul>
+            <li>Avoid extra fees at the gate</li>
+            <li>Ensure bags fit in overhead bins</li>
+            <li>Check weight limits for check-in</li>
+        </ul>
+    </div>
+</div>
+
+<div class="requirement-row">
+    <section id="currency-section" class="wide-card">
+        <div class="card-header"><i class="fa-solid fa-coins"></i></div>
+        <div class="card-content">
+            <h2>Currency & Tipping</h2>
+            <p id="currencyText">---</p>
+            <p id="tippingText" class="tipping-note">Select a route to view tipping customs.</p>
+        </div>
+    </section>
+    <div class="explanation-box">
+        <h4>Money Matters</h4>
+        <p class="explanation-subtext">This is the official currency. Cash is always recommended; you can also use a credit or debit card.</p>
+        <ul>
+            <li>Be aware of local ATM fees</li>
+            <li>Notify your bank of travel</li>
+        </ul>
+    </div>
+</div>
+
+<div class="requirement-row">
+    <section id="power-section" class="wide-card">
+        <div class="card-header"><i class="fa-solid fa-bolt"></i></div>
+        <div class="card-content">
+            <h2>Power & Electricity</h2>
+            <p id="powerText">Information on plug types and voltage.</p>
+        </div>
+    </section>
+    <div class="explanation-box">
+        <h4>Stay Charged</h4>
+        <ul>
+            <li>Check if you need an adapter</li>
+            <li>Verify voltage compatibility</li>
+            <li>Type C/F common in Europe</li>
+        </ul>
+    </div>
+</div>
+
+<div class="requirement-row">
+    <section id="emergency-section" class="wide-card">
+        <div class="card-header"><i class="fa-solid fa-phone-flip"></i></div>
+        <div class="card-content">
+            <h2>Emergency Number</h2>
+            <p id="emergencyText" class="emergency-number">---</p>
+            <p class="emergency-desc">Local police, medical, and fire services.</p>
+        </div>
+    </section>
+    <div class="explanation-box">
+        <h4>Stay Safe</h4>
+        <ul>
+            <li>Keep this number saved</li>
+            <li>Available 24/7 locally</li>
+            <li>Works on locked mobile phones</li>
+        </ul>
+    </div>
+</div>
 </section>
  </section>
 </main>
@@ -211,6 +295,4 @@
     <script src="auth.js"></script>
     <script src="search.js"></script>
     <script src="cloude.js"></script>
-    <script src="pathways.js"></script>
-    <script src="posts.js"></script>
 </body>

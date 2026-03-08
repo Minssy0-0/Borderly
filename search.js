@@ -3,25 +3,12 @@ function handleMainSearch() {
     const to = document.getElementById('destinationInput').value;
     
     if (from && to) {
+        // Redirects to checker.html with the search terms in the URL
         window.location.href = `checker.html?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`;
     } else {
         alert("Please enter both a starting point and a destination.");
     }
 }
-
-// navigate to popular destinations page from main banner
-function goToPopularPage() {
-    let country = document.getElementById('destinationInput')?.value.trim();
-    if (country) {
-        country = encodeURIComponent(country);
-        window.location.href = `popular.html?country=${country}`;
-    } else {
-        window.location.href = 'popular.html';
-    }
-}
-
-
-
 
 const countries = [
     "Slovakia", "Slovenia", "Spain", "Turkey", "Thailand", "United Kingdom",
@@ -61,260 +48,81 @@ const countries = [
 ];
 
 
-const cities = [
-    "Bratislava", "Ljubljana", "Madrid", "Barcelona", "Istanbul", "Ankara", 
-    "Bangkok", "London", "Manchester", "New York", "Los Angeles", "Chicago", 
-    "Paris", "Lyon", "Berlin", "Munich", "Rome", "Milan", "Amsterdam", 
-    "Lisbon", "Athens", "Vienna", "Brussels", "Copenhagen", "Helsinki", 
-    "Dublin", "Oslo", "Warsaw", "Stockholm", "Zurich", "Geneva",
+const airlineList = [
+    "Ryanair", "EasyJet", "Lufthansa", "Air France", "British Airways",
+    "Turkish Airlines", "Alitalia", "Iberia", "United Airlines",
+    "American Airlines", "Japan Airlines", "Thai Airways", "Emirates",
+    "Qantas", "Latam"
+];
 
-    // Europe
-    "Prague", "Budapest", "Bucharest", "Sofia", "Belgrade", "Zagreb", 
-    "Sarajevo", "Skopje", "Tirana", "Podgorica", "Vilnius", "Riga", 
-    "Tallinn", "Reykjavik", "Luxembourg", "Valencia", "Seville", 
-    "Naples", "Turin", "Florence", "Bologna", "Cologne", "Hamburg", 
-    "Frankfurt", "Stuttgart", "Dusseldorf", "Nice", "Marseille", 
-    "Toulouse", "Bordeaux", "Porto", "Krakow", "Gdansk", "Wroclaw",
+// --- LUGGAGE CHECKER LOGIC ---
+function initLuggageChecker() {
+    const airlineInput = document.getElementById('airlineSearch');
+    const airlineResults = document.getElementById('airlineResults');
+    const luggageText = document.getElementById('luggageText');
+    const checkBtn = document.getElementById('checkLuggageBtn');
 
-    // North America
-    "San Francisco", "Miami", "Houston", "Dallas", "Seattle", "Boston", 
-    "Washington", "Atlanta", "Philadelphia", "Toronto", "Vancouver", 
-    "Montreal", "Ottawa", "Calgary", "Mexico City", "Guadalajara", 
-    "Monterrey",
+    if (!airlineInput || !airlineResults || !luggageText || !checkBtn) return;
 
-    // South America
-    "Buenos Aires", "Sao Paulo", "Rio de Janeiro", "Brasilia", 
-    "Santiago", "Lima", "Bogota", "Quito", "Caracas", "Montevideo", 
-    "La Paz", "Asuncion",
+    const airlineNames = Object.keys(window.luggageRules || {});
 
-    // Asia
-    "Tokyo", "Osaka", "Kyoto", "Seoul", "Busan", "Beijing", "Shanghai", 
-    "Shenzhen", "Hong Kong", "Taipei", "Singapore", "Kuala Lumpur", 
-    "Jakarta", "Manila", "Hanoi", "Ho Chi Minh City", "Delhi", 
-    "Mumbai", "Bangalore", "Dubai", "Abu Dhabi", "Doha", "Riyadh", 
-    "Jeddah", "Tel Aviv", "Jerusalem",
-
-    // Africa
-    "Cairo", "Alexandria", "Casablanca", "Marrakesh", "Tunis", 
-    "Algiers", "Lagos", "Abuja", "Nairobi", "Addis Ababa", 
-    "Johannesburg", "Cape Town", "Durban", "Accra", "Dakar",
-
-    // Oceania
-    "Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide", 
-    "Auckland", "Wellington", "Christchurch",
-
-    // Extra popular tourist cities
-    "Venice", "Edinburgh", "Glasgow", "Birmingham", "Liverpool", 
-    "Las Vegas", "Orlando", "San Diego", "Honolulu", "Reykjavik", 
-    "Antalya", "Izmir", "Phuket", "Bali", "Santorini", "Mykonos"
-];  
-
-
-// Popular city suggestions per country (top 3)
-const popularCitiesByCountry = {
-    "Slovakia": ["Bratislava", "Kosice", "Zilina"],
-    "Slovenia": ["Ljubljana", "Maribor", "Koper"],
-    "Spain": ["Madrid", "Barcelona", "Valencia"],
-    "Turkey": ["Istanbul", "Ankara", "Izmir"],
-    "Thailand": ["Bangkok", "Chiang Mai", "Phuket"],
-    "United Kingdom": ["London", "Manchester", "Edinburgh"],
-    "USA": ["New York", "Los Angeles", "Chicago"],
-    "France": ["Paris", "Lyon", "Nice"],
-    "Germany": ["Berlin", "Munich", "Hamburg"],
-    "Italy": ["Rome", "Milan", "Venice"],
-    "Netherlands": ["Amsterdam", "Rotterdam", "The Hague"],
-    "Portugal": ["Lisbon", "Porto", "Faro"],
-    "Greece": ["Athens", "Thessaloniki", "Santorini"],
-    "Austria": ["Vienna", "Salzburg", "Graz"],
-    "Belgium": ["Brussels", "Antwerp", "Bruges"],
-    "Denmark": ["Copenhagen", "Aarhus", "Odense"],
-    "Finland": ["Helsinki", "Tampere", "Turku"],
-    "Ireland": ["Dublin", "Cork", "Galway"],
-    "Norway": ["Oslo", "Bergen", "Trondheim"],
-    "Poland": ["Warsaw", "Krakow", "Gdansk"],
-    "Sweden": ["Stockholm", "Gothenburg", "Malmo"],
-    "Switzerland": ["Zurich", "Geneva", "Bern"],
-
-    "Bulgaria": ["Sofia", "Plovdiv", "Varna"],
-    "Romania": ["Bucharest", "Cluj-Napoca", "Timisoara"],
-    "Hungary": ["Budapest", "Debrecen", "Szeged"],
-    "Czech Republic": ["Prague", "Brno", "Ostrava"],
-    "Croatia": ["Zagreb", "Split", "Dubrovnik"],
-    "Serbia": ["Belgrade", "Novi Sad", "Nis"],
-    "Bosnia and Herzegovina": ["Sarajevo", "Mostar", "Banja Luka"],
-    "Montenegro": ["Podgorica", "Budva", "Kotor"],
-    "Albania": ["Tirana", "Durres", "Vlore"],
-    "North Macedonia": ["Skopje", "Ohrid", "Bitola"],
-    "Estonia": ["Tallinn", "Tartu", "Narva"],
-    "Latvia": ["Riga", "Daugavpils", "Liepaja"],
-    "Lithuania": ["Vilnius", "Kaunas", "Klaipeda"],
-    "Iceland": ["Reykjavik", "Akureyri", "Keflavik"],
-    "Luxembourg": ["Luxembourg City", "Esch-sur-Alzette", "Differdange"],
-    "Malta": ["Valletta", "Sliema", "St. Julian's"],
-    "Cyprus": ["Nicosia", "Limassol", "Larnaca"],
-    "Ukraine": ["Kyiv", "Lviv", "Odessa"],
-    "Belarus": ["Minsk", "Gomel", "Brest"],
-    "Moldova": ["Chisinau", "Balti", "Tiraspol"],
-
-    "Canada": ["Toronto", "Vancouver", "Montreal"],
-    "Mexico": ["Mexico City", "Guadalajara", "Monterrey"],
-    "Cuba": ["Havana", "Santiago de Cuba", "Varadero"],
-    "Jamaica": ["Kingston", "Montego Bay", "Ocho Rios"],
-    "Dominican Republic": ["Santo Domingo", "Punta Cana", "Santiago"],
-    "Costa Rica": ["San Jose", "Limon", "Alajuela"],
-    "Panama": ["Panama City", "Colon", "David"],
-    "Guatemala": ["Guatemala City", "Antigua", "Quetzaltenango"],
-    "Honduras": ["Tegucigalpa", "San Pedro Sula", "La Ceiba"],
-    "El Salvador": ["San Salvador", "Santa Ana", "San Miguel"],
-    "Nicaragua": ["Managua", "Leon", "Granada"],
-
-    "Brazil": ["Sao Paulo", "Rio de Janeiro", "Brasilia"],
-    "Argentina": ["Buenos Aires", "Cordoba", "Rosario"],
-    "Chile": ["Santiago", "Valparaiso", "Concepcion"],
-    "Peru": ["Lima", "Cusco", "Arequipa"],
-    "Colombia": ["Bogota", "Medellin", "Cartagena"],
-    "Ecuador": ["Quito", "Guayaquil", "Cuenca"],
-    "Venezuela": ["Caracas", "Maracaibo", "Valencia"],
-    "Bolivia": ["La Paz", "Santa Cruz", "Cochabamba"],
-    "Paraguay": ["Asuncion", "Ciudad del Este", "Encarnacion"],
-    "Uruguay": ["Montevideo", "Punta del Este", "Salto"],
-    "Guyana": ["Georgetown", "Linden", "New Amsterdam"],
-    "Suriname": ["Paramaribo", "Lelydorp", "Nieuw Nickerie"],
-
-    "Japan": ["Tokyo", "Osaka", "Kyoto"],
-    "South Korea": ["Seoul", "Busan", "Incheon"],
-    "China": ["Beijing", "Shanghai", "Shenzhen"],
-    "India": ["Delhi", "Mumbai", "Bangalore"],
-    "Indonesia": ["Jakarta", "Bali", "Surabaya"],
-    "Malaysia": ["Kuala Lumpur", "Penang", "Johor Bahru"],
-    "Singapore": ["Singapore", "Jurong", "Woodlands"],
-    "Vietnam": ["Hanoi", "Ho Chi Minh City", "Da Nang"],
-    "Philippines": ["Manila", "Cebu", "Davao"],
-    "Pakistan": ["Karachi", "Lahore", "Islamabad"],
-    "Bangladesh": ["Dhaka", "Chittagong", "Khulna"],
-    "Sri Lanka": ["Colombo", "Kandy", "Galle"],
-    "Nepal": ["Kathmandu", "Pokhara", "Lalitpur"],
-    "Mongolia": ["Ulaanbaatar", "Erdenet", "Darkhan"],
-    "Kazakhstan": ["Almaty", "Astana", "Shymkent"],
-    "Uzbekistan": ["Tashkent", "Samarkand", "Bukhara"],
-    "United Arab Emirates": ["Dubai", "Abu Dhabi", "Sharjah"],
-    "Saudi Arabia": ["Riyadh", "Jeddah", "Mecca"],
-    "Qatar": ["Doha", "Al Wakrah", "Al Khor"],
-    "Kuwait": ["Kuwait City", "Hawalli", "Salmiya"],
-    "Oman": ["Muscat", "Salalah", "Sohar"],
-    "Israel": ["Tel Aviv", "Jerusalem", "Haifa"],
-    "Jordan": ["Amman", "Aqaba", "Irbid"],
-    "Lebanon": ["Beirut", "Tripoli", "Sidon"],
-    "Iran": ["Tehran", "Isfahan", "Shiraz"],
-    "Iraq": ["Baghdad", "Erbil", "Basra"],
-
-    "Egypt": ["Cairo", "Alexandria", "Giza"],
-    "Morocco": ["Casablanca", "Marrakesh", "Rabat"],
-    "Algeria": ["Algiers", "Oran", "Constantine"],
-    "Tunisia": ["Tunis", "Sfax", "Sousse"],
-    "Libya": ["Tripoli", "Benghazi", "Misrata"],
-    "South Africa": ["Johannesburg", "Cape Town", "Durban"],
-    "Nigeria": ["Lagos", "Abuja", "Ibadan"],
-    "Kenya": ["Nairobi", "Mombasa", "Kisumu"],
-    "Ethiopia": ["Addis Ababa", "Dire Dawa", "Mekelle"],
-    "Ghana": ["Accra", "Kumasi", "Takoradi"],
-    "Senegal": ["Dakar", "Saint-Louis", "Touba"],
-    "Tanzania": ["Dar es Salaam", "Dodoma", "Arusha"],
-    "Uganda": ["Kampala", "Entebbe", "Jinja"],
-    "Angola": ["Luanda", "Huambo", "Lobito"],
-    "Zimbabwe": ["Harare", "Bulawayo", "Mutare"],
-
-    "Australia": ["Sydney", "Melbourne", "Brisbane"],
-    "New Zealand": ["Auckland", "Wellington", "Christchurch"],
-    "Fiji": ["Suva", "Nadi", "Lautoka"],
-    "Papua New Guinea": ["Port Moresby", "Lae", "Mount Hagen"]
-};
-
-function updateRecommendationHeader() {
-    const dest = document.getElementById('destinationInput');
-    const title = document.getElementById('recommendationTitle');
-    if (!title || !dest) return;
-    if (dest.value.trim().length > 0) {
-        title.textContent = 'Recommended Cities';
-    } else {
-        title.textContent = 'Recommended Countries';
-    }
-}
-
-function updateRecommendedCities() {
-    const destInput = document.getElementById('destinationInput');
-    if (!destInput) return;
-    const raw = destInput.value.trim();
-    const cardGrid = document.getElementById('cardGrid');
-    if (!cardGrid) return;
-
-    // Clear existing cards
-    cardGrid.innerHTML = '';
-
-    if (!raw) return;
-
-    const normalized = raw.toLowerCase();
-
-    // Try to match country directly (exact, startsWith, includes)
-    let matchKey = Object.keys(popularCitiesByCountry).find(k => {
-        const kl = k.toLowerCase();
-        return kl === normalized || normalized.startsWith(kl) || normalized.includes(kl);
-    });
-
-    // If still not found, check if the input matches a popular city and map back to its country
-    if (!matchKey) {
-        for (const [country, list] of Object.entries(popularCitiesByCountry)) {
-            for (const c of list) {
-                if (c.toLowerCase() === normalized || normalized.startsWith(c.toLowerCase()) || normalized.includes(c.toLowerCase())) {
-                    matchKey = country;
-                    break;
-                }
-            }
-            if (matchKey) break;
+    // Function to actually display the data
+    const displayAirlineData = (name) => {
+        const rule = window.luggageRules[name];
+        if (rule) {
+            luggageText.innerHTML = `
+                <div class="luggage-info-card">
+                    <p><strong><i class="fa-solid fa-briefcase"></i> Carry-on:</strong> ${rule.carryOn}</p>
+                    <p><strong><i class="fa-solid fa-suitcase"></i> Checked:</strong> ${rule.checkIn}</p>
+                    <p class="tipping-note"><strong>Note:</strong> ${rule.extra}</p>
+                </div>
+            `;
+            airlineResults.style.display = 'none';
         }
-    }
+    };
 
-    if (!matchKey) return; // nothing we can recommend
+    // 1. Handle typing/dropdown
+    airlineInput.addEventListener('input', (e) => {
+        const val = e.target.value.trim().toLowerCase();
+        airlineResults.innerHTML = '';
+        if (val.length > 0) {
+            const matches = airlineNames.filter(n => n.toLowerCase().includes(val));
+            if (matches.length > 0) {
+                airlineResults.style.display = 'block';
+                matches.forEach(name => {
+                    const li = document.createElement('li');
+                    li.textContent = name;
+                    li.onclick = () => {
+                        airlineInput.value = name;
+                        displayAirlineData(name);
+                    };
+                    airlineResults.appendChild(li);
+                });
+            } else { airlineResults.style.display = 'none'; }
+        } else { airlineResults.style.display = 'none'; }
+    });
 
-    const citiesList = popularCitiesByCountry[matchKey] || [];
-    if (citiesList.length === 0) return;
+    checkBtn.addEventListener('click', () => {
+        const inputVal = airlineInput.value.trim();
+        const exactMatch = airlineNames.find(n => n.toLowerCase() === inputVal.toLowerCase());
+        if (exactMatch) {
+            displayAirlineData(exactMatch);
+        } else {
+            luggageText.innerText = "Airline not found. Please select from the dropdown.";
+        }
+    });
 
-    // Build up to three city cards
-    citiesList.slice(0,3).forEach(cityName => {
-        const card = document.createElement('div');
-        card.className = 'city-card';
-
-        const img = document.createElement('div');
-        img.className = 'card-img';
-        img.style.background = '#ddd';
-
-        const info = document.createElement('div');
-        info.className = 'card-info';
-        const h3 = document.createElement('h3');
-        h3.textContent = cityName;
-        const p = document.createElement('p');
-        p.textContent = `Top sights & local tips in ${cityName}`;
-
-        const stats = document.createElement('div');
-        stats.className = 'post-stats';
-        stats.innerHTML = '<span><i class="fa-regular fa-heart"></i> 124</span> <button class="add-diary-btn"><i class="fa-solid fa-plus"></i> Add to Diary</button>';
-
-        info.appendChild(h3);
-        info.appendChild(p);
-        info.appendChild(stats);
-
-        card.appendChild(img);
-        card.appendChild(info);
-
-        cardGrid.appendChild(card);
+    airlineInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') checkBtn.click();
     });
 }
+
 
 function filterCountries(input, resultsId) {
     const list = document.getElementById(resultsId);
     if (!list) return;
     const query = input.value.toLowerCase();
-    list.innerHTML = ""; // Clear previous results
+    list.innerHTML = ""; 
 
     if (query.length > 1) {
         const filtered = countries.filter(country => 
@@ -324,18 +132,14 @@ function filterCountries(input, resultsId) {
         if (filtered.length > 0) {
             list.style.display = "block";
             filtered.forEach(country => {
-                // Change from 'li' to 'div' + class 'suggestion-item'
                 const div = document.createElement("div");
                 div.className = "suggestion-item"; 
                 div.textContent = country;
                 div.onclick = () => {
                     input.value = country;
                     list.style.display = "none";
-                    // Only call updateResults if it exists (on the checker page)
                     if (typeof updateResults === "function") updateResults();
-                    // Only call updatePreview if it exists (on the profile page)
                     if (typeof updatePreview === "function") updatePreview();
-                    // update recommendation header and cities if this was destination field
                     if (input && input.id === 'destinationInput') {
                         updateRecommendationHeader();
                         updateRecommendedCities();
@@ -383,108 +187,64 @@ function filterCities(input, resultsId) {
     }
 }
 
-let activePriceFilter = null;
 
-function setFilterPrice(val) {
-    activePriceFilter = val;
-    console.log("Price filter set to:", val);
-}
-
-function applyCommunityFilters() {
-    const countryVal = document.getElementById('filterCountry').value.toLowerCase();
-    const cityVal = document.getElementById('filterCity').value.toLowerCase();
-    
-    closeExpander(); 
-
-    const allCards = document.querySelectorAll('.mini-card');
-    
-    allCards.forEach(card => {
-        const postId = card.id.replace('mini-', '');
-        const post = db.posts.find(p => p.id == postId);
-        
-        if (!post) return;
-        const matchesCountry = countryVal === "" || post.location.toLowerCase().includes(countryVal);
-        const matchesCity = cityVal === "" || post.location.toLowerCase().includes(cityVal);
-        const matchesPrice = activePriceFilter === null || post.price === activePriceFilter;
-
-        if (matchesCountry && matchesCity && matchesPrice) {
-            card.style.display = 'flex';
-        } else {
-            card.style.display = 'none';
-        }
-    });
-}
-
-function clearAllFilters() {
-    document.getElementById('filterCountry').value = "";
-    document.getElementById('filterCity').value = "";
-    activePriceFilter = null;
-    applyCommunityFilters(); // Reset the grid
-}
-
-// Close dropdown if user clicks outside
-document.addEventListener("click", (e) => {
-    if (!e.target.closest(".input-wrapper")) {
-        document.querySelectorAll(".custom-dropdown").forEach(d => d.style.display = "none");
-    }
-});
-
-
-
-
-/*Info cards*/
-function updatePageContent(from, to) {
+function updateResults() {
+    const fromInput = document.getElementById('originInput');
+    const toInput = document.getElementById('destinationInput');
     const container = document.getElementById('results-container');
-    const key = `${from}-${to}`;
-    const data = travelRules[key]; // Pulling from your database.js
+    const badge = document.getElementById('verificationBadge');
+
+    if (!fromInput || !toInput) return;
+
+    const from = fromInput.value.trim();
+    const to = toInput.value.trim();
+
+    // The Fix: Case-insensitive search through window.travelRules keys
+    const routeKey = Object.keys(window.travelRules).find(
+        k => k.toLowerCase() === `${from.toLowerCase()}-${to.toLowerCase()}`
+    );
+    
+    const data = routeKey ? window.travelRules[routeKey] : null;
 
     if (data) {
-        container.style.opacity = "1";
-
-
+        // Standard Card Updates
         document.getElementById('docsText').innerText = data.docs;
         document.getElementById('visaText').innerText = data.visa;
         document.getElementById('vaxText').innerText = data.vax;
         document.getElementById('insText').innerText = data.ins;
-    } else {
-        document.getElementById('docsText').innerText = "We are currently gathering the latest requirements for this specific route. Please check back shortly!";
-    }
-}
-li.onclick = () => {
-    input.value = country;
-    list.style.display = "none";
-    updateResults(); 
-};
 
-// 1. The function that fills the cards
-function updateResults() {
-    const from = document.getElementById('originInput').value;
-    const to = document.getElementById('destinationInput').value;
-    const container = document.getElementById('results-container');
-    const badge = document.getElementById('status-badge');
+        // New Card Updates (Currency, Tipping, Power, Emergency)
+        if(document.getElementById('currencyText')) {
+            document.getElementById('currencyText').innerText = data.currency || "---";
+        }
+        if(document.getElementById('tippingText')) {
+            document.getElementById('tippingText').innerText = data.tipping || "Select a route to view tipping customs.";
+        }
+        if(document.getElementById('powerText')) {
+            document.getElementById('powerText').innerText = data.power || "---";
+        }
+        if(document.getElementById('emergencyText')) {
+            document.getElementById('emergencyText').innerText = data.emergency || "---";
+        }
 
-    if (!from || !to) return;
-
-    const routeKey = `${from}-${to}`;
-    const result = travelRules[routeKey]; // Looks in database.js
-
-    if (result) {
-        // Update Text
-        document.getElementById('docsText').innerText = result.docs;
-        document.getElementById('visaText').innerText = result.visa;
-        document.getElementById('vaxText').innerText = result.vax;
-        document.getElementById('insText').innerText = result.ins;
+        // Update Badge
+        if(badge) {
+            badge.innerHTML = `<i class="fa-solid fa-circle-check"></i> Verified for ${from} to ${to}`;
+            badge.className = "badge-verified";
+        }
         
-        // Show Badge & Container
-        badge.innerHTML = `<i class="fa-solid fa-circle-check"></i> Verified for ${from} to ${to}`;
-        badge.className = "badge-verified";
-        container.style.opacity = "1";
-    } else {
-        // Fallback if route is missing
-        document.getElementById('docsText').innerText = "We are currently updating data for this route.";
-        badge.innerHTML = `<i class="fa-solid fa-clock"></i> Updating...`;
-        badge.className = "badge-update";
-        container.style.opacity = "1";
+        if(container) container.style.opacity = "1";
+
+    } else if (from && to) {
+        // Fallback for missing routes
+        if(document.getElementById('docsText')) {
+            document.getElementById('docsText').innerText = "We are currently gathering the latest requirements for this specific route.";
+        }
+        if(badge) {
+            badge.innerHTML = `<i class="fa-solid fa-clock"></i> Updating...`;
+            badge.className = "badge-update";
+        }
+        if(container) container.style.opacity = "1";
     }
 }
 
@@ -500,134 +260,14 @@ window.addEventListener('load', () => {
     }
 });
 
-// This single block replaces all other window.onload or load listeners
-window.addEventListener('load', () => {
-    const params = new URLSearchParams(window.location.search);
-    const fromParam = params.get('from');
-    const toParam = params.get('to');
 
-    if (fromParam && toParam) {
-        const originBox = document.getElementById('originInput');
-        const destBox = document.getElementById('destinationInput');
-        
-        if (originBox && destBox) {
-            originBox.value = fromParam;
-            destBox.value = toParam;
-            updateResults(); // This triggers the info cards to appear
-            updateRecommendationHeader();
-            updateRecommendedCities();
-        }
-    }
-
-    // listen for changes in destination typing to adjust recommendations
-    const destBox = document.getElementById('destinationInput');
-    if (destBox) {
-        destBox.addEventListener('input', () => {
-            updateRecommendationHeader();
-            updateRecommendedCities();
-        });
-    }
-});
-
-// Run this when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     const destInput = document.getElementById('destinationInput');
-    
-    // Initial load: show the 3 latest posts globally
-    renderRecommended();
 
-    // Listen for typing in the "Traveling To" field
+
     destInput.addEventListener('input', (e) => {
         const query = e.target.value.trim();
-        renderRecommended(query);
     });
+
+    initLuggageChecker();
 });
-
-function renderRecommended(countryQuery = "") {
-    const grid = document.getElementById('recommendedGrid');
-    if (!grid) return;
-
-    let filteredPosts = [];
-
-    // Logic for filtering (same as before)
-    if (!countryQuery) {
-        filteredPosts = [...db.posts]
-            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-            .slice(0, 3);
-    } else {
-        filteredPosts = db.posts
-            .filter(post => post.location.toLowerCase().includes(countryQuery.toLowerCase()))
-            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-            .slice(0, 3);
-    }
-
-    // Clear grid for the new results
-    grid.innerHTML = '';
-
-    if (filteredPosts.length === 0) {
-        grid.innerHTML = `<p class="no-results">No gems found in "${countryQuery}" yet.</p>`;
-        return;
-    }
-
-    // Create cards but keep them hidden initially
-    filteredPosts.forEach((post, index) => {
-        const card = document.createElement('div');
-        card.className = 'mini-card';
-        card.style.opacity = '0'; // Start invisible
-        
-        card.innerHTML = `
-            <div class="mini-card-image">
-                <img src="${post.image}" alt="${post.location}">
-            </div>
-            <div class="mini-card-info">
-                <div class="mini-card-header">
-                    <span class="mini-category">${post.category}</span>
-                    <div class="mini-price">${"$".repeat(post.price)}</div>
-                </div>
-                <h4 class="mini-location">${post.location}</h4>
-            </div>
-        `;
-
-        grid.appendChild(card);
-
-        // TRIGGER ANIMATION: Staggered entry (100ms apart)
-        setTimeout(() => {
-            card.classList.add('reveal-card');
-        }, index * 100); 
-    });
-}
-
-let typingTimer;
-destInput.addEventListener('input', (e) => {
-    clearTimeout(typingTimer);
-    typingTimer = setTimeout(() => {
-        renderRecommended(e.target.value.trim());
-    }, 300);
-});
-
-card.onclick = () => openGemModal(post.id); 
-
-function openGemModal(postId) {
-    const post = db.posts.find(p => p.id == postId);
-    const modal = document.getElementById('gemModal');
-    const container = document.getElementById('modalContentContainer');
-
-    container.innerHTML = generatePostHTML(post);
-    
-    modal.style.display = 'flex';
-    setTimeout(() => modal.classList.add('active'), 10);
-}
-
-
-card.innerHTML = `
-    <div class="mini-card-image">
-        <img src="${post.image}" alt="${post.location}">
-    </div>
-    <div class="mini-card-info">
-        <div class="mini-card-header">
-            <span class="mini-category">${post.category}</span>
-            <div class="mini-price">${"$".repeat(post.price)}</div>
-        </div>
-        <h4 class="mini-location">${post.location}</h4>
-    </div>
-`;

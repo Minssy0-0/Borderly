@@ -1,0 +1,213 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap');
+@property --orange-x { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+@property --orange-y { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+@property --blue-x { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+@property --blue-y { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+@property --pink-x { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+@property --pink-y { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+
+
+.community-header {
+    text-align: center;
+    margin-top: 9rem; 
+    margin-bottom: -80px; 
+    padding: 0 20px;
+}
+
+.bubbly-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    margin-top: 3rem;
+    
+    /* The Gradient Effect */
+    background: linear-gradient(135.2deg, #466bc3 10%, #8ea6df 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    
+    /* Makes it look more 'bubbly' */
+    letter-spacing: -1px;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+}
+
+.bubbly-subtitle {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.2rem;
+    color: #64748b;
+    font-weight: 400;
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.8;
+}
+
+
+#suggested-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto 80px;
+    padding: 0 20px;
+}
+
+/* Card Styling */
+.suggested-card {
+    background: white;
+    border-radius: 30px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.suggested-card:hover {
+    transform: translateY(-10px);
+}
+
+.card-header {
+    background: #466bc3;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-family: 'Fredoka', sans-serif;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    padding: 20px;
+}
+
+.info-box {
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 20px;
+    border: 1px solid #f1f5f9;
+}
+
+.info-box h4 {
+    margin: 0 0 5px 0;
+    color: #466bc3;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.info-box p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+/* Buttons */
+.save-btn {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid white;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.save-btn:hover {
+    background: white;
+    color: #466bc3;
+}
+
+.full-check-btn {
+    width: 80%;
+    margin: 0 auto 20px;
+    display: block;
+    background: #f3a333;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#airlineResults li:hover {
+    background-color: #f1f5f9;
+    color: #466bc3;
+    border-radius: 8px;
+}
+
+
+.requirement-row {
+    margin-bottom: 30px;
+}
+
+
+/* Currency Styling */
+.main-currency-display {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 5px;
+}
+
+.tip-info-text {
+    font-size: 0.9rem;
+    color: #64748b;
+    font-style: italic;
+    border-top: 1px dashed #cbd5e1;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.explanation-main-text {
+    font-size: 0.85rem;
+    color: #475569;
+    line-height: 1.4;
+    margin-bottom: 10px;
+}
+
+/* Emergency Card Styling */
+.emergency-card {
+    border: 2px solid #fee2e2;
+}
+
+.emergency-card .card-header i {
+    color: #ef4444; /* Red for emergency */
+}
+
+.emergency-number-display {
+    background: #fef2f2;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    margin: 10px 0;
+}
+
+#emergencyText {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #b91c1c;
+    letter-spacing: 2px;
+}
+
+.emergency-subtext {
+    font-size: 0.8rem;
+    color: #7f1d1d;
+    margin-top: 5px;
+}
+
+.danger-zone {
+    background: #fff1f2;
+    border-color: #fecdd3;
+}

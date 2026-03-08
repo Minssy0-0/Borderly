@@ -218,3 +218,155 @@ select {
     color: #d97706;
     border: 1px solid #f59e0b;
 }
+
+.tipping-note {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-style: italic;
+    margin-top: 10px;
+    border-top: 1px dashed #cbd5e1;
+    padding-top: 10px;
+}
+
+
+.explanation-subtext {
+    font-size: 0.85rem;
+    color: #475569;
+    margin-bottom: 10px;
+}
+
+
+.emergency-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #b91c1c;
+    margin: 10px 0;
+}
+
+.emergency-desc {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+/* Airline Search Container */
+.airline-search-container {
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+/* The Input Field */
+#airlineSearch {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+#airlineSearch:focus {
+    outline: none;
+    border-color: #466bc3;
+    box-shadow: 0 0 0 4px rgba(70, 107, 195, 0.1);
+}
+
+/* Custom Dropdown Results */
+.custom-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 250px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    margin-top: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    list-style: none;
+    padding: 0;
+}
+
+/* Individual Dropdown Items */
+.custom-dropdown li {
+    padding: 12px 15px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #334155;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.2s ease;
+}
+
+.custom-dropdown li:last-child {
+    border-bottom: none;
+}
+
+.custom-dropdown li:hover {
+    background-color: #f8fafc;
+    color: #466bc3;
+}
+
+/* Luggage Info Display Area */
+#luggageDisplay {
+    background: #f1f5f9;
+    padding: 15px;
+    border-radius: 12px;
+    min-height: 60px;
+}
+
+#luggageText {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #475569;
+}
+
+/* Scrollbar for the dropdown */
+.custom-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-dropdown::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.custom-dropdown::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.search-input-group {
+    display: flex;
+    gap: 10px;
+}
+
+#airlineSearch {
+    flex: 1; /* Input takes up remaining space */
+}
+
+.checkluggage-btn {
+    background-color: #466bc3;
+    color: white;
+    border: none;
+    padding: 0 25px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.check-btn:hover {
+    background-color: #3556a5;
+}
+
+
+.luggage-info-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #466bc3;
+}
