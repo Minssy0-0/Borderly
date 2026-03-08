@@ -25,7 +25,7 @@
           <div id="navAuthSection" class="nav-auth-group">
         <a href="javascript:void(0)" onclick="gatekeeper('profile.html')" class="nav-icon-link" title="Profile">
             <div class="profile-circle">
-                <img src="Stock/defaultPic.webp" id="navAvatar" alt="User" class="nav-avatar">
+                <img src="Stock/defaultPic.webp" id="navAvatar" alt="User" class="nav-profile-pic">
             </div>
         </a>
     </div>
@@ -76,8 +76,9 @@
 </div>
 </section>
     </main>
-<div id="editProfileModal" class="modal-overlay" style="display: none;">
-    <div class="modal-content edit-modal">
+<div id="editProfileModal" class="edit-modal" style="display: none;">
+    <div class="edit-modal-content">
+        <span  class="close-" onclick="closeEditModal()">&times;</span>
         <h3 style="color: #0e255a; margin-bottom: 20px;">Edit Profile</h3>
         
         <div class="edit-avatar-container">
@@ -104,29 +105,7 @@
         </div>
     </div>
 </div>
-<script>
-  function loadProfilePosts() {
-    const postContainer = document.getElementById('userPostsContainer');
-    const currentUserId = db.currentUser ? db.currentUser.id : null;
-    const myPosts = db.posts.filter(post => post.userId === currentUserId);
 
-    if (myPosts.length === 0) {
-        postContainer.innerHTML = "<p style='text-align:center; padding: 20px;'>You haven't posted anything yet!</p>";
-        return;
-    }
-
-    postContainer.innerHTML = myPosts.map(post => `
-        <div class="post-card">
-            <div class="post-header">
-                <strong>${post.author}</strong> <small>${post.date}</small>
-            </div>
-            <p>${post.content}</p>
-            ${post.image ? `<img src="${post.image}" class="post-img">` : ''}
-        </div>
-    `).join('');
-}
-document.addEventListener('DOMContentLoaded', loadProfilePosts);
-</script>
     <script src="database.js"></script>
     <script src="auth.js"></script>
     <script src="search.js"></script>

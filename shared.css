@@ -2,6 +2,7 @@ header, nav {
     height: auto !important; /* Prevents parent tags from squishing the bar */
 }
 
+
 /* --- Trip Diary Button & Dropdown (Navbar) --- */
 .diary-wrapper-outer {
   display: flex;
@@ -147,6 +148,7 @@ nav .navbar{
 /* 3. The Menu (Starts hidden & shrunk) */
 navmenu {
   position: absolute;
+  margin-left: 1rem;
   top: 24%; 
   left: 0;
   background: white;
@@ -281,6 +283,15 @@ header {
   text-decoration: none;
   font-weight: 500;
   color: #ffffff;
+}
+
+.nav-profile-pic {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%; 
+    object-fit: cover;  
+    border: 2px solid #466bc3;
+    cursor: pointer;
 }
 
 /* ===== CONTACT SECTION ===== */
@@ -440,92 +451,92 @@ header {
 
 
 
-
-
-/* --- DIARY NAVBAR ICON --- */
-
-.diary-wrapper {
-    position: relative;
-    cursor: pointer;
+.site-footer {
+    width: 100%;
+    margin: 0;
+    padding: 40px 0;
+    background-color: #0e255a; 
 }
 
-.diary-member-circle { border: 2px solid #f3a333; }
-.diary-guest-circle { border: 2px dashed #cbd5e1; }
+.footer-inner {
+    max-width: 1200px; 
+    margin: 0 auto;   
+    padding: 0 20px;  
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
 
+/* --- DIARY NAVBAR ICON --- */
+/* Container for the Diary button */
+.diary-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* The Circular Pill Button */
 .diary-circle {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 70px;
-  height: 70px;
-  background: white;
-  border-radius: 50%;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease;
-  cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    padding: 8px 18px;
+    border-radius: 50px;
+    border: 1px solid #e2e8f0;
+    color: #466bc3;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
 }
 
 .diary-circle i {
-  font-size: 1.4rem;
-  color: #466bc3;
-  margin-bottom: 2px;
+    font-size: 1.1rem;
 }
 
-.diary-circle span {
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: #334155;
-  text-transform: uppercase;
+/* Hover Effect */
+.diary-circle:hover {
+    background: #f8fafc;
+    border-color: #466bc3;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(70, 107, 195, 0.1);
 }
 
-/* Scaling Transition on Hover */
-.diary-wrapper:hover .diary-circle {
-  transform: scale(1.15);
-  border: 2px solid #f3a333;
-}
-
-/* --- DIARY DROPDOWN PREVIEW --- */
-
+/* The Dropdown Menu Appearance */
 .diary-dropdown {
-    display: none; /* Hidden by default */
     position: absolute;
-    top: 100%;
+    top: calc(100% + 15px);
     right: 0;
-    width: 220px;
+    width: 260px;
     background: white;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    border-radius: 15px;
+    border-radius: 20px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(226, 232, 240, 0.8);
     padding: 15px;
-    margin-top: 10px;
+    display: none; /* Controlled by JS or :hover */
+    z-index: 1000;
 }
 
+/* Show dropdown when hovering the wrapper */
 .diary-wrapper:hover .diary-dropdown {
-    display: block; 
+    display: block;
+    animation: slideDown 0.3s ease-out;
 }
 
 .dropdown-header {
-  font-size: 0.8rem;
-  font-weight: 800;
-  color: #94a3b8;
-  margin-bottom: 10px;
-  text-transform: uppercase;
+    font-weight: 800;
+    color: #1e293b;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f1f5f9;
 }
 
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 0;
-  border-bottom: 1px solid #f1f5f9;
-  cursor: pointer;
-}
-
-.dropdown-item img {
-  width: 40px;
-  height: 40px;
-  border-radius: 6px;
-  object-fit: cover;
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .item-info strong {
@@ -549,7 +560,16 @@ header {
   text-decoration: none;
 }
 
+#logoutBtn {
+    border-top: 1px solid #f1f5f9;
+    margin-top: 10px;
+    padding-top: 10px;
+}
 
+#logoutBtn:hover {
+    color: #ef4444 !important; 
+    background: rgba(239, 68, 68, 0.05);
+}
 
 /* --- GUEST PROMPT IN DROPDOWN --- */
 
@@ -883,28 +903,6 @@ header {
 
 
 
-.custom-category-dropdown { position: relative; width: 100%; }
-
-.category-selected {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 10px 0; border-bottom: 1px dashed #cbd5e1;
-    cursor: pointer; font-weight: 700; color: #64748b;
-}
-
-.category-menu {
-    display: none; position: absolute; top: 100%; left: 0; width: 100%;
-    background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 9999; margin-top: 5px;
-}
-
-.category-menu.show { display: block !important; }
-
-.cat-option {
-    padding: 12px 15px; cursor: pointer; font-weight: 600; color: #64748b;
-}
-
-.cat-option:hover { background: #f1f5f9; color: #466bc3; }
-
 .diary-circle {
     width: 42px;
     height: 42px;
@@ -965,12 +963,6 @@ header {
     background: #005fa3;
 }
 
-#recommendedGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 20px 0;
-}
 
 .mini-card {
     background: white;
@@ -1013,4 +1005,15 @@ header {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
     min-height: 350px; /* Prevents the page from jumping when empty */
+}
+
+/* When the URL ends in #documentsSection, that specific card will glow */
+.checker-card:target {
+    animation: highlightCard 2s ease-out;
+    border: 2px solid #466bc3; /* Using your primary blue */
+}
+
+@keyframes highlightCard {
+    0% { background-color: rgba(70, 107, 195, 0.2); }
+    100% { background-color: transparent; }
 }

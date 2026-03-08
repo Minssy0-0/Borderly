@@ -263,11 +263,13 @@ window.addEventListener('load', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const destInput = document.getElementById('destinationInput');
-
-
     destInput.addEventListener('input', (e) => {
         const query = e.target.value.trim();
     });
 
     initLuggageChecker();
+
+    if (typeof renderRecommendedCards === 'function') {
+        renderRecommendedCards();
+    }
 });

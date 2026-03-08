@@ -1,34 +1,17 @@
-/*#banner::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
-  background: rgba(0, 0, 0, 0.8); /* adjust 0.5 for darkness 
-  z-index: 1;
-}*/
-
-html {
-  scroll-behavior: smooth;
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; 
+    scroll-behavior: smooth;
 }
 
 #banner {
   position: relative;
   height: 520px;
-  margin-top: 75px; /* header height */
+  margin-top: 75px; 
   overflow: hidden;
 }
-  
-/*.hero-video {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-}*/
-
 
 .banner-content {
   position: relative;
@@ -279,16 +262,13 @@ html {
 
 
 #features {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 20px;
-  padding: 1rem ;
-  background: white;
-  border-bottom: 1px solid #f1f5f9;
-  position: relative;
-  z-index: 3;
-  scroll-margin-top: 600px;
+    display: flex;           
+    justify-content: center; 
+    align-items: stretch;     
+    gap: 4rem;             
+    flex-wrap: wrap;      
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 .feature-item {
@@ -296,12 +276,24 @@ html {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 1rem;
+  gap: 6rem;
   transition: all 0.3s ease;
 }
 
+
+#features a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;           
+    flex: 1;                 
+    max-width: 250px;         
+}
+
+#features a:hover {
+    text-decoration: none;
+}
 .feature-item i {
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   color: #466bc3; 
   transition: transform 0.3s ease, color 0.3s ease;
 }
@@ -340,49 +332,24 @@ html {
     gap: 40px;
   }
   .feature-item {
-    text-decoration: none; /* Removes the underline */
-    color: inherit;        /* Keeps your original text color */
+    text-decoration: none;
+    color: inherit;        
     display: block;
-    width: 40%; /* Shows 2 items per row on tablets */
+    width:410%; 
   }
 }
 
 @media (max-width: 600px) {
   .feature-item {
-    width: 100%; /* Shows 1 item per row on phones */
+    width: 100%; 
   }
 }
 
 
-#recommendedGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 20px 0;
-}
-
-.mini-card {
-    background: white;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    transition: transform 0.3s ease;
-}
-
-.mini-card:hover {
-    transform: translateY(-5px);
-}
-
-.no-results {
-    grid-column: 1 / -1;
-    text-align: center;
-    color: #64748b;
-    padding: 40px;
-}
 
 #recommendations {
     position: relative;
-    padding: 80px 0 40px 0;
+    padding: 50px 0 40px 0;
     background-color: #ffffff; 
     overflow: hidden; 
 
@@ -419,7 +386,7 @@ html {
     z-index: 2; 
 }
 
-/* Stylizing the H2 for the Golden Glow */
+
 .recommended-section h2 {
     font-family: 'Fredoka', sans-serif;
     font-size: 2.5rem;
@@ -440,8 +407,9 @@ html {
 }
 
 .recommended-section h2 {
-    margin-top: -20px; /* Keep it high as we discussed */
-    margin-bottom: 8px; /* Tighten space to the subtitle */
+    margin-top: 2rem; 
+    margin-bottom: 8px; 
+    margin-left: 3rem;
     font-family: 'Fredoka', sans-serif;
     color: #1f2e53df;
 }
@@ -451,6 +419,7 @@ html {
     font-size: 1.3rem;
     color: #64748b; 
     margin-bottom: 40px; 
+    margin-left: 3rem;
     max-width: 600px; 
     line-height: 1.5;
     text-align: left; 

@@ -12,15 +12,22 @@ window.saveDB = function() {
     localStorage.setItem('borderly_folders', JSON.stringify(window.db.folders));
     localStorage.setItem('borderly_saved_trips', JSON.stringify(window.db.savedTrips));
 }
-
-// --- LOGOUT FUNCTION ---
 window.logout = function() {
     window.db.currentUser = null;
     localStorage.removeItem('borderly_session');
     window.location.href = 'index.html';
 };
+function updateNavAuth() {
+    const logoutBtn = document.getElementById('logoutBtn');
+    const isLoggedIn = localStorage.getItem('borderly_session') !== null;
 
- /*to Log In*/
+    if (logoutBtn) {
+        logoutBtn.style.display = isLoggedIn ? 'block' : 'none';
+    }
+}
+
+window.addEventListener('load', updateNavAuth);
+
 function loginUser(email, password) {
     const user = db.users.find(u => u.email === email && u.password === password);
     if (user) {
@@ -37,20 +44,16 @@ function updateGlobalDiaryUI() {
     const previewContent = document.getElementById('diaryPreviewContent');
     const user = JSON.parse(localStorage.getItem('borderly_session'));
 
-    // SAFETY CHECK: If these elements don't exist on the current page, 
-    // exit the function immediately so it doesn't crash the rest of the site.
+
     if (!diaryCircle || !diaryIcon || !previewContent) {
         console.log("Diary elements not found on this page. Skipping UI update.");
         return; 
     }
 
     if (user) {
-        // LOGGED IN STATE
+        /*LOGGED IN STATE*/
         diaryCircle.className = "diary-circle diary-member-circle";
         diaryIcon.className = "fa-solid fa-book-atlas diary-member-icon";
-        
-        // Show latest 2 saves in the preview
-        // Note: Using window.db to ensure it's pointing to the global database object
         const userPosts = (window.db?.posts || []).filter(p => p.author === user.username);
         
         if (userPosts.length > 0) {
@@ -65,7 +68,7 @@ function updateGlobalDiaryUI() {
             previewContent.innerHTML = "<p class='diary-empty'>Your diary is empty. Start saving!</p>";
         }
     } else {
-        // GUEST STATE
+        /*GUEST STATE*/
         diaryCircle.className = "diary-circle diary-guest-circle";
         diaryIcon.className = "fa-solid fa-book-atlas diary-guest-icon";
         previewContent.innerHTML = `
@@ -79,7 +82,7 @@ function handleDiaryClick() {
     gatekeeper('diary.html');
 }
 document.addEventListener('DOMContentLoaded', updateGlobalDiaryUI);
-/*Save Post to Diary*/
+
 function saveToDiary(postId) {
     const post = db.posts.find(p => p.id === postId);
     if (!post) {
@@ -87,17 +90,14 @@ function saveToDiary(postId) {
         return false;
     }
 
-    // Get existing diary items from localStorage
     let diaryItems = JSON.parse(localStorage.getItem('diary_items')) || [];
     
-    // Check if post is already in diary
     const exists = diaryItems.some(item => item.id === postId);
     if (exists) {
         alert("This destination is already in your diary!");
         return false;
     }
 
-    // Create diary item object
     const diaryItem = {
         id: postId,
         title: post.location,
@@ -106,8 +106,6 @@ function saveToDiary(postId) {
         timestamp: new Date().toISOString(),
         postContent: post.content
     };
-
-    // Add to diary and save
     diaryItems.push(diaryItem);
     localStorage.setItem('diary_items', JSON.stringify(diaryItems));
     
@@ -133,13 +131,23 @@ function registerUser(username, email, password) {
 
     db.users.push(newUser);
     saveDB();
-    // Auto-login after registration
     db.currentUser = newUser;
     saveDB();
     return { success: true };
 }
 
+function syncGlobalAvatar() {
+    const savedAvatar = localStorage.getItem('profileAvatar');
+    
+    if (savedAvatar) {
+        const navAvatar = document.getElementById('navAvatar');
+        const mainProfilePic = document.getElementById('mainProfilePic');
 
+        if (navAvatar) navAvatar.src = savedAvatar;
+        if (mainProfilePic) mainProfilePic.src = savedAvatar;
+    }
+}
+window.addEventListener('load', syncGlobalAvatar);
 
 
 

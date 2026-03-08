@@ -25,7 +25,7 @@
           <div id="navAuthSection" class="nav-auth-group">
         <a href="javascript:void(0)" onclick="gatekeeper('profile.html')" class="nav-icon-link" title="Profile">
             <div class="profile-circle">
-                <img src="Stock/defaultPic.webp" id="navAvatar" alt="User" class="nav-avatar">
+                <img src="Stock/defaultPic.webp" id="navAvatar" alt="User" class="nav-profile-pic">
             </div>
         </a>
     </div>
@@ -56,21 +56,25 @@
   </nav>
 </header>
 
-
-
-<div class="community-header">
-    <h1 class="bubbly-title">Borderly Board</h1>
-    <p class="bubbly-subtitle">Discover hidden gems, local tips, and your next big adventure.</p>
-</div>
-
-    <div id="suggested-grid"></div>
+<main>
+    <div class="community-header">
+        <h1 class="bubbly-title">Borderly Board</h1>
+        <p class="bubbly-subtitle">Browse easy to travel places based on your current location.</p>
+        
+        <div class="board-controls">
+            <div class="search-wrapper">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="boardSearchInput" placeholder="Enter your current country (e.g. Slovakia)..." oninput="filterBoard()">
+            </div>
+        </div>
     </div>
-    
-</main>
-</body>
-    <script src="database.js"></script>
-    <script src="auth.js"></script>
-    <script src="cloude.js"></script>
-    <scriptsrc="suggested-trips.js"></script>
 
+    <div id="suggested-grid" class="board-container"></div>
+</main>
+
+<script src="database.js"></script>
+<script src="auth.js"></script>
+<script src="suggested.js"></script> 
+<script src="cloude.js"></script>>
+</body>
 </html>
